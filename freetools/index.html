@@ -1,0 +1,1992 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histree Lead Finder — Free Client Research Tool</title>
+  <meta name="description" content="Free lead research tool by Histree Studios. Build your ICP, generate research links, score and qualify leads, write outreach, and email or export your prospect list.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #F7F5EE;
+      --card: #ffffff;
+      --text: #16241C;
+      --muted: #5E6F64;
+      --border: #DEE4D7;
+      --primary: #1B4332;
+      --primary-dark: #0F2E1F;
+      --primary-soft: #E7F0EA;
+      --accent: #D8A23B;
+      --accent-dark: #B9842A;
+      --accent-soft: #FBF1DC;
+      --danger: #BD4332;
+      --danger-dark: #97342A;
+      --success: #2F7A4D;
+      --hot-bg: #FBE3DA; --hot-text: #8A3520;
+      --warm-bg: #FBF0D2; --warm-text: #8A5E16;
+      --cold-bg: #E1EEF4; --cold-text: #1E5C78;
+      --shadow: 0 10px 28px rgba(16, 42, 29, 0.10);
+      --shadow-lg: 0 26px 70px rgba(16, 42, 29, 0.30);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --font-display: 'Space Grotesk', 'Segoe UI', Arial, sans-serif;
+      --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--primary-dark);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .brand-mark img { height: 26px; width: auto; display: block; }
+    .brand-mark .fallback-logo {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: var(--primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .topbar-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 7px 12px;
+      border-radius: 999px;
+    }
+    .topbar-link:hover { border-color: var(--primary); }
+
+    /* ---------- Header / hero ---------- */
+    header {
+      background: linear-gradient(155deg, #0F2E1F, #1B4332 55%, #2C5B41);
+      color: #EFF5F0;
+      padding: 40px 18px 44px;
+      text-align: center;
+      margin-top: 18px;
+      border-radius: 0 0 28px 28px;
+    }
+    .header-inner { max-width: 880px; margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #F4E7C7;
+      font-weight: 700; font-size: 12.5px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 6px 13px; border-radius: 999px;
+    }
+    header h1 {
+      margin: 16px 0 12px;
+      font-size: clamp(32px, 5.6vw, 50px);
+      line-height: 1.05;
+      font-weight: 700;
+    }
+    header h1 em { color: var(--accent); font-style: normal; }
+    header p.lede {
+      margin: 0 auto;
+      max-width: 660px;
+      color: #DCE9E0;
+      font-size: clamp(15.5px, 2.2vw, 18px);
+    }
+    .hero-ctas {
+      margin-top: 22px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-cta-primary, .hero-cta-secondary {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-weight: 700; font-size: 14.5px;
+      padding: 12px 18px; border-radius: 999px;
+      text-decoration: none;
+    }
+    .hero-cta-primary { background: var(--accent); color: #2A1C04; }
+    .hero-cta-primary:hover { background: #E3B255; }
+    .hero-cta-secondary { background: rgba(255,255,255,0.10); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+    .hero-cta-secondary:hover { background: rgba(255,255,255,0.18); }
+    .trust-row {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #BFD3C6;
+    }
+    .trust-row strong { color: #EFF5F0; }
+
+    main { max-width: 1180px; margin: 26px auto 48px; padding: 0 16px; }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    @media (min-width: 900px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .card h2 { margin: 0 0 6px; font-size: 21px; color: var(--primary-dark); }
+    .card p.help { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+
+    label { display: block; font-weight: 700; margin: 12px 0 6px; font-size: 13.5px; color: #2A3A30; }
+    input, textarea, select {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 15px;
+      background: #fff;
+      color: var(--text);
+      font-family: var(--font-body);
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+      border-color: var(--primary);
+    }
+    textarea { min-height: 78px; resize: vertical; }
+
+    .row { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 700px) {
+      .row-2 { grid-template-columns: 1fr 1fr; }
+      .row-3 { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    button, .button-link {
+      border: none; border-radius: 10px; padding: 11px 15px;
+      background: var(--primary); color: #fff;
+      font-weight: 700; font-size: 14px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center;
+      justify-content: center; gap: 6px; min-height: 42px;
+      font-family: var(--font-body);
+    }
+    button:hover, .button-link:hover { background: var(--primary-dark); }
+    button.secondary { background: #EDEFE9; color: #233227; }
+    button.secondary:hover { background: #DEE3D6; }
+    button.danger { background: var(--danger); }
+    button.danger:hover { background: var(--danger-dark); }
+    button.accent { background: var(--accent); color: #2A1C04; }
+    button.accent:hover { background: #E3B255; }
+    button:disabled { opacity: 0.6; cursor: wait; }
+    .small-button { padding: 7px 10px; min-height: auto; font-size: 12.5px; }
+
+    .status-message { margin-top: 12px; font-size: 14px; color: var(--success); font-weight: 700; min-height: 18px; }
+    .ai-status { margin-top: 8px; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    .summary-card {
+      display: none; margin-top: 16px; padding: 16px;
+      border: 1px solid #CFE0D4; border-radius: 14px; background: var(--primary-soft);
+    }
+    .summary-card h3 { margin: 0 0 10px; font-size: 16px; color: var(--primary-dark); }
+    .summary-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    @media (min-width: 700px) { .summary-grid { grid-template-columns: 1fr 1fr; } }
+    .summary-item { background: #fff; border: 1px solid #D6E5DA; border-radius: 10px; padding: 10px; font-size: 13.5px; }
+    .summary-item strong { display: block; margin-bottom: 3px; font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+    .summary-wide { grid-column: 1 / -1; }
+    .summary-cta { margin-top: 12px; font-size: 13px; color: var(--primary-dark); }
+    .summary-cta a { color: var(--accent-dark); font-weight: 700; text-decoration: none; }
+    .summary-cta a:hover { text-decoration: underline; }
+
+    .search-results { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 16px; max-height: 540px; overflow-y: auto; padding-right: 4px; }
+    .search-item { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: #FAFAF5; }
+    .search-item strong { display: block; margin-bottom: 4px; }
+    .search-item span { display: block; color: var(--muted); font-size: 12.5px; margin-bottom: 10px; overflow-wrap: anywhere; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; margin-top: 16px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1900px; background: #fff; }
+    th, td { border-bottom: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; font-size: 13.5px; }
+    th { background: #F1F3EC; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: #3A4A3F; position: relative; }
+    th.sortable { cursor: pointer; user-select: none; }
+    th.sortable:hover { color: var(--primary); }
+    th.sort-active { color: var(--primary-dark); }
+    tr:last-child td { border-bottom: none; }
+    .table-link { color: var(--primary-dark); font-weight: 700; text-decoration: none; }
+    .table-link:hover { text-decoration: underline; }
+    .empty-state { padding: 22px; color: var(--muted); text-align: center; }
+
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    @media (min-width: 700px) { .stats-grid { grid-template-columns: repeat(5, 1fr); } }
+    .stat-card { border: 1px solid var(--border); border-radius: 12px; background: #FAFAF5; padding: 14px; }
+    .stat-card.due-alert { border-color: #E8C9A8; background: var(--accent-soft); }
+    .stat-label { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+    .stat-value { display: block; margin-top: 5px; font-size: 24px; font-weight: 700; font-family: var(--font-display); }
+
+    /* Score ring */
+    .score-ring-wrap { display: inline-flex; align-items: center; justify-content: center; }
+    .score-ring-text { font-family: var(--font-display); font-weight: 700; fill: var(--text); font-size: 15px; }
+
+    .temp-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 56px; padding: 6px 9px; border-radius: 999px;
+      font-weight: 800; font-size: 12.5px; white-space: nowrap;
+    }
+    .temp-hot { background: var(--hot-bg); color: var(--hot-text); }
+    .temp-warm { background: var(--warm-bg); color: var(--warm-text); }
+    .temp-cold { background: var(--cold-bg); color: var(--cold-text); }
+
+    .followup-badge { display: inline-block; margin-top: 4px; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .followup-overdue { background: var(--hot-bg); color: var(--hot-text); }
+    .followup-today { background: var(--warm-bg); color: var(--warm-text); }
+
+    .offer-preview { max-width: 250px; color: var(--text); font-size: 12.5px; }
+
+    /* View toggle */
+    .view-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; padding: 3px; background: #F1F3EC; }
+    .view-toggle button { background: transparent; color: #3A4A3F; padding: 7px 14px; border-radius: 999px; min-height: auto; font-size: 13px; }
+    .view-toggle button.active { background: var(--primary); color: #fff; }
+
+    .filter-row { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+    @media (min-width: 700px) { .filter-row { grid-template-columns: 1.6fr 1fr 1fr; } }
+
+    /* Pipeline */
+    .pipeline-board { display: grid; grid-auto-flow: column; grid-auto-columns: 250px; gap: 12px; overflow-x: auto; margin-top: 16px; padding-bottom: 6px; }
+    .pipeline-column { background: #FAFAF5; border: 1px solid var(--border); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; min-height: 160px; }
+    .pipeline-column-header { display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-size: 13px; color: #2A3A30; margin-bottom: 10px; padding: 0 2px; }
+    .pipeline-count { background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; font-size: 12px; }
+    .pipeline-cards { display: flex; flex-direction: column; gap: 8px; min-height: 60px; border-radius: 10px; transition: background 0.15s; }
+    .pipeline-cards.drag-over { background: var(--primary-soft); }
+    .pipeline-empty { color: var(--muted); font-size: 12.5px; text-align: center; padding: 14px 4px; }
+    .pipeline-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 10px; cursor: grab; }
+    .pipeline-card.dragging { opacity: 0.4; }
+    .pipeline-card-top { display: flex; align-items: center; gap: 8px; }
+    .pipeline-card-info { display: flex; flex-direction: column; min-width: 0; }
+    .pipeline-card-info strong { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pipeline-card-info span { font-size: 11.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pipeline-card-actions { display: flex; gap: 6px; margin-top: 8px; }
+    .pipeline-status-select { padding: 6px 8px; font-size: 12px; border-radius: 8px; }
+
+    /* Modals */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15, 30, 22, 0.62); display: none; align-items: center; justify-content: center; padding: 18px; z-index: 1000; }
+    .modal-overlay.active { display: flex; }
+    .modal { width: min(720px, 100%); max-height: 90vh; overflow-y: auto; background: #fff; border-radius: 18px; box-shadow: var(--shadow-lg); padding: 22px; border: 1px solid var(--border); }
+    .modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 6px; }
+    .modal-header h2 { margin: 0; font-size: 21px; }
+    .modal-close { background: #EDEFE9; color: #233227; min-height: auto; padding: 8px 11px; border-radius: 999px; }
+    .modal-close:hover { background: #DEE3D6; }
+    .ai-tag { display: none; align-items: center; gap: 5px; background: var(--accent-soft); color: var(--accent-dark); font-size: 11.5px; font-weight: 800; padding: 4px 9px; border-radius: 999px; margin-left: 8px; }
+    .ai-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; padding: 12px; border: 1px dashed #CFE0D4; border-radius: 12px; background: #FAFCF8; }
+    .ai-bar p { margin: 0; font-size: 12.5px; color: var(--muted); flex: 1 1 220px; }
+
+    .offer-detail-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
+    @media (min-width: 700px) { .offer-detail-grid { grid-template-columns: 1fr 1fr; } }
+    .offer-detail-card { border: 1px solid var(--border); border-radius: 12px; background: #FAFAF5; padding: 12px; }
+    .offer-detail-card strong { display: block; margin-bottom: 5px; color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .offer-detail-wide { grid-column: 1 / -1; }
+
+    .message-block { border: 1px solid var(--border); border-radius: 12px; background: #FAFAF5; padding: 12px; margin-top: 12px; }
+    .message-block-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    .message-block-header strong { color: var(--text); font-size: 13.5px; margin: 0; }
+    .message-text { white-space: pre-wrap; color: var(--text); font-size: 13.5px; line-height: 1.55; background: #fff; border: 1px solid #E7EAE0; border-radius: 10px; padding: 10px; }
+    .copy-feedback { display: inline-block; margin-left: 8px; color: var(--success); font-size: 12.5px; font-weight: 800; }
+
+    .how-it-works { margin-bottom: 18px; }
+    .steps-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
+    @media (min-width: 700px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+    .step-card { border: 1px solid var(--border); border-radius: 12px; background: #FAFAF5; padding: 13px; }
+    .step-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-bottom: 8px; border-radius: 999px; background: var(--primary); color: #fff; font-weight: 700; font-size: 13px; font-family: var(--font-display); }
+    .step-card strong { display: block; margin-bottom: 4px; }
+    .step-card span { color: var(--muted); font-size: 13.5px; }
+
+    .privacy-note { margin-top: 18px; padding: 14px; border: 1px solid #CFE0D4; border-radius: 12px; background: var(--primary-soft); color: #1E3A2A; font-size: 13.5px; font-weight: 600; }
+    .release-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 18px; }
+    @media (min-width: 900px) { .release-grid { grid-template-columns: 1fr 1fr; } }
+    .clean-list { margin: 12px 0 0; padding-left: 20px; color: var(--text); }
+    .clean-list li { margin-bottom: 8px; }
+    .does-not-do-note { margin-top: 14px; padding: 12px; border: 1px solid #E7C9C0; border-radius: 12px; background: #FBEFEC; color: #7A3324; font-size: 13.5px; font-weight: 600; }
+    .export-reminder { margin-top: 14px; padding: 12px; border: 1px solid #E8D7A6; border-radius: 12px; background: var(--accent-soft); color: #7A5A14; font-size: 13.5px; font-weight: 700; }
+
+    .backup-section { border: 2px solid #CFE0D4; }
+    .backup-file-label { margin: 0; }
+    .backup-file-input { display: block; margin-top: 10px; max-width: 420px; }
+    .backup-warning { margin-top: 12px; color: #7A3324; font-size: 13.5px; font-weight: 700; }
+
+    footer { max-width: 1180px; margin: 0 auto 30px; padding: 0 16px; color: var(--muted); font-size: 13px; text-align: center; }
+    footer a { color: var(--primary-dark); font-weight: 700; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer .foot-links { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin: 10px 0; }
+
+    @media (max-width: 620px) {
+      main { margin-top: 18px; padding: 0 12px; }
+      .card { padding: 15px; border-radius: 13px; }
+      .button-row { flex-direction: column; align-items: stretch; }
+      button, .button-link { width: 100%; }
+      .search-results { max-height: none; }
+      .modal { max-height: 92vh; padding: 16px; }
+      .modal-header { flex-direction: column; }
+      .modal-close { width: 100%; }
+      th, td { padding: 9px; font-size: 12.5px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="brand-mark" href="https://www.histreestudios.com/" target="_blank" rel="noopener noreferrer">
+      <img src="https://www.histreestudios.com/histree-logo.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'fallback-logo',textContent:'H'}))">
+      HISTREE STUDIOS
+    </a>
+    <a class="topbar-link" href="https://www.histreestudios.com/" target="_blank" rel="noopener noreferrer">Visit histreestudios.com ↗</a>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <span class="eyebrow">🌳 Free tool · by Histree Studios</span>
+      <h1>Find your next <em>10 clients</em><br>before lunch.</h1>
+      <p class="lede">Build your ICP, generate research links, save and score leads, write your offer, and send outreach — all in your browser, completely free, forever.</p>
+      <div class="hero-ctas">
+        <a class="hero-cta-primary" href="#icpCard">🎯 Build My ICP</a>
+        <a class="hero-cta-secondary" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" rel="noopener noreferrer">Want us to run this for you? Book a free call ↗</a>
+      </div>
+      <p class="trust-row"><strong>No login · No signup · No backend.</strong> Your leads live only in this browser, unless you choose to email them to yourself.</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="howItWorks" class="card how-it-works">
+      <h2>How it works</h2>
+      <p class="help">Five steps from a blank page to a list of real, qualified leads.</p>
+      <div class="steps-grid">
+        <div class="step-card"><span class="step-number">1</span><strong>Build your ICP</strong><span>Pick a service, a client type, a city, and a budget level.</span></div>
+        <div class="step-card"><span class="step-number">2</span><strong>Open research links</strong><span>We generate Google Maps searches. Open them and review real businesses.</span></div>
+        <div class="step-card"><span class="step-number">3</span><strong>Save good-fit leads</strong><span>Log the businesses worth contacting, with notes on what you noticed.</span></div>
+        <div class="step-card"><span class="step-number">4</span><strong>Work the Hot leads first</strong><span>Scoring and temperature badges tell you where to spend your time.</span></div>
+        <div class="step-card"><span class="step-number">5</span><strong>Pitch and follow up</strong><span>Generate an offer angle and outreach messages, then email yourself the list.</span></div>
+      </div>
+      <div class="privacy-note">
+        Your ICP and leads are stored only in this browser (localStorage) — nothing is uploaded to a server. The optional <strong>✨ Personalize with AI</strong> button is the one exception: it sends that single lead's details to Claude to write sharper copy. Everything else never leaves your device. Export a JSON backup any time you want to move data to another browser.
+      </div>
+    </section>
+
+    <section class="release-grid">
+      <div class="card">
+        <h2>About this tool</h2>
+        <p class="help">
+          Histree Lead Finder is a free, manual lead-research tool. Built by the same team that runs done-for-you content and lead systems for creators and businesses at Histree Studios — this is the free version of step one: finding the right people to reach out to. Pick an ICP, generate research links, save leads by hand, score them, write your offer, generate outreach, and export or email the list.
+        </p>
+        <div class="does-not-do-note">
+          This tool does not scrape Google Maps, use paid data APIs, send automated messages on your behalf, require a login, or store your data on a server.
+        </div>
+      </div>
+      <div class="card">
+        <h2>Recommended workflow</h2>
+        <p class="help">Stay focused. Don't try to qualify the whole city at once.</p>
+        <ol class="clean-list">
+          <li>Pick one niche and one city.</li>
+          <li>Generate research links and open 5–10 of them.</li>
+          <li>Save only the businesses that genuinely fit.</li>
+          <li>Work Hot leads first, Warm leads second.</li>
+          <li>Personalize your top offers with AI before sending.</li>
+          <li>Email or export your list before switching devices.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="grid grid-2">
+      <div id="icpCard" class="card">
+        <h2>1. Build Your ICP</h2>
+        <p class="help">Choose a focused service, client type, location, and budget level.</p>
+        <label for="serviceType">Service Type</label>
+        <select id="serviceType">
+          <option value="YouTube Long-Form Editing">YouTube Long-Form Editing</option>
+          <option value="Short-Form Reels & Shorts">Short-Form Reels &amp; Shorts</option>
+          <option value="Podcast Editing & Clipping">Podcast Editing &amp; Clipping</option>
+          <option value="SaaS Explainer Videos">SaaS Explainer Videos</option>
+          <option value="Script Writing">Script Writing</option>
+          <option value="Thumbnail Design & A/B Testing">Thumbnail Design &amp; A/B Testing</option>
+          <option value="Content Strategy & Calendar">Content Strategy &amp; Calendar</option>
+          <option value="Sponsor & Lead Funnel Build">Sponsor &amp; Lead Funnel Build</option>
+        </select>
+        <label for="clientCategory">Client Category</label>
+        <select id="clientCategory">
+          <option value="Real estate agents">Real estate agents</option>
+          <option value="Restaurants">Restaurants</option>
+          <option value="Cafes">Cafes</option>
+          <option value="Gyms & fitness studios">Gyms &amp; fitness studios</option>
+          <option value="Dental clinics">Dental clinics</option>
+          <option value="Skin clinics">Skin clinics</option>
+          <option value="Beauty salons">Beauty salons</option>
+          <option value="Wedding planners">Wedding planners</option>
+          <option value="Business coaches">Business coaches</option>
+          <option value="Podcasters">Podcasters</option>
+          <option value="Interior designers">Interior designers</option>
+          <option value="Hotels">Hotels</option>
+          <option value="Local ecommerce brands">Local ecommerce brands</option>
+          <option value="SaaS founders">SaaS founders</option>
+          <option value="Authors & speakers">Authors &amp; speakers</option>
+        </select>
+        <div class="row row-2">
+          <div><label for="targetCity">Target City</label><input id="targetCity" type="text" placeholder="Example: Dallas, London, Toronto"></div>
+          <div><label for="targetCountry">Target Country</label><input id="targetCountry" type="text" placeholder="Example: USA, UK, Canada"></div>
+        </div>
+        <label for="budgetLevel">Budget Level</label>
+        <select id="budgetLevel">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="Premium">Premium</option>
+        </select>
+        <div class="button-row">
+          <button id="saveIcpBtn">Save ICP</button>
+          <button id="clearIcpBtn" class="secondary">Clear ICP</button>
+        </div>
+        <div id="icpStatus" class="status-message"></div>
+        <div id="icpSummary" class="summary-card">
+          <h3>Your ICP Summary</h3>
+          <div class="summary-grid">
+            <div class="summary-item"><strong>Service Type</strong><span id="summaryServiceType"></span></div>
+            <div class="summary-item"><strong>Client Category</strong><span id="summaryClientCategory"></span></div>
+            <div class="summary-item"><strong>Target Location</strong><span id="summaryLocation"></span></div>
+            <div class="summary-item"><strong>Budget Level</strong><span id="summaryBudget"></span></div>
+            <div class="summary-item summary-wide"><strong>Why This Client Type Needs Content</strong><span id="summaryWhy"></span></div>
+            <div class="summary-item summary-wide"><strong>Best Offer To Pitch</strong><span id="summaryOffer"></span></div>
+            <div class="summary-item summary-wide"><strong>Best Place To Check First</strong><span id="summaryPlatform"></span></div>
+          </div>
+          <div class="summary-cta">Doing this by hand for every client is a lot of work. <a href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" rel="noopener noreferrer">Histree can build and run the whole system for you ↗</a></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>2. Google Maps Research Links</h2>
+        <p class="help">Generates 22 manual research angles. Open them, review real businesses, then save the good ones below.</p>
+        <div class="button-row"><button id="generateLinksBtn">Generate Research Links</button></div>
+        <div id="searchResults" class="search-results">
+          <div class="search-item"><strong>No research links yet</strong><span>Save your ICP first, then generate research links.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+      <h2>3. Manual Lead Entry</h2>
+      <p class="help">Save a business after you've checked it on Google Maps, its website, or social media.</p>
+      <div class="row row-3">
+        <div><label for="leadName">Business Name</label><input id="leadName" type="text" placeholder="Example: Apex Realty Group"></div>
+        <div><label for="leadNiche">Niche / Category</label><input id="leadNiche" type="text" placeholder="Example: Real estate agents"></div>
+        <div><label for="leadCity">City</label><input id="leadCity" type="text" placeholder="Example: Dallas"></div>
+      </div>
+      <div class="row row-3">
+        <div><label for="leadWebsite">Website</label><input id="leadWebsite" type="url" placeholder="https://example.com"></div>
+        <div><label for="leadMapsUrl">Google Maps URL</label><input id="leadMapsUrl" type="url" placeholder="Paste Google Maps link"></div>
+        <div><label for="leadContact">Contact Name</label><input id="leadContact" type="text" placeholder="Owner, manager, or marketing contact"></div>
+      </div>
+      <div class="row row-3">
+        <div><label for="leadEmail">Email or Social Handle</label><input id="leadEmail" type="text" placeholder="email@example.com or @handle"></div>
+        <div><label for="leadPhone">Phone</label><input id="leadPhone" type="text" placeholder="Optional"></div>
+        <div><label for="leadStatus">Status</label>
+          <select id="leadStatus">
+            <option value="New">New</option>
+            <option value="Checked">Checked</option>
+            <option value="Contacted">Contacted</option>
+            <option value="Replied">Replied</option>
+            <option value="Won">Won</option>
+            <option value="Not Fit">Not Fit</option>
+          </select>
+        </div>
+      </div>
+      <div class="row row-3">
+        <div><label for="contentQuality">Content Quality</label>
+          <select id="contentQuality"><option value="Poor">Poor</option><option value="Average" selected>Average</option><option value="Good">Good</option><option value="Excellent">Excellent</option></select>
+        </div>
+        <div><label for="postingFrequency">Posting Frequency</label>
+          <select id="postingFrequency"><option value="Inactive">Inactive</option><option value="Monthly">Monthly</option><option value="Weekly">Weekly</option><option value="Daily">Daily</option></select>
+        </div>
+        <div><label for="hasVideoContent">Has Video Content</label>
+          <select id="hasVideoContent"><option value="No" selected>No</option><option value="Yes">Yes</option></select>
+        </div>
+      </div>
+      <div class="row row-3">
+        <div><label for="premiumLooking">Premium-Looking Business</label>
+          <select id="premiumLooking"><option value="No" selected>No</option><option value="Yes">Yes</option></select>
+        </div>
+        <div><label for="easyToContact">Easy to Contact</label>
+          <select id="easyToContact"><option value="No" selected>No</option><option value="Yes">Yes</option></select>
+        </div>
+        <div><label for="decisionMakerVisible">Decision Maker Visible</label>
+          <select id="decisionMakerVisible"><option value="No" selected>No</option><option value="Yes">Yes</option></select>
+        </div>
+      </div>
+      <div class="row row-2">
+        <div><label for="leadFollowUp">Next Follow-Up Date (optional)</label><input id="leadFollowUp" type="date"></div>
+        <div><label for="leadNotes">Notes</label><input id="leadNotesInline" type="hidden"></div>
+      </div>
+      <label for="leadNotes">Notes</label>
+      <textarea id="leadNotes" placeholder="Example: Posts rarely. Website looks outdated. Could pitch weekly reels."></textarea>
+      <div class="button-row">
+        <button id="addLeadBtn">Add Lead</button>
+        <button id="clearFormBtn" class="secondary">Clear Form</button>
+        <button id="cancelEditBtn" class="secondary" style="display:none;">Cancel Edit</button>
+      </div>
+      <div id="leadStatusMessage" class="status-message"></div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+      <h2>4. Dashboard Stats</h2>
+      <p class="help">Lead volume, pipeline health, and what needs your attention today.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-label">Total Leads</span><span id="totalLeadsStat" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Hot Leads</span><span id="hotLeadsStat" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Warm Leads</span><span id="warmLeadsStat" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Cold Leads</span><span id="coldLeadsStat" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Average Score</span><span id="averageScoreStat" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Contacted</span><span id="contactedLeadsStat" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Replied</span><span id="repliedLeadsStat" class="stat-value">0</span></div>
+        <div class="stat-card"><span class="stat-label">Won</span><span id="wonLeadsStat" class="stat-value">0</span></div>
+        <div class="stat-card due-alert"><span class="stat-label">Due Today</span><span id="dueTodayStat" class="stat-value">0</span></div>
+        <div class="stat-card due-alert"><span class="stat-label">Overdue Follow-ups</span><span id="overdueStat" class="stat-value">0</span></div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top: 18px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+        <div>
+          <h2 style="margin-bottom:2px;">5. Saved Leads</h2>
+          <p class="help" style="margin-bottom:0;">Search, filter, sort, and work your pipeline.</p>
+        </div>
+        <div class="view-toggle">
+          <button id="tableViewBtn" class="active" type="button">Table</button>
+          <button id="pipelineViewBtn" type="button">Pipeline</button>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <div><label for="leadSearchInput" style="margin-top:0;">Search</label><input id="leadSearchInput" type="text" placeholder="Search by name, niche, city, or notes"></div>
+        <div><label for="leadFilterStatus" style="margin-top:0;">Status</label>
+          <select id="leadFilterStatus">
+            <option value="All">All Statuses</option>
+            <option value="New">New</option><option value="Checked">Checked</option><option value="Contacted">Contacted</option><option value="Replied">Replied</option><option value="Won">Won</option><option value="Not Fit">Not Fit</option>
+          </select>
+        </div>
+        <div><label for="leadFilterTemperature" style="margin-top:0;">Temperature</label>
+          <select id="leadFilterTemperature">
+            <option value="All">All Temperatures</option>
+            <option value="Hot">Hot</option><option value="Warm">Warm</option><option value="Cold">Cold</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="exportCsvBtn">Export CSV Prospect List</button>
+        <button id="deleteAllBtn" class="danger">Delete All Leads</button>
+      </div>
+
+      <div id="tableViewWrap" class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="name">Business</th>
+              <th>Niche</th>
+              <th>City</th>
+              <th class="sortable" data-sort="score">Score</th>
+              <th>Temp</th>
+              <th>Offer Angle</th>
+              <th>Content Quality</th>
+              <th>Posting</th>
+              <th>Has Video</th>
+              <th>Premium</th>
+              <th>Easy Contact</th>
+              <th>Decision Maker</th>
+              <th>Follow-Up</th>
+              <th>Website</th>
+              <th>Maps</th>
+              <th>Contact</th>
+              <th>Email / Social</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>Notes</th>
+              <th class="sortable" data-sort="addedAt">Added</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leadTableBody"><tr><td colspan="22" class="empty-state">No leads yet. Build an ICP, open a research link, then save your first promising business.</td></tr></tbody>
+        </table>
+      </div>
+
+      <div id="pipelineViewWrap" class="pipeline-board" style="display:none;"></div>
+    </section>
+
+    <section id="emailLeadsSection" class="card" style="margin-top: 18px;">
+      <h2>6. Email Your Leads</h2>
+      <p class="help">Get your list sent straight to your inbox — opens your email app with everything filled in, ready to send.</p>
+      <div class="row row-2">
+        <div><label for="emailRecipient">Your Email Address</label><input id="emailRecipient" type="email" placeholder="you@example.com"></div>
+        <div><label for="emailScope">Include</label>
+          <select id="emailScope">
+            <option value="all">All saved leads</option>
+            <option value="hot">Hot leads only</option>
+            <option value="warm">Warm leads only</option>
+          </select>
+        </div>
+      </div>
+      <div class="button-row">
+        <button id="emailLeadsBtn">📧 Email Me This List</button>
+        <button id="downloadForAttachBtn" class="secondary">Download CSV to Attach</button>
+      </div>
+      <div id="emailStatusMessage" class="status-message"></div>
+      <div class="export-reminder">Email apps can't auto-attach files for security reasons, and very long lists get summarized to fit in an email body. For the complete list with notes, offer angles, and outreach copy, download the CSV above and attach it manually.</div>
+    </section>
+
+    <section id="backupRestoreSection" class="card backup-section" style="margin-top: 18px;">
+      <h2>7. Backup &amp; Restore</h2>
+      <p class="help">Back up all saved app data, restore a previous backup, or wipe this tool's saved browser data.</p>
+      <div class="button-row">
+        <button id="exportJsonBackupBtn" type="button">Export JSON Backup</button>
+        <button id="clearAllAppDataBtn" class="danger" type="button">Clear All App Data</button>
+      </div>
+      <label for="importJsonBackupInput" class="backup-file-label">Import JSON Backup</label>
+      <input id="importJsonBackupInput" class="backup-file-input" type="file" accept=".json,application/json">
+      <div id="backupRestoreStatus" class="status-message"></div>
+      <div class="export-reminder">Before switching browsers, clearing browser data, or changing devices, export a JSON backup.</div>
+      <div class="backup-warning">Importing a backup can replace your current saved ICP and leads. Clearing app data cannot be undone.</div>
+    </section>
+  </main>
+
+  <!-- Offer modal -->
+  <div id="offerModalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="offerModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 id="offerModalTitle">Offer Angle <span id="offerAiTag" class="ai-tag">✨ AI-personalized</span></h2>
+          <p id="offerModalSubtitle" class="help" style="margin: 4px 0 0;">Use this to decide what to pitch before writing outreach.</p>
+        </div>
+        <button id="closeOfferModalBtn" class="modal-close" type="button">Close</button>
+      </div>
+      <div class="offer-detail-grid">
+        <div class="offer-detail-card"><strong>Business Name</strong><span id="modalBusinessName"></span></div>
+        <div class="offer-detail-card"><strong>Score</strong><span id="modalScore"></span></div>
+        <div class="offer-detail-card"><strong>Temperature</strong><span id="modalTemperature"></span></div>
+        <div class="offer-detail-card"><strong>Suggested Package</strong><span id="modalPackageName"></span></div>
+        <div class="offer-detail-card offer-detail-wide"><strong>Full Offer Angle</strong><span id="modalOfferAngle"></span></div>
+        <div class="offer-detail-card offer-detail-wide"><strong>Suggested Monthly Deliverables</strong><span id="modalDeliverables"></span></div>
+      </div>
+      <div class="ai-bar">
+        <p>✨ <strong>Personalize with AI</strong> rewrites this offer using this lead's actual details. Sends only this lead's info to Claude — nothing else leaves your browser.</p>
+        <button id="aiOfferBtn" class="accent small-button" type="button">✨ Personalize with AI</button>
+      </div>
+      <div id="offerAiStatus" class="ai-status"></div>
+    </div>
+  </div>
+
+  <!-- Outreach modal -->
+  <div id="outreachModalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="outreachModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 id="outreachModalTitle">Outreach Messages <span id="outreachAiTag" class="ai-tag">✨ AI-personalized</span></h2>
+          <p id="outreachModalSubtitle" class="help" style="margin: 4px 0 0;">Copy and customize before sending.</p>
+        </div>
+        <button id="closeOutreachModalBtn" class="modal-close" type="button">Close</button>
+      </div>
+      <div class="offer-detail-grid">
+        <div class="offer-detail-card"><strong>Business Name</strong><span id="outreachBusinessName"></span></div>
+        <div class="offer-detail-card"><strong>Score</strong><span id="outreachScore"></span></div>
+        <div class="offer-detail-card"><strong>Temperature</strong><span id="outreachTemperature"></span></div>
+        <div class="offer-detail-card"><strong>Suggested Package</strong><span id="outreachPackageName"></span></div>
+        <div class="offer-detail-card offer-detail-wide"><strong>Offer Angle</strong><span id="outreachOfferAngle"></span></div>
+      </div>
+
+      <div class="ai-bar">
+        <p>✨ <strong>Personalize with AI</strong> rewrites all six messages below using this lead's actual details. Sends only this lead's info to Claude.</p>
+        <button id="aiOutreachBtn" class="accent small-button" type="button">✨ Personalize with AI</button>
+      </div>
+      <div id="outreachAiStatus" class="ai-status"></div>
+
+      <div class="message-block">
+        <div class="message-block-header"><strong>Instagram DM</strong><div><button class="secondary small-button" type="button" onclick="copyMessage('instagramDmText', 'instagramDmCopied')">Copy</button><span id="instagramDmCopied" class="copy-feedback"></span></div></div>
+        <div id="instagramDmText" class="message-text"></div>
+      </div>
+      <div class="message-block">
+        <div class="message-block-header"><strong>Cold Email Subject</strong><div><button class="secondary small-button" type="button" onclick="copyMessage('coldEmailSubjectText', 'coldEmailSubjectCopied')">Copy</button><span id="coldEmailSubjectCopied" class="copy-feedback"></span></div></div>
+        <div id="coldEmailSubjectText" class="message-text"></div>
+      </div>
+      <div class="message-block">
+        <div class="message-block-header"><strong>Cold Email Body</strong><div><button class="secondary small-button" type="button" onclick="copyMessage('coldEmailBodyText', 'coldEmailBodyCopied')">Copy</button><span id="coldEmailBodyCopied" class="copy-feedback"></span></div></div>
+        <div id="coldEmailBodyText" class="message-text"></div>
+      </div>
+      <div class="message-block">
+        <div class="message-block-header"><strong>WhatsApp Message</strong><div><button class="secondary small-button" type="button" onclick="copyMessage('whatsappMessageText', 'whatsappMessageCopied')">Copy</button><span id="whatsappMessageCopied" class="copy-feedback"></span></div></div>
+        <div id="whatsappMessageText" class="message-text"></div>
+      </div>
+      <div class="message-block">
+        <div class="message-block-header"><strong>First Follow-Up</strong><div><button class="secondary small-button" type="button" onclick="copyMessage('firstFollowUpText', 'firstFollowUpCopied')">Copy</button><span id="firstFollowUpCopied" class="copy-feedback"></span></div></div>
+        <div id="firstFollowUpText" class="message-text"></div>
+      </div>
+      <div class="message-block">
+        <div class="message-block-header"><strong>Second Follow-Up</strong><div><button class="secondary small-button" type="button" onclick="copyMessage('secondFollowUpText', 'secondFollowUpCopied')">Copy</button><span id="secondFollowUpCopied" class="copy-feedback"></span></div></div>
+        <div id="secondFollowUpText" class="message-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="brand-mark" style="justify-content:center; margin-bottom: 8px;">🌳 HISTREE STUDIOS</div>
+    <p>Free lead research tool for creators, agencies, and business owners. No login. No backend. No scraping.</p>
+    <div class="foot-links">
+      <a href="https://www.histreestudios.com/" target="_blank" rel="noopener noreferrer">histreestudios.com</a>
+      <a href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" rel="noopener noreferrer">Book a free strategy call</a>
+      <a href="mailto:collab@histreestudios.com">collab@histreestudios.com</a>
+      <a href="https://instagram.com/joe.sh0w/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
+    <p><strong>© 2026 Histree Studios. All rights reserved.</strong></p>
+    <p>Free to use. Source code, design, and workflow may not be copied, resold, rebranded, or republished without permission.</p>
+  </footer>
+
+  <script>
+    /* ===================== State & constants ===================== */
+    const STORAGE_KEYS = { icp: "histreeLeadFinder_icp_v1", leads: "histreeLeadFinder_leads_v1" };
+    const APP_VERSION = "v1.0";
+    let leads = [];
+    let currentView = "table";
+    let editingLeadId = null;
+    let sortState = { key: "score", dir: "desc" };
+
+    /* ===================== Element refs ===================== */
+    const serviceTypeInput = document.getElementById("serviceType");
+    const clientCategoryInput = document.getElementById("clientCategory");
+    const targetCityInput = document.getElementById("targetCity");
+    const targetCountryInput = document.getElementById("targetCountry");
+    const budgetLevelInput = document.getElementById("budgetLevel");
+    const saveIcpBtn = document.getElementById("saveIcpBtn");
+    const clearIcpBtn = document.getElementById("clearIcpBtn");
+    const generateLinksBtn = document.getElementById("generateLinksBtn");
+    const searchResults = document.getElementById("searchResults");
+    const icpStatus = document.getElementById("icpStatus");
+    const icpSummary = document.getElementById("icpSummary");
+    const summaryServiceType = document.getElementById("summaryServiceType");
+    const summaryClientCategory = document.getElementById("summaryClientCategory");
+    const summaryLocation = document.getElementById("summaryLocation");
+    const summaryBudget = document.getElementById("summaryBudget");
+    const summaryWhy = document.getElementById("summaryWhy");
+    const summaryOffer = document.getElementById("summaryOffer");
+    const summaryPlatform = document.getElementById("summaryPlatform");
+
+    const leadNameInput = document.getElementById("leadName");
+    const leadNicheInput = document.getElementById("leadNiche");
+    const leadCityInput = document.getElementById("leadCity");
+    const leadWebsiteInput = document.getElementById("leadWebsite");
+    const leadMapsUrlInput = document.getElementById("leadMapsUrl");
+    const leadContactInput = document.getElementById("leadContact");
+    const leadEmailInput = document.getElementById("leadEmail");
+    const leadPhoneInput = document.getElementById("leadPhone");
+    const leadStatusInput = document.getElementById("leadStatus");
+    const contentQualityInput = document.getElementById("contentQuality");
+    const postingFrequencyInput = document.getElementById("postingFrequency");
+    const hasVideoContentInput = document.getElementById("hasVideoContent");
+    const premiumLookingInput = document.getElementById("premiumLooking");
+    const easyToContactInput = document.getElementById("easyToContact");
+    const decisionMakerVisibleInput = document.getElementById("decisionMakerVisible");
+    const leadFollowUpInput = document.getElementById("leadFollowUp");
+    const leadNotesInput = document.getElementById("leadNotes");
+    const addLeadBtn = document.getElementById("addLeadBtn");
+    const clearFormBtn = document.getElementById("clearFormBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
+    const leadStatusMessage = document.getElementById("leadStatusMessage");
+
+    const leadTableBody = document.getElementById("leadTableBody");
+    const tableViewWrap = document.getElementById("tableViewWrap");
+    const pipelineViewWrap = document.getElementById("pipelineViewWrap");
+    const tableViewBtn = document.getElementById("tableViewBtn");
+    const pipelineViewBtn = document.getElementById("pipelineViewBtn");
+    const leadSearchInput = document.getElementById("leadSearchInput");
+    const leadFilterStatus = document.getElementById("leadFilterStatus");
+    const leadFilterTemperature = document.getElementById("leadFilterTemperature");
+
+    const exportCsvBtn = document.getElementById("exportCsvBtn");
+    const deleteAllBtn = document.getElementById("deleteAllBtn");
+    const exportJsonBackupBtn = document.getElementById("exportJsonBackupBtn");
+    const importJsonBackupInput = document.getElementById("importJsonBackupInput");
+    const clearAllAppDataBtn = document.getElementById("clearAllAppDataBtn");
+    const backupRestoreStatus = document.getElementById("backupRestoreStatus");
+
+    const emailRecipientInput = document.getElementById("emailRecipient");
+    const emailScopeInput = document.getElementById("emailScope");
+    const emailLeadsBtn = document.getElementById("emailLeadsBtn");
+    const downloadForAttachBtn = document.getElementById("downloadForAttachBtn");
+    const emailStatusMessage = document.getElementById("emailStatusMessage");
+
+    const totalLeadsStat = document.getElementById("totalLeadsStat");
+    const hotLeadsStat = document.getElementById("hotLeadsStat");
+    const warmLeadsStat = document.getElementById("warmLeadsStat");
+    const coldLeadsStat = document.getElementById("coldLeadsStat");
+    const contactedLeadsStat = document.getElementById("contactedLeadsStat");
+    const repliedLeadsStat = document.getElementById("repliedLeadsStat");
+    const wonLeadsStat = document.getElementById("wonLeadsStat");
+    const averageScoreStat = document.getElementById("averageScoreStat");
+    const dueTodayStat = document.getElementById("dueTodayStat");
+    const overdueStat = document.getElementById("overdueStat");
+
+    const offerModalOverlay = document.getElementById("offerModalOverlay");
+    const closeOfferModalBtn = document.getElementById("closeOfferModalBtn");
+    const offerModalSubtitle = document.getElementById("offerModalSubtitle");
+    const modalBusinessName = document.getElementById("modalBusinessName");
+    const modalScore = document.getElementById("modalScore");
+    const modalTemperature = document.getElementById("modalTemperature");
+    const modalPackageName = document.getElementById("modalPackageName");
+    const modalOfferAngle = document.getElementById("modalOfferAngle");
+    const modalDeliverables = document.getElementById("modalDeliverables");
+    const offerAiTag = document.getElementById("offerAiTag");
+    const offerAiStatus = document.getElementById("offerAiStatus");
+    const aiOfferBtn = document.getElementById("aiOfferBtn");
+
+    const outreachModalOverlay = document.getElementById("outreachModalOverlay");
+    const closeOutreachModalBtn = document.getElementById("closeOutreachModalBtn");
+    const outreachModalSubtitle = document.getElementById("outreachModalSubtitle");
+    const outreachBusinessName = document.getElementById("outreachBusinessName");
+    const outreachScore = document.getElementById("outreachScore");
+    const outreachTemperature = document.getElementById("outreachTemperature");
+    const outreachPackageName = document.getElementById("outreachPackageName");
+    const outreachOfferAngle = document.getElementById("outreachOfferAngle");
+    const outreachAiTag = document.getElementById("outreachAiTag");
+    const outreachAiStatus = document.getElementById("outreachAiStatus");
+    const aiOutreachBtn = document.getElementById("aiOutreachBtn");
+    const instagramDmText = document.getElementById("instagramDmText");
+    const coldEmailSubjectText = document.getElementById("coldEmailSubjectText");
+    const coldEmailBodyText = document.getElementById("coldEmailBodyText");
+    const whatsappMessageText = document.getElementById("whatsappMessageText");
+    const firstFollowUpText = document.getElementById("firstFollowUpText");
+    const secondFollowUpText = document.getElementById("secondFollowUpText");
+
+    let currentOfferId = null;
+    let currentOutreachId = null;
+
+    /* ===================== Lookup tables ===================== */
+    const serviceOfferMap = {
+      "YouTube Long-Form Editing": "Pitch monthly long-form YouTube editing — hooks, retention cuts, captions, motion graphics, and thumbnail direction that turns watch time into inbound leads.",
+      "Short-Form Reels & Shorts": "Pitch 12 to 20 short-form Reels, TikToks, or Shorts a month, repurposed from footage they already have, built to grow reach without extra filming.",
+      "Podcast Editing & Clipping": "Pitch full episode editing plus 15 to 30 short clips per episode for Instagram, TikTok, YouTube Shorts, and LinkedIn.",
+      "SaaS Explainer Videos": "Pitch a clean explainer or demo video plus a short-form clip set that turns trial sign-ups into paying customers.",
+      "Script Writing": "Pitch proven, hook-driven scripts and a content calendar built around what's already working in their niche.",
+      "Thumbnail Design & A/B Testing": "Pitch A/B-tested, high-CTR thumbnails designed from what's working in their niche right now.",
+      "Content Strategy & Calendar": "Pitch a full content calendar reverse-engineered from their real goal — leads, authority, or sponsorships.",
+      "Sponsor & Lead Funnel Build": "Pitch the system that turns their existing audience into booked calls — landing page, lead capture, and follow-up."
+    };
+    const clientWhyMap = {
+      "Real estate agents": "Listings move faster on video. They need trust-building clips, property walkthroughs, and local market content to win more sellers and buyers.",
+      "Restaurants": "Diners decide with their eyes first. Food reels, ambience clips, and weekly specials turn scrolls into bookings.",
+      "Cafes": "A cosy feed drives foot traffic. Drink shots, ambience clips, and seasonal offers keep regulars coming back.",
+      "Gyms & fitness studios": "Transformations sell memberships. Trainer tips, class energy, and member results are what fills classes.",
+      "Dental clinics": "Trust is the whole sale. Educational clips and friendly explainers turn nervous searchers into booked patients.",
+      "Skin clinics": "Treatments need to be seen to be sold. Results-style content and treatment explainers move premium services.",
+      "Beauty salons": "Transformations are the product demo. Before/after reels and process clips are what books the chair.",
+      "Wedding planners": "Couples buy emotion. Cinematic highlight reels and venue showcases win premium bookings.",
+      "Business coaches": "Authority sells programs. Talking-head clips and result stories from one long video build the trust that fills calls.",
+      "Podcasters": "Every episode is a content goldmine sitting unused. Clipping it into short-form is the fastest way to grow an audience.",
+      "Interior designers": "Portfolios sell projects. Before/after reveals and walkthroughs turn browsers into signed clients.",
+      "Hotels": "Bookings start with a feed. Room tours and experience reels do the convincing before a guest checks rates.",
+      "Local ecommerce brands": "Product video outperforms static photos every time. Demos and ad creatives are what move units.",
+      "SaaS founders": "A confusing product loses trial sign-ups. Clear explainer videos and founder clips turn free trials into paying customers.",
+      "Authors & speakers": "Stages and books sell on presence. Clipped talks and authority reels are what book the next gig."
+    };
+    const platformMap = {
+      "Real estate agents": "Google Maps first, then Instagram and Facebook.",
+      "Restaurants": "Google Maps first, then Instagram.",
+      "Cafes": "Google Maps first, then Instagram.",
+      "Gyms & fitness studios": "Google Maps first, then Instagram.",
+      "Dental clinics": "Google Maps first, then their website.",
+      "Skin clinics": "Google Maps first, then Instagram.",
+      "Beauty salons": "Instagram first, then Google Maps.",
+      "Wedding planners": "Instagram first, then their website.",
+      "Business coaches": "LinkedIn or Instagram first.",
+      "Podcasters": "YouTube first, then Instagram and Spotify.",
+      "Interior designers": "Instagram first, then their website.",
+      "Hotels": "Google Maps first, then Instagram.",
+      "Local ecommerce brands": "Instagram first, then their website.",
+      "SaaS founders": "LinkedIn first, then their website.",
+      "Authors & speakers": "LinkedIn first, then YouTube."
+    };
+    const baseOffers = {
+      "Real estate agents": "A done-for-you package of property walkthroughs, listing reels, agent talking-head clips, and neighborhood highlights for Instagram, Facebook, and YouTube Shorts.",
+      "Restaurants": "12 short food reels a month built from footage you already have — best dishes, ambience, kitchen process, and weekly specials.",
+      "Cafes": "Aesthetic cafe reels covering drinks, ambience, behind-the-scenes prep, and limited-time offers, shot to feel premium.",
+      "Gyms & fitness studios": "Workout reels, transformation edits, trainer tips, and member testimonials, built for Instagram and TikTok growth.",
+      "Dental clinics": "Educational reels, doctor talking-head clips, treatment explainers, and trust-building short content for nervous searchers.",
+      "Skin clinics": "Treatment explainer reels, results-style content, and premium service promos that match the price point you charge.",
+      "Beauty salons": "Before/after reels, stylist process clips, and weekly offer videos built to book more chairs.",
+      "Wedding planners": "Cinematic highlight reels, venue showcases, and testimonial edits built for the premium end of the market.",
+      "Business coaches": "One long video, webinar, or call, turned into 10 short authority clips for Instagram, TikTok, Shorts, and LinkedIn.",
+      "Podcasters": "Every episode clipped into 15 to 30 short videos, quote graphics, and guest highlight reels for every platform.",
+      "Interior designers": "Before/after reveals, room transformations, and walkthrough edits built to convert browsers into signed clients.",
+      "Hotels": "Room tour reels, guest experience clips, and seasonal offer videos built to drive direct bookings.",
+      "Local ecommerce brands": "Product reels, ad creatives, and testimonial videos built for Meta ads and organic social.",
+      "SaaS founders": "A clear explainer or demo video plus a short clip set that turns trial sign-ups into paying customers.",
+      "Authors & speakers": "Clipped talks, authority reels, and highlight videos built to book your next stage or podcast slot."
+    };
+    const packageNameMap = {
+      "Real estate agents": "Property Video Pack",
+      "Restaurants": "Local Reels Engine",
+      "Cafes": "Local Reels Engine",
+      "Gyms & fitness studios": "Member Growth Pack",
+      "Dental clinics": "Clinic Trust Builder",
+      "Skin clinics": "Clinic Trust Builder",
+      "Beauty salons": "Clinic Trust Builder",
+      "Wedding planners": "Premium Highlight Package",
+      "Business coaches": "Authority Clips Package",
+      "Podcasters": "Podcast Repurposing Pack",
+      "Interior designers": "Portfolio Reveal Pack",
+      "Hotels": "Guest Experience Pack",
+      "Local ecommerce brands": "Product Video Ads Pack",
+      "SaaS founders": "Founder & Demo Pack",
+      "Authors & speakers": "Authority Clips Package"
+    };
+    const deliverablesMap = {
+      "Real estate agents": "8 property or neighborhood reels, 2 agent talking-head clips, 2 listing edits, captions, hooks, and vertical formatting.",
+      "Restaurants": "12 short reels a month, captions, hooks, music timing, menu or offer text overlays, vertical exports.",
+      "Cafes": "10 to 12 aesthetic reels a month, captions, hooks, and seasonal offer overlays, vertical exports.",
+      "Gyms & fitness studios": "10 to 12 workout and transformation reels, trainer clips, captions, and weekly motivational edits.",
+      "Dental clinics": "8 trust-building reels, 4 educational or FAQ clips, captions, clean pacing, vertical exports.",
+      "Skin clinics": "8 trust-building reels, 4 educational or FAQ clips, captions, clean pacing, vertical exports.",
+      "Beauty salons": "8 trust-building reels, 4 educational or FAQ clips, captions, clean pacing, vertical exports.",
+      "Wedding planners": "1 cinematic highlight reel, 4 venue/testimonial clips, captions, premium color grade, portfolio cut.",
+      "Business coaches": "10 authority clips from long-form content, captions, hook titles, jump cuts, vertical exports.",
+      "Podcasters": "12 to 20 podcast clips a month, captions, hook titles, quote graphics, exports for Shorts, Reels, TikTok, LinkedIn.",
+      "Interior designers": "6 to 8 before/after reveal reels, 2 walkthrough edits, captions, premium pacing, vertical exports.",
+      "Hotels": "8 to 10 room tour and experience reels, captions, seasonal offer edits, vertical exports.",
+      "Local ecommerce brands": "6 to 10 product videos, 3 ad creative variations, captions, hooks, square plus vertical exports.",
+      "SaaS founders": "1 explainer or demo video, 6 to 8 founder/feature clips, captions, vertical and landing-page cuts.",
+      "Authors & speakers": "8 to 10 authority clips from talks or interviews, captions, hook titles, vertical exports."
+    };
+
+    /* ===================== ICP ===================== */
+    function loadIcp() {
+      const savedIcp = localStorage.getItem(STORAGE_KEYS.icp);
+      if (!savedIcp) return;
+      try {
+        const icp = normalizeIcp(JSON.parse(savedIcp));
+        setSelectValue(serviceTypeInput, icp.serviceType);
+        setSelectValue(clientCategoryInput, icp.clientCategory);
+        targetCityInput.value = icp.targetCity || "";
+        targetCountryInput.value = icp.targetCountry || "";
+        setSelectValue(budgetLevelInput, icp.budgetLevel || "Medium");
+        renderIcpSummary(icp);
+      } catch (error) {
+        console.warn("Could not load saved ICP.", error);
+      }
+    }
+    function normalizeIcp(icp) {
+      return {
+        serviceType: icp.serviceType || findMatchingOption(serviceTypeInput, icp.serviceAngle) || "YouTube Long-Form Editing",
+        clientCategory: icp.clientCategory || findMatchingOption(clientCategoryInput, icp.businessType) || "Real estate agents",
+        targetCity: icp.targetCity || icp.city || "",
+        targetCountry: icp.targetCountry || "",
+        budgetLevel: icp.budgetLevel || "Medium"
+      };
+    }
+    function getCurrentIcp() {
+      const serviceType = serviceTypeInput.value;
+      const clientCategory = clientCategoryInput.value;
+      const targetCity = targetCityInput.value.trim();
+      const targetCountry = targetCountryInput.value.trim();
+      const budgetLevel = budgetLevelInput.value;
+      return { serviceType, clientCategory, targetCity, targetCountry, budgetLevel };
+    }
+    function saveIcp() {
+      const icp = getCurrentIcp();
+      localStorage.setItem(STORAGE_KEYS.icp, JSON.stringify(icp));
+      icpStatus.textContent = "ICP saved.";
+      renderIcpSummary(icp);
+      autofillLeadFromIcp(icp);
+    }
+    function clearIcp() {
+      localStorage.removeItem(STORAGE_KEYS.icp);
+      serviceTypeInput.value = "YouTube Long-Form Editing";
+      clientCategoryInput.value = "Real estate agents";
+      targetCityInput.value = "";
+      targetCountryInput.value = "";
+      budgetLevelInput.value = "Medium";
+      renderEmptySearchState();
+      icpSummary.style.display = "none";
+      icpStatus.textContent = "ICP cleared.";
+    }
+    function renderIcpSummary(icp) {
+      const location = [icp.targetCity, icp.targetCountry].filter(Boolean).join(", ") || "Not selected yet";
+      summaryServiceType.textContent = icp.serviceType;
+      summaryClientCategory.textContent = icp.clientCategory;
+      summaryLocation.textContent = location;
+      summaryBudget.textContent = icp.budgetLevel;
+      summaryWhy.textContent = clientWhyMap[icp.clientCategory] || "This client type can use video and content to build trust and generate more inquiries.";
+      summaryOffer.textContent = serviceOfferMap[icp.serviceType] || "Pitch a simple monthly content package focused on consistency and visibility.";
+      summaryPlatform.textContent = platformMap[icp.clientCategory] || "Google Maps first, then Instagram and the client website.";
+      icpSummary.style.display = "block";
+    }
+    function autofillLeadFromIcp(icp) {
+      leadNicheInput.value = icp.clientCategory || "";
+      leadCityInput.value = icp.targetCity || "";
+    }
+    function renderEmptySearchState() {
+      searchResults.innerHTML = '<div class="search-item"><strong>No research links yet</strong><span>Save your ICP first, then generate research links.</span></div>';
+    }
+    function generateSearchLinks() {
+      const icp = getCurrentIcp();
+      const clientCategory = icp.clientCategory;
+      const city = icp.targetCity;
+      const country = icp.targetCountry;
+      if (!clientCategory || !city) {
+        searchResults.innerHTML = '<div class="search-item"><strong>Missing information</strong><span>Please select a client category and enter a target city first.</span></div>';
+        return;
+      }
+      const searches = [
+        `${clientCategory} in ${city}`,
+        `best ${clientCategory} in ${city}`,
+        `top rated ${clientCategory} in ${city}`,
+        `premium ${clientCategory} in ${city}`,
+        `luxury ${clientCategory} in ${city}`,
+        `high end ${clientCategory} in ${city}`,
+        `new ${clientCategory} in ${city}`,
+        `${clientCategory} near ${city}`,
+        `${clientCategory} in ${city} ${country}`.trim(),
+        `${clientCategory} website ${city}`,
+        `${clientCategory} contact ${city}`,
+        `${clientCategory} Instagram ${city}`,
+        `${clientCategory} Facebook ${city}`,
+        `${clientCategory} owner ${city}`,
+        `${clientCategory} marketing ${city}`,
+        `boutique ${clientCategory} in ${city}`,
+        `popular ${clientCategory} in ${city}`,
+        `local ${clientCategory} in ${city}`,
+        `recommended ${clientCategory} in ${city}`,
+        `${clientCategory} services in ${city}`,
+        `${clientCategory} company in ${city}`,
+        `${clientCategory} reviews ${city}`
+      ];
+      searchResults.innerHTML = "";
+      searches.forEach(function (query, index) {
+        const url = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+        const item = document.createElement("div");
+        item.className = "search-item";
+        item.innerHTML = `<strong>${index + 1}. ${escapeHtml(query)}</strong><span>${escapeHtml(url)}</span><a class="button-link" href="${url}" target="_blank" rel="noopener noreferrer">Open Google Maps</a>`;
+        searchResults.appendChild(item);
+      });
+    }
+
+    /* ===================== Leads: load/save ===================== */
+    function loadLeads() {
+      const savedLeads = localStorage.getItem(STORAGE_KEYS.leads);
+      try { leads = savedLeads ? JSON.parse(savedLeads) : []; }
+      catch (error) { console.warn("Could not load saved leads.", error); leads = []; }
+      renderCurrentView();
+    }
+    function saveLeads() { localStorage.setItem(STORAGE_KEYS.leads, JSON.stringify(leads)); }
+
+    function getFormLeadData() {
+      return {
+        name: leadNameInput.value.trim(),
+        niche: leadNicheInput.value.trim(),
+        city: leadCityInput.value.trim(),
+        website: leadWebsiteInput.value.trim(),
+        mapsUrl: leadMapsUrlInput.value.trim(),
+        contact: leadContactInput.value.trim(),
+        email: leadEmailInput.value.trim(),
+        phone: leadPhoneInput.value.trim(),
+        status: leadStatusInput.value,
+        contentQuality: contentQualityInput.value,
+        postingFrequency: postingFrequencyInput.value,
+        hasVideoContent: hasVideoContentInput.value,
+        premiumLooking: premiumLookingInput.value,
+        easyToContact: easyToContactInput.value,
+        decisionMakerVisible: decisionMakerVisibleInput.value,
+        followUp: leadFollowUpInput.value,
+        notes: leadNotesInput.value.trim()
+      };
+    }
+    function buildComputedLead(base) {
+      const lead = { ...base };
+      const scoreData = calculateLeadScore(lead);
+      lead.score = scoreData.score;
+      lead.temperature = scoreData.temperature;
+      const offerData = generateOfferData(lead);
+      lead.offerAngle = offerData.offerAngle;
+      lead.suggestedPackage = offerData.packageName;
+      lead.suggestedDeliverables = offerData.deliverables;
+      const outreachData = generateOutreachData(lead);
+      lead.instagramDm = outreachData.instagramDm;
+      lead.coldEmailSubject = outreachData.coldEmailSubject;
+      lead.coldEmailBody = outreachData.coldEmailBody;
+      lead.whatsappMessage = outreachData.whatsappMessage;
+      lead.firstFollowUp = outreachData.firstFollowUp;
+      lead.secondFollowUp = outreachData.secondFollowUp;
+      return lead;
+    }
+    function addOrUpdateLead() {
+      const formData = getFormLeadData();
+      if (!formData.name) { leadStatusMessage.textContent = "Please enter a business name."; return; }
+
+      if (editingLeadId) {
+        const index = leads.findIndex(function (l) { return l.id === editingLeadId; });
+        if (index === -1) { leadStatusMessage.textContent = "Could not find that lead to update."; return; }
+        const existing = leads[index];
+        const updated = buildComputedLead(formData);
+        updated.id = existing.id;
+        updated.addedAt = existing.addedAt;
+        leads[index] = updated;
+        saveLeads();
+        renderCurrentView();
+        exitEditMode();
+        leadStatusMessage.textContent = `Lead updated. Score: ${updated.score}/100 (${updated.temperature}).`;
+        return;
+      }
+
+      const lead = buildComputedLead(formData);
+      lead.id = Date.now().toString();
+      lead.addedAt = new Date().toLocaleDateString();
+      leads.unshift(lead);
+      saveLeads();
+      renderCurrentView();
+      clearLeadForm();
+      leadStatusMessage.textContent = `Lead added. Score: ${lead.score}/100 (${lead.temperature}).`;
+    }
+    function startEditLead(id) {
+      const lead = leads.find(function (l) { return l.id === id; });
+      if (!lead) return;
+      editingLeadId = id;
+      leadNameInput.value = lead.name || "";
+      leadNicheInput.value = lead.niche || "";
+      leadCityInput.value = lead.city || "";
+      leadWebsiteInput.value = lead.website || "";
+      leadMapsUrlInput.value = lead.mapsUrl || "";
+      leadContactInput.value = lead.contact || "";
+      leadEmailInput.value = lead.email || "";
+      leadPhoneInput.value = lead.phone || "";
+      leadStatusInput.value = lead.status || "New";
+      contentQualityInput.value = lead.contentQuality || "Average";
+      postingFrequencyInput.value = lead.postingFrequency || "Inactive";
+      hasVideoContentInput.value = lead.hasVideoContent || "No";
+      premiumLookingInput.value = lead.premiumLooking || "No";
+      easyToContactInput.value = lead.easyToContact || "No";
+      decisionMakerVisibleInput.value = lead.decisionMakerVisible || "No";
+      leadFollowUpInput.value = lead.followUp || "";
+      leadNotesInput.value = lead.notes || "";
+      addLeadBtn.textContent = "Update Lead";
+      cancelEditBtn.style.display = "inline-flex";
+      leadStatusMessage.textContent = `Editing "${lead.name}". Make your changes and click Update Lead.`;
+      document.getElementById("leadName").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    function exitEditMode() {
+      editingLeadId = null;
+      addLeadBtn.textContent = "Add Lead";
+      cancelEditBtn.style.display = "none";
+      clearLeadForm();
+    }
+    function clearLeadForm() {
+      leadNameInput.value = "";
+      leadWebsiteInput.value = "";
+      leadMapsUrlInput.value = "";
+      leadContactInput.value = "";
+      leadEmailInput.value = "";
+      leadPhoneInput.value = "";
+      leadStatusInput.value = "New";
+      contentQualityInput.value = "Average";
+      postingFrequencyInput.value = "Inactive";
+      hasVideoContentInput.value = "No";
+      premiumLookingInput.value = "No";
+      easyToContactInput.value = "No";
+      decisionMakerVisibleInput.value = "No";
+      leadFollowUpInput.value = "";
+      leadNotesInput.value = "";
+      const savedIcp = localStorage.getItem(STORAGE_KEYS.icp);
+      if (savedIcp) {
+        try { autofillLeadFromIcp(normalizeIcp(JSON.parse(savedIcp))); }
+        catch (error) { console.warn("Could not autofill lead form.", error); }
+      }
+    }
+    function deleteLead(id) {
+      leads = leads.filter(function (lead) { return lead.id !== id; });
+      saveLeads();
+      if (editingLeadId === id) exitEditMode();
+      renderCurrentView();
+    }
+    function deleteAllLeads() {
+      if (!leads.length) return;
+      if (!confirm("Delete all saved leads? This cannot be undone.")) return;
+      leads = [];
+      saveLeads();
+      renderCurrentView();
+    }
+
+    /* ===================== Scoring ===================== */
+    function calculateLeadScore(lead) {
+      let score = 0;
+      const niche = String(lead.niche || "").trim();
+      const contentQuality = lead.contentQuality || "Average";
+      const postingFrequency = lead.postingFrequency || "Inactive";
+      const hasVideoContent = lead.hasVideoContent || "Yes";
+      const premiumLooking = lead.premiumLooking || "No";
+      const easyToContact = lead.easyToContact || "No";
+      const decisionMakerVisible = lead.decisionMakerVisible || "No";
+      const contactName = String(lead.contact || "").trim();
+
+      if (niche) score += 20;
+      score += premiumLooking === "Yes" ? 20 : 10;
+
+      if (hasVideoContent === "No") score += 20;
+      else if (contentQuality === "Poor") score += 15;
+      else if (contentQuality === "Average") score += 10;
+      else if (contentQuality === "Good") score += 5;
+      else if (contentQuality === "Excellent") score += 0;
+
+      if (postingFrequency === "Daily") score += 15;
+      else if (postingFrequency === "Weekly") score += 12;
+      else if (postingFrequency === "Monthly") score += 7;
+      else if (postingFrequency === "Inactive") score += 2;
+
+      if (easyToContact === "Yes") score += 15;
+      if (decisionMakerVisible === "Yes" || contactName) score += 10;
+
+      score = Math.max(0, Math.min(100, score));
+      return { score, temperature: getLeadTemperature(score) };
+    }
+    function getLeadTemperature(score) {
+      if (score >= 75) return "Hot";
+      if (score >= 50) return "Warm";
+      return "Cold";
+    }
+    function getTemperatureClass(temperature) {
+      if (temperature === "Hot") return "temp-badge temp-hot";
+      if (temperature === "Warm") return "temp-badge temp-warm";
+      return "temp-badge temp-cold";
+    }
+    function getScoredLead(lead) {
+      const scoreData = calculateLeadScore(lead);
+      const scoredLead = {
+        ...lead,
+        score: Number.isFinite(Number(lead.score)) ? Number(lead.score) : scoreData.score,
+        temperature: lead.temperature || scoreData.temperature,
+        contentQuality: lead.contentQuality || "Not set",
+        postingFrequency: lead.postingFrequency || "Not set",
+        hasVideoContent: lead.hasVideoContent || "Not set",
+        premiumLooking: lead.premiumLooking || "Not set",
+        easyToContact: lead.easyToContact || "Not set",
+        decisionMakerVisible: lead.decisionMakerVisible || "Not set"
+      };
+      const offerData = generateOfferData(scoredLead);
+      return {
+        ...scoredLead,
+        offerAngle: scoredLead.offerAngle || offerData.offerAngle,
+        suggestedPackage: scoredLead.suggestedPackage || offerData.packageName,
+        suggestedDeliverables: scoredLead.suggestedDeliverables || offerData.deliverables
+      };
+    }
+
+    /* ===================== Offer / outreach (template) ===================== */
+    function getSavedServiceType() {
+      const savedIcp = localStorage.getItem(STORAGE_KEYS.icp);
+      if (!savedIcp) return serviceTypeInput ? serviceTypeInput.value : "";
+      try { return normalizeIcp(JSON.parse(savedIcp)).serviceType || ""; }
+      catch (error) { return serviceTypeInput ? serviceTypeInput.value : ""; }
+    }
+    function normalizeCategory(category) {
+      const value = String(category || "").toLowerCase();
+      if (value.includes("real estate")) return "Real estate agents";
+      if (value.includes("restaurant")) return "Restaurants";
+      if (value.includes("cafe")) return "Cafes";
+      if (value.includes("gym") || value.includes("fitness")) return "Gyms & fitness studios";
+      if (value.includes("dental")) return "Dental clinics";
+      if (value.includes("skin")) return "Skin clinics";
+      if (value.includes("beauty") || value.includes("salon")) return "Beauty salons";
+      if (value.includes("wedding")) return "Wedding planners";
+      if (value.includes("coach")) return "Business coaches";
+      if (value.includes("podcast")) return "Podcasters";
+      if (value.includes("interior")) return "Interior designers";
+      if (value.includes("hotel")) return "Hotels";
+      if (value.includes("ecommerce") || value.includes("e-commerce") || value.includes("product")) return "Local ecommerce brands";
+      if (value.includes("saas") || value.includes("startup") || value.includes("founder")) return "SaaS founders";
+      if (value.includes("author") || value.includes("speaker")) return "Authors & speakers";
+      return category || "Default";
+    }
+    function generateOfferData(lead) {
+      const category = normalizeCategory(lead.niche);
+      const serviceType = getSavedServiceType();
+      const temperature = lead.temperature || getLeadTemperature(Number(lead.score || 0));
+      const contentQuality = lead.contentQuality || "Not set";
+      const postingFrequency = lead.postingFrequency || "Not set";
+      const hasVideoContent = lead.hasVideoContent || "Not set";
+      const baseOffer = baseOffers[category] || "A short-form content package focused on improving social presence, building trust, and turning existing footage into consistent content.";
+      const modifiers = [];
+      if (hasVideoContent === "No") modifiers.push("They currently have little or no video content, so the pitch should focus on starting simple with existing phone footage.");
+      if (contentQuality === "Poor" || contentQuality === "Average") modifiers.push("Their current content can be improved with better pacing, captions, hooks, and structure.");
+      if (postingFrequency === "Weekly" || postingFrequency === "Daily") modifiers.push("They are already active, so the pitch should focus on making their existing content look more professional and consistent.");
+      if (temperature === "Hot") modifiers.push("This is a strong fit. Prioritize outreach.");
+      if (temperature === "Cold") modifiers.push("Only contact this lead if you have extra time or a very specific idea.");
+      const serviceContext = serviceType ? `Recommended focus from your ICP: ${serviceType}.` : "";
+      const offerAngle = [baseOffer, serviceContext, ...modifiers].filter(Boolean).join(" ");
+      return {
+        offerAngle,
+        packageName: packageNameMap[category] || "Local Lead Starter",
+        deliverables: deliverablesMap[category] || (temperature === "Hot"
+          ? "12 short-form videos a month, captions, hooks, simple branded overlays, and weekly delivery."
+          : "6 to 8 short-form videos a month, captions, simple hooks, and vertical exports.")
+      };
+    }
+    function getOfferPreview(offerAngle) {
+      const text = String(offerAngle || "");
+      return text.length > 110 ? `${text.slice(0, 110)}...` : text;
+    }
+    function getGreetingName(lead) {
+      const contactName = String(lead.contact || "").trim();
+      if (contactName) return `Hey ${contactName}`;
+      if (lead.name) return `Hey ${lead.name} team`;
+      return "Hey there";
+    }
+    function getColdEmailSubject(lead) {
+      const businessName = lead.name || "your business";
+      const category = String(lead.niche || "business").toLowerCase();
+      if (lead.temperature === "Hot") return `Quick video idea for ${businessName}`;
+      if (category && category !== "business") return `Content idea for your ${category} business`;
+      return `Simple content idea for ${businessName}`;
+    }
+    function getOutreachOpportunity(lead) {
+      const modifiers = [];
+      if (lead.hasVideoContent === "No") modifiers.push("I noticed there may be an opportunity to start with simple reels using existing phone footage or photos.");
+      if (lead.contentQuality === "Poor" || lead.contentQuality === "Average") modifiers.push("Your current content could likely become stronger with better hooks, pacing, captions, and structure.");
+      if (lead.postingFrequency === "Weekly" || lead.postingFrequency === "Daily") modifiers.push("You're already active, so cleaner editing could make the content feel more consistent and professional.");
+      if (!modifiers.length) modifiers.push("There seems to be a realistic opportunity to make your content more consistent and easier to repurpose.");
+      return modifiers.join(" ");
+    }
+    function getShortOpportunity(lead) {
+      if (lead.hasVideoContent === "No") return "I noticed you could start with simple reels using existing phone footage or photos.";
+      if (lead.contentQuality === "Poor" || lead.contentQuality === "Average") return "I noticed a chance to improve hooks, pacing, captions, and structure.";
+      if (lead.postingFrequency === "Weekly" || lead.postingFrequency === "Daily") return "Since you already post actively, cleaner editing could make things feel more consistent.";
+      return "I noticed a chance to turn existing content into more consistent short-form videos.";
+    }
+    function getTemperatureOutreachLine(temperature) {
+      if (temperature === "Hot") return "I think this could be a strong fit because your business already has a clear visual angle.";
+      if (temperature === "Cold") return "This may or may not be a fit, but I had a simple idea worth testing.";
+      return "This could be a simple way to improve consistency without adding more work for your team.";
+    }
+    function generateOutreachData(lead) {
+      const scoredLead = getScoredLead(lead);
+      const businessName = scoredLead.name || "your business";
+      const category = scoredLead.niche || "business";
+      const city = scoredLead.city || "your area";
+      const greetingName = getGreetingName(scoredLead);
+      const packageName = scoredLead.suggestedPackage || "Local Lead Starter";
+      const opportunity = getOutreachOpportunity(scoredLead);
+      const confidenceLine = getTemperatureOutreachLine(scoredLead.temperature);
+      const softAsk = scoredLead.temperature === "Cold"
+        ? "Would it be useful if I sent over 2 simple content ideas you could use later?"
+        : "Would you be open to seeing 2 or 3 video ideas for your page?";
+      const instagramDm = `${greetingName}, I came across ${businessName} while looking at ${category} in ${city}. ${opportunity}\nI help businesses turn existing footage, photos, or simple phone clips into clean short-form videos without needing a big production setup. ${confidenceLine}\nWould you be open to seeing 2 or 3 video ideas for your page?`;
+      const coldEmailSubject = getColdEmailSubject(scoredLead);
+      const coldEmailBody = `${greetingName},\nI came across ${businessName} while looking at ${category} in ${city}. ${opportunity}\nI help businesses create short-form videos that feel clean, consistent, and easy to post. Based on what I saw, a simple ${packageName} could help you turn existing footage, photos, or basic phone clips into more useful content for Instagram, TikTok, Facebook, or YouTube Shorts.\nThis would not need a big production setup. The main focus would be better hooks, captions, pacing, and a clear content structure.\n${softAsk}`;
+      const whatsappMessage = `${greetingName}, I found ${businessName} while checking ${category} in ${city}. ${getShortOpportunity(scoredLead)} I help businesses turn simple footage or photos into clean short videos for social media. Would you be open to 2 or 3 quick video ideas for your page?`;
+      const firstFollowUp = `${greetingName}, just following up in case my last message got buried. I had a couple of simple video ideas for ${businessName} that could work without a big shoot or complicated setup. Would you like me to send them over?`;
+      const secondFollowUp = `${greetingName}, final quick note from me. I can send 2 or 3 free content ideas for ${businessName} based on your current page and local market. No pressure at all — would that be helpful?`;
+      return { instagramDm, coldEmailSubject, coldEmailBody, whatsappMessage, firstFollowUp, secondFollowUp };
+    }
+
+    /* ===================== AI personalization (Claude API) ===================== */
+    async function callClaudeJSON(promptText) {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: promptText }]
+        })
+      });
+      if (!response.ok) throw new Error("AI request failed with status " + response.status);
+      const data = await response.json();
+      const textBlocks = (data.content || []).filter(function (b) { return b.type === "text"; }).map(function (b) { return b.text; }).join("\n");
+      const cleaned = textBlocks.replace(/```json/g, "").replace(/```/g, "").trim();
+      return JSON.parse(cleaned);
+    }
+    function buildOfferPrompt(lead) {
+      return `You are a senior content strategist who writes short, specific service offers for prospective clients of a content and lead-generation agency. Respond with ONLY valid JSON, no markdown fences, no commentary, in exactly this shape: {"offerAngle": "...", "packageName": "...", "deliverables": "..."}.
+Rules: offerAngle is 2 to 4 confident sentences referencing concrete details below, written for a freelancer or agency about to pitch this business. packageName is a short punchy package name, 3 to 5 words. deliverables is one sentence listing concrete monthly deliverables.
+Business name: ${lead.name}
+Niche/category: ${lead.niche}
+City: ${lead.city}
+Content quality: ${lead.contentQuality}
+Posting frequency: ${lead.postingFrequency}
+Has video content: ${lead.hasVideoContent}
+Premium-looking business: ${lead.premiumLooking}
+Notes: ${lead.notes || "None"}
+Lead temperature: ${lead.temperature}`;
+    }
+    function buildOutreachPrompt(lead) {
+      return `You are a freelancer writing first-contact outreach to a prospective client found through manual research. Respond with ONLY valid JSON, no markdown fences, no commentary, in exactly this shape: {"instagramDm": "...", "coldEmailSubject": "...", "coldEmailBody": "...", "whatsappMessage": "...", "firstFollowUp": "...", "secondFollowUp": "..."}.
+Rules: Friendly, confident, never desperate, no corporate buzzwords, no exclamation-point spam. Reference concrete details about this specific business below, not generic filler. instagramDm and whatsappMessage are short (3 to 5 sentences). coldEmailBody is slightly longer with a clear soft ask at the end. firstFollowUp and secondFollowUp are brief, low-pressure nudges. coldEmailSubject is under 8 words.
+Business name: ${lead.name}
+Niche/category: ${lead.niche}
+City: ${lead.city}
+Contact name: ${lead.contact || "Unknown"}
+Content quality: ${lead.contentQuality}
+Posting frequency: ${lead.postingFrequency}
+Has video content: ${lead.hasVideoContent}
+Notes: ${lead.notes || "None"}
+Lead temperature: ${lead.temperature}
+Suggested package: ${lead.suggestedPackage}`;
+    }
+    async function personalizeOfferWithAI() {
+      if (!currentOfferId) return;
+      const lead = leads.find(function (l) { return l.id === currentOfferId; });
+      if (!lead) return;
+      const original = aiOfferBtn.textContent;
+      aiOfferBtn.textContent = "Personalizing…";
+      aiOfferBtn.disabled = true;
+      offerAiStatus.textContent = "";
+      try {
+        const scoredLead = getScoredLead(lead);
+        const aiData = await callClaudeJSON(buildOfferPrompt(scoredLead));
+        modalOfferAngle.textContent = aiData.offerAngle || modalOfferAngle.textContent;
+        modalPackageName.textContent = aiData.packageName || modalPackageName.textContent;
+        modalDeliverables.textContent = aiData.deliverables || modalDeliverables.textContent;
+        offerAiTag.style.display = "inline-flex";
+      } catch (error) {
+        console.warn("AI offer personalization failed.", error);
+        offerAiStatus.textContent = "AI personalization isn't available right now — showing the standard offer instead.";
+      } finally {
+        aiOfferBtn.textContent = original;
+        aiOfferBtn.disabled = false;
+      }
+    }
+    async function personalizeOutreachWithAI() {
+      if (!currentOutreachId) return;
+      const lead = leads.find(function (l) { return l.id === currentOutreachId; });
+      if (!lead) return;
+      const original = aiOutreachBtn.textContent;
+      aiOutreachBtn.textContent = "Personalizing…";
+      aiOutreachBtn.disabled = true;
+      outreachAiStatus.textContent = "";
+      try {
+        const scoredLead = getScoredLead(lead);
+        const aiData = await callClaudeJSON(buildOutreachPrompt(scoredLead));
+        if (aiData.instagramDm) instagramDmText.textContent = aiData.instagramDm;
+        if (aiData.coldEmailSubject) coldEmailSubjectText.textContent = aiData.coldEmailSubject;
+        if (aiData.coldEmailBody) coldEmailBodyText.textContent = aiData.coldEmailBody;
+        if (aiData.whatsappMessage) whatsappMessageText.textContent = aiData.whatsappMessage;
+        if (aiData.firstFollowUp) firstFollowUpText.textContent = aiData.firstFollowUp;
+        if (aiData.secondFollowUp) secondFollowUpText.textContent = aiData.secondFollowUp;
+        outreachAiTag.style.display = "inline-flex";
+      } catch (error) {
+        console.warn("AI outreach personalization failed.", error);
+        outreachAiStatus.textContent = "AI personalization isn't available right now — showing the standard messages instead.";
+      } finally {
+        aiOutreachBtn.textContent = original;
+        aiOutreachBtn.disabled = false;
+      }
+    }
+
+    /* ===================== Score ring (signature visual) ===================== */
+    function scoreRingSVG(score, temperature, size) {
+      size = size || 52;
+      const stroke = size <= 42 ? 4 : 5;
+      const radius = (size - stroke) / 2;
+      const circumference = 2 * Math.PI * radius;
+      const safeScore = Math.max(0, Math.min(100, Number(score) || 0));
+      const offset = circumference - (safeScore / 100) * circumference;
+      const color = temperature === "Hot" ? "var(--danger)" : (temperature === "Warm" ? "var(--accent-dark)" : "var(--cold-text)");
+      const fontSize = size <= 42 ? 12 : 15;
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" class="score-ring-wrap"><circle cx="${size / 2}" cy="${size / 2}" r="${radius}" fill="none" stroke="var(--border)" stroke-width="${stroke}"></circle><circle cx="${size / 2}" cy="${size / 2}" r="${radius}" fill="none" stroke="${color}" stroke-width="${stroke}" stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" transform="rotate(-90 ${size / 2} ${size / 2})"></circle><text x="50%" y="51%" dominant-baseline="central" text-anchor="middle" class="score-ring-text" style="font-size:${fontSize}px;">${safeScore}</text></svg>`;
+    }
+
+    /* ===================== Follow-up date helpers ===================== */
+    function todayKey() {
+      const d = new Date();
+      return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    }
+    function getFollowUpBadge(followUp) {
+      if (!followUp) return "";
+      const today = todayKey();
+      if (followUp < today) return '<span class="followup-badge followup-overdue">Overdue</span>';
+      if (followUp === today) return '<span class="followup-badge followup-today">Due Today</span>';
+      return "";
+    }
+
+    /* ===================== Filtering / sorting ===================== */
+    function applyFiltersAndSort(list) {
+      const search = leadSearchInput.value.trim().toLowerCase();
+      const statusFilter = leadFilterStatus.value;
+      const tempFilter = leadFilterTemperature.value;
+      let result = list.filter(function (lead) {
+        if (statusFilter !== "All" && lead.status !== statusFilter) return false;
+        if (tempFilter !== "All" && lead.temperature !== tempFilter) return false;
+        if (search) {
+          const haystack = `${lead.name} ${lead.niche} ${lead.city} ${lead.notes}`.toLowerCase();
+          if (!haystack.includes(search)) return false;
+        }
+        return true;
+      });
+      const key = sortState.key;
+      const dir = sortState.dir;
+      result.sort(function (a, b) {
+        let av = a[key];
+        let bv = b[key];
+        if (key === "score") { av = Number(av) || 0; bv = Number(bv) || 0; }
+        else if (key === "addedAt") { av = new Date(av || 0).getTime() || 0; bv = new Date(bv || 0).getTime() || 0; }
+        else { av = String(av || "").toLowerCase(); bv = String(bv || "").toLowerCase(); }
+        if (av < bv) return dir === "asc" ? -1 : 1;
+        if (av > bv) return dir === "asc" ? 1 : -1;
+        return 0;
+      });
+      return result;
+    }
+    function setSort(key) {
+      if (sortState.key === key) sortState.dir = sortState.dir === "asc" ? "desc" : "asc";
+      else { sortState.key = key; sortState.dir = key === "score" ? "desc" : "asc"; }
+      renderCurrentView();
+    }
+
+    /* ===================== Rendering: table + pipeline ===================== */
+    function renderCurrentView() {
+      updateDashboardStats();
+      document.querySelectorAll("th.sortable").forEach(function (th) {
+        th.classList.toggle("sort-active", th.dataset.sort === sortState.key);
+      });
+      if (currentView === "table") renderTable(); else renderPipeline();
+    }
+    function renderTable() {
+      leadTableBody.innerHTML = "";
+      if (!leads.length) {
+        leadTableBody.innerHTML = '<tr><td colspan="22" class="empty-state">No leads yet. Build an ICP, open a research link, then save your first promising business.</td></tr>';
+        return;
+      }
+      const scoredLeads = applyFiltersAndSort(leads.map(getScoredLead));
+      if (!scoredLeads.length) {
+        leadTableBody.innerHTML = '<tr><td colspan="22" class="empty-state">No leads match your search or filters.</td></tr>';
+        return;
+      }
+      scoredLeads.forEach(function (lead) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${escapeHtml(lead.name)}</td>
+          <td>${escapeHtml(lead.niche)}</td>
+          <td>${escapeHtml(lead.city)}</td>
+          <td>${scoreRingSVG(lead.score, lead.temperature)}</td>
+          <td><span class="${getTemperatureClass(lead.temperature)}">${escapeHtml(lead.temperature)}</span></td>
+          <td>
+            <div class="offer-preview">${escapeHtml(getOfferPreview(lead.offerAngle))}</div>
+            <div class="button-row" style="margin-top: 8px;">
+              <button class="secondary small-button" onclick="viewOffer('${lead.id}')" type="button">View Offer</button>
+              <button class="small-button" onclick="generateOutreach('${lead.id}')" type="button">Outreach</button>
+            </div>
+          </td>
+          <td>${escapeHtml(lead.contentQuality)}</td>
+          <td>${escapeHtml(lead.postingFrequency)}</td>
+          <td>${escapeHtml(lead.hasVideoContent)}</td>
+          <td>${escapeHtml(lead.premiumLooking)}</td>
+          <td>${escapeHtml(lead.easyToContact)}</td>
+          <td>${escapeHtml(lead.decisionMakerVisible)}</td>
+          <td>${escapeHtml(lead.followUp || "—")}${getFollowUpBadge(lead.followUp)}</td>
+          <td>${makeLink(lead.website, "Website")}</td>
+          <td>${makeLink(lead.mapsUrl, "Maps")}</td>
+          <td>${escapeHtml(lead.contact)}</td>
+          <td>${escapeHtml(lead.email)}</td>
+          <td>${escapeHtml(lead.phone)}</td>
+          <td>${escapeHtml(lead.status)}</td>
+          <td>${escapeHtml(lead.notes)}</td>
+          <td>${escapeHtml(lead.addedAt)}</td>
+          <td>
+            <div class="button-row" style="margin:0; flex-direction:column;">
+              <button class="secondary small-button" onclick="startEditLead('${lead.id}')" type="button">Edit</button>
+              <button class="danger small-button" onclick="deleteLead('${lead.id}')" type="button">Delete</button>
+            </div>
+          </td>
+        `;
+        leadTableBody.appendChild(row);
+      });
+    }
+    const PIPELINE_STATUSES = ["New", "Checked", "Contacted", "Replied", "Won", "Not Fit"];
+    function renderPipeline() {
+      pipelineViewWrap.innerHTML = "";
+      const scoredLeads = applyFiltersAndSort(leads.map(getScoredLead));
+      PIPELINE_STATUSES.forEach(function (status) {
+        const columnLeads = scoredLeads.filter(function (l) { return l.status === status; });
+        const column = document.createElement("div");
+        column.className = "pipeline-column";
+        column.innerHTML = `<div class="pipeline-column-header"><span>${status}</span><span class="pipeline-count">${columnLeads.length}</span></div><div class="pipeline-cards"></div>`;
+        pipelineViewWrap.appendChild(column);
+        const cardsWrap = column.querySelector(".pipeline-cards");
+        cardsWrap.addEventListener("dragover", function (e) { e.preventDefault(); cardsWrap.classList.add("drag-over"); });
+        cardsWrap.addEventListener("dragleave", function () { cardsWrap.classList.remove("drag-over"); });
+        cardsWrap.addEventListener("drop", function (e) {
+          e.preventDefault();
+          cardsWrap.classList.remove("drag-over");
+          const id = e.dataTransfer.getData("text/plain");
+          if (id) updateLeadStatus(id, status);
+        });
+        if (!columnLeads.length) { cardsWrap.innerHTML = '<div class="pipeline-empty">No leads</div>'; return; }
+        columnLeads.forEach(function (lead) {
+          const card = document.createElement("div");
+          card.className = "pipeline-card";
+          card.draggable = true;
+          card.addEventListener("dragstart", function (e) { e.dataTransfer.setData("text/plain", lead.id); card.classList.add("dragging"); });
+          card.addEventListener("dragend", function () { card.classList.remove("dragging"); });
+          const options = PIPELINE_STATUSES.map(function (s) { return `<option value="${s}" ${s === lead.status ? "selected" : ""}>${s}</option>`; }).join("");
+          card.innerHTML = `
+            <div class="pipeline-card-top">
+              ${scoreRingSVG(lead.score, lead.temperature, 40)}
+              <div class="pipeline-card-info">
+                <strong>${escapeHtml(lead.name)}</strong>
+                <span>${escapeHtml(lead.niche)}${lead.city ? " · " + escapeHtml(lead.city) : ""}</span>
+              </div>
+            </div>
+            <div class="pipeline-card-actions">
+              <select class="pipeline-status-select" onchange="updateLeadStatus('${lead.id}', this.value)">${options}</select>
+              <button class="secondary small-button" onclick="viewOffer('${lead.id}')" type="button">Offer</button>
+            </div>
+          `;
+          cardsWrap.appendChild(card);
+        });
+      });
+    }
+    function updateLeadStatus(id, status) {
+      const lead = leads.find(function (l) { return l.id === id; });
+      if (!lead) return;
+      lead.status = status;
+      saveLeads();
+      renderCurrentView();
+    }
+    function setView(view) {
+      currentView = view;
+      tableViewBtn.classList.toggle("active", view === "table");
+      pipelineViewBtn.classList.toggle("active", view === "pipeline");
+      tableViewWrap.style.display = view === "table" ? "block" : "none";
+      pipelineViewWrap.style.display = view === "pipeline" ? "grid" : "none";
+      renderCurrentView();
+    }
+
+    /* ===================== Dashboard stats ===================== */
+    function updateDashboardStats() {
+      const scoredLeads = leads.map(getScoredLead);
+      const total = scoredLeads.length;
+      const hot = scoredLeads.filter(function (l) { return l.temperature === "Hot"; }).length;
+      const warm = scoredLeads.filter(function (l) { return l.temperature === "Warm"; }).length;
+      const cold = scoredLeads.filter(function (l) { return l.temperature === "Cold"; }).length;
+      const contacted = scoredLeads.filter(function (l) { return l.status === "Contacted"; }).length;
+      const replied = scoredLeads.filter(function (l) { return l.status === "Replied"; }).length;
+      const won = scoredLeads.filter(function (l) { return l.status === "Won"; }).length;
+      const today = todayKey();
+      const dueToday = scoredLeads.filter(function (l) { return l.followUp === today; }).length;
+      const overdue = scoredLeads.filter(function (l) { return l.followUp && l.followUp < today; }).length;
+      const averageScore = total ? Math.round(scoredLeads.reduce(function (sum, l) { return sum + Number(l.score || 0); }, 0) / total) : 0;
+      totalLeadsStat.textContent = total;
+      hotLeadsStat.textContent = hot;
+      warmLeadsStat.textContent = warm;
+      coldLeadsStat.textContent = cold;
+      contactedLeadsStat.textContent = contacted;
+      repliedLeadsStat.textContent = replied;
+      wonLeadsStat.textContent = won;
+      averageScoreStat.textContent = total ? `${averageScore}/100` : "0";
+      dueTodayStat.textContent = dueToday;
+      overdueStat.textContent = overdue;
+    }
+
+    /* ===================== Export / backup ===================== */
+    function getSavedIcpData() {
+      const savedIcp = localStorage.getItem(STORAGE_KEYS.icp);
+      if (!savedIcp) return null;
+      try { return JSON.parse(savedIcp); } catch (error) { return null; }
+    }
+    function exportJsonBackup() {
+      const backupData = { appVersion: APP_VERSION, exportedAt: new Date().toISOString(), icp: getSavedIcpData(), leads };
+      downloadBlob(JSON.stringify(backupData, null, 2), "application/json;charset=utf-8;", "histree-lead-finder-backup.json");
+      backupRestoreStatus.textContent = "JSON backup exported successfully.";
+    }
+    function importJsonBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (loadEvent) {
+        let backupData;
+        try { backupData = JSON.parse(loadEvent.target.result); }
+        catch (error) { backupRestoreStatus.textContent = "Invalid backup file. Please upload a valid JSON backup."; importJsonBackupInput.value = ""; return; }
+        if (!isValidBackupFile(backupData)) { backupRestoreStatus.textContent = "This backup file does not match the app format."; importJsonBackupInput.value = ""; return; }
+        if (!confirm("Importing this backup may replace your current saved ICP and leads. Continue?")) { backupRestoreStatus.textContent = "Import cancelled."; importJsonBackupInput.value = ""; return; }
+        const importedLeads = backupData.leads.map(function (lead, index) { return { id: lead.id || `${Date.now()}-${index}`, ...lead }; });
+        if (backupData.icp) localStorage.setItem(STORAGE_KEYS.icp, JSON.stringify(backupData.icp));
+        else localStorage.removeItem(STORAGE_KEYS.icp);
+        leads = importedLeads;
+        saveLeads();
+        resetAppViewAfterDataChange();
+        backupRestoreStatus.textContent = "Backup imported successfully.";
+        importJsonBackupInput.value = "";
+      };
+      reader.onerror = function () { backupRestoreStatus.textContent = "Invalid backup file. Please upload a valid JSON backup."; importJsonBackupInput.value = ""; };
+      reader.readAsText(file);
+    }
+    function isValidBackupFile(data) {
+      if (!data || typeof data !== "object") return false;
+      const hasAppVersion = Object.prototype.hasOwnProperty.call(data, "appVersion");
+      const hasExportedAt = Object.prototype.hasOwnProperty.call(data, "exportedAt");
+      const hasIcp = Object.prototype.hasOwnProperty.call(data, "icp");
+      const hasLeads = Object.prototype.hasOwnProperty.call(data, "leads");
+      const icpIsValid = data.icp === null || typeof data.icp === "object";
+      const leadsAreValid = Array.isArray(data.leads);
+      return hasAppVersion && hasExportedAt && hasIcp && hasLeads && icpIsValid && leadsAreValid;
+    }
+    function clearAllAppData() {
+      if (!confirm("This will delete all saved ICP data and leads from this browser. This cannot be undone. Continue?")) {
+        backupRestoreStatus.textContent = "Clear all app data cancelled.";
+        return;
+      }
+      localStorage.removeItem(STORAGE_KEYS.icp);
+      localStorage.removeItem(STORAGE_KEYS.leads);
+      leads = [];
+      resetIcpFormFields();
+      renderEmptySearchState();
+      icpSummary.style.display = "none";
+      icpStatus.textContent = "";
+      leadStatusMessage.textContent = "";
+      exitEditMode();
+      renderCurrentView();
+      backupRestoreStatus.textContent = "All app data cleared successfully.";
+    }
+    function resetIcpFormFields() {
+      serviceTypeInput.value = "YouTube Long-Form Editing";
+      clientCategoryInput.value = "Real estate agents";
+      targetCityInput.value = "";
+      targetCountryInput.value = "";
+      budgetLevelInput.value = "Medium";
+    }
+    function resetAppViewAfterDataChange() {
+      resetIcpFormFields();
+      renderEmptySearchState();
+      icpSummary.style.display = "none";
+      loadIcp();
+      renderCurrentView();
+      clearLeadForm();
+    }
+    function downloadBlob(content, mimeType, filename) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+    function exportCsv() {
+      if (!leads.length) { alert("No leads to export yet."); return; }
+      const headers = [
+        "Business Name", "Niche", "City", "Score", "Temperature", "Offer Angle", "Suggested Package",
+        "Instagram DM", "Cold Email Subject", "Cold Email Body", "WhatsApp Message", "First Follow-Up", "Second Follow-Up",
+        "Content Quality", "Posting Frequency", "Has Video Content", "Premium-Looking Business", "Easy to Contact",
+        "Decision Maker Visible", "Next Follow-Up Date", "Website", "Google Maps URL", "Contact Name", "Email or Social",
+        "Phone", "Status", "Notes", "Added Date"
+      ];
+      const rows = leads.map(function (lead) {
+        const scoredLead = getScoredLead(lead);
+        const outreachData = generateOutreachData(scoredLead);
+        return [
+          scoredLead.name, scoredLead.niche, scoredLead.city, scoredLead.score, scoredLead.temperature, scoredLead.offerAngle, scoredLead.suggestedPackage,
+          outreachData.instagramDm, outreachData.coldEmailSubject, outreachData.coldEmailBody, outreachData.whatsappMessage, outreachData.firstFollowUp, outreachData.secondFollowUp,
+          scoredLead.contentQuality, scoredLead.postingFrequency, scoredLead.hasVideoContent, scoredLead.premiumLooking, scoredLead.easyToContact,
+          scoredLead.decisionMakerVisible, scoredLead.followUp, scoredLead.website, scoredLead.mapsUrl, scoredLead.contact, scoredLead.email,
+          scoredLead.phone, scoredLead.status, scoredLead.notes, scoredLead.addedAt
+        ];
+      });
+      const csvContent = [headers, ...rows].map(function (row) { return row.map(escapeCsvValue).join(","); }).join("\n");
+      downloadBlob(csvContent, "text/csv;charset=utf-8;", "histree-leads.csv");
+    }
+
+    /* ===================== Email leads (mailto) ===================== */
+    function buildLeadEmailBody(scope, list) {
+      const sorted = list.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
+      const total = sorted.length;
+      const lines = [];
+      lines.push(`Your Histree Lead Finder results — ${total} lead${total === 1 ? "" : "s"}.`);
+      lines.push("");
+      let charBudget = 1400;
+      let shown = 0;
+      for (let i = 0; i < sorted.length; i++) {
+        const lead = sorted[i];
+        const parts = [lead.name || "Unnamed", lead.niche || "-", lead.city || "-", `Score ${lead.score}/100 (${lead.temperature})`, lead.status];
+        if (lead.contact) parts.push("Contact: " + lead.contact);
+        if (lead.email) parts.push(lead.email);
+        const line = parts.join(" | ");
+        if (line.length + 1 > charBudget) break;
+        lines.push(line);
+        charBudget -= line.length + 1;
+        shown++;
+      }
+      if (shown < total) {
+        lines.push("");
+        lines.push(`+ ${total - shown} more lead${total - shown === 1 ? "" : "s"} — export the CSV or JSON backup for the complete list.`);
+      }
+      lines.push("");
+      lines.push("Sent from Histree Lead Finder (free tool) — histreestudios.com");
+      return lines.join("\n");
+    }
+    function emailLeads() {
+      const email = emailRecipientInput.value.trim();
+      if (!email || !email.includes("@")) { emailStatusMessage.textContent = "Please enter a valid email address."; return; }
+      const scope = emailScopeInput.value;
+      let scopedLeads = leads.map(getScoredLead);
+      if (scope === "hot") scopedLeads = scopedLeads.filter(function (l) { return l.temperature === "Hot"; });
+      if (scope === "warm") scopedLeads = scopedLeads.filter(function (l) { return l.temperature === "Warm"; });
+      if (!scopedLeads.length) { emailStatusMessage.textContent = "No leads match this selection yet."; return; }
+      const subject = `Your Lead List from Histree Lead Finder (${scopedLeads.length} lead${scopedLeads.length === 1 ? "" : "s"})`;
+      const body = buildLeadEmailBody(scope, scopedLeads);
+      const mailtoUrl = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoUrl;
+      emailStatusMessage.textContent = "Opening your email app with the list filled in...";
+    }
+
+    /* ===================== Modals ===================== */
+    function viewOffer(id) {
+      const lead = leads.find(function (item) { return item.id === id; });
+      if (!lead) return;
+      currentOfferId = id;
+      const scoredLead = getScoredLead(lead);
+      offerAiTag.style.display = "none";
+      offerAiStatus.textContent = "";
+      offerModalSubtitle.textContent = "Use this to decide what to pitch before writing outreach.";
+      modalBusinessName.textContent = scoredLead.name || "Unnamed business";
+      modalScore.innerHTML = scoreRingSVG(scoredLead.score, scoredLead.temperature, 40);
+      modalTemperature.innerHTML = `<span class="${getTemperatureClass(scoredLead.temperature)}">${escapeHtml(scoredLead.temperature)}</span>`;
+      modalPackageName.textContent = scoredLead.suggestedPackage;
+      modalOfferAngle.textContent = scoredLead.offerAngle;
+      modalDeliverables.textContent = scoredLead.suggestedDeliverables;
+      offerModalOverlay.classList.add("active");
+    }
+    function closeOfferModal() { offerModalOverlay.classList.remove("active"); currentOfferId = null; }
+    function generateOutreach(id) {
+      const lead = leads.find(function (item) { return item.id === id; });
+      if (!lead) return;
+      currentOutreachId = id;
+      const scoredLead = getScoredLead(lead);
+      const outreachData = generateOutreachData(scoredLead);
+      outreachAiTag.style.display = "none";
+      outreachAiStatus.textContent = "";
+      outreachModalSubtitle.textContent = "Copy and customize these messages before sending.";
+      outreachBusinessName.textContent = scoredLead.name || "Unnamed business";
+      outreachScore.innerHTML = scoreRingSVG(scoredLead.score, scoredLead.temperature, 40);
+      outreachTemperature.innerHTML = `<span class="${getTemperatureClass(scoredLead.temperature)}">${escapeHtml(scoredLead.temperature)}</span>`;
+      outreachPackageName.textContent = scoredLead.suggestedPackage;
+      outreachOfferAngle.textContent = scoredLead.offerAngle;
+      instagramDmText.textContent = outreachData.instagramDm;
+      coldEmailSubjectText.textContent = outreachData.coldEmailSubject;
+      coldEmailBodyText.textContent = outreachData.coldEmailBody;
+      whatsappMessageText.textContent = outreachData.whatsappMessage;
+      firstFollowUpText.textContent = outreachData.firstFollowUp;
+      secondFollowUpText.textContent = outreachData.secondFollowUp;
+      clearCopyFeedback();
+      outreachModalOverlay.classList.add("active");
+    }
+    function closeOutreachModal() { outreachModalOverlay.classList.remove("active"); currentOutreachId = null; }
+    function copyMessage(textElementId, feedbackElementId) {
+      const textElement = document.getElementById(textElementId);
+      const feedbackElement = document.getElementById(feedbackElementId);
+      const text = textElement ? textElement.textContent : "";
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { showCopyFeedback(feedbackElement); }).catch(function () { fallbackCopyText(text, feedbackElement); });
+      } else { fallbackCopyText(text, feedbackElement); }
+    }
+    function fallbackCopyText(text, feedbackElement) {
+      const tempTextArea = document.createElement("textarea");
+      tempTextArea.value = text;
+      tempTextArea.setAttribute("readonly", "");
+      tempTextArea.style.position = "absolute";
+      tempTextArea.style.left = "-9999px";
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempTextArea);
+      showCopyFeedback(feedbackElement);
+    }
+    function showCopyFeedback(feedbackElement) {
+      if (!feedbackElement) return;
+      feedbackElement.textContent = "Copied";
+      setTimeout(function () { feedbackElement.textContent = ""; }, 1600);
+    }
+    function clearCopyFeedback() {
+      ["instagramDmCopied", "coldEmailSubjectCopied", "coldEmailBodyCopied", "whatsappMessageCopied", "firstFollowUpCopied", "secondFollowUpCopied"].forEach(function (id) {
+        const element = document.getElementById(id);
+        if (element) element.textContent = "";
+      });
+    }
+
+    /* ===================== Misc helpers ===================== */
+    function makeLink(url, label) {
+      if (!url) return "";
+      const safeUrl = escapeHtml(url);
+      return `<a class="table-link" href="${safeUrl}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+    }
+    function escapeCsvValue(value) { return `"${String(value || "").replace(/"/g, '""')}"`; }
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+    function setSelectValue(selectElement, value) {
+      const matchingOption = findMatchingOption(selectElement, value);
+      if (matchingOption) selectElement.value = matchingOption;
+    }
+    function findMatchingOption(selectElement, value) {
+      if (!value) return "";
+      const normalizedValue = String(value).trim().toLowerCase();
+      const options = Array.from(selectElement.options);
+      const exactMatch = options.find(function (option) { return option.value.toLowerCase() === normalizedValue; });
+      if (exactMatch) return exactMatch.value;
+      const partialMatch = options.find(function (option) { return normalizedValue.includes(option.value.toLowerCase()) || option.value.toLowerCase().includes(normalizedValue); });
+      return partialMatch ? partialMatch.value : "";
+    }
+
+    /* ===================== Event wiring ===================== */
+    saveIcpBtn.addEventListener("click", saveIcp);
+    clearIcpBtn.addEventListener("click", clearIcp);
+    generateLinksBtn.addEventListener("click", generateSearchLinks);
+    addLeadBtn.addEventListener("click", addOrUpdateLead);
+    clearFormBtn.addEventListener("click", function () { if (editingLeadId) exitEditMode(); else clearLeadForm(); });
+    cancelEditBtn.addEventListener("click", exitEditMode);
+    exportCsvBtn.addEventListener("click", exportCsv);
+    deleteAllBtn.addEventListener("click", deleteAllLeads);
+    exportJsonBackupBtn.addEventListener("click", exportJsonBackup);
+    importJsonBackupInput.addEventListener("change", importJsonBackup);
+    clearAllAppDataBtn.addEventListener("click", clearAllAppData);
+    emailLeadsBtn.addEventListener("click", emailLeads);
+    downloadForAttachBtn.addEventListener("click", exportCsv);
+
+    closeOfferModalBtn.addEventListener("click", closeOfferModal);
+    offerModalOverlay.addEventListener("click", function (event) { if (event.target === offerModalOverlay) closeOfferModal(); });
+    aiOfferBtn.addEventListener("click", personalizeOfferWithAI);
+
+    closeOutreachModalBtn.addEventListener("click", closeOutreachModal);
+    outreachModalOverlay.addEventListener("click", function (event) { if (event.target === outreachModalOverlay) closeOutreachModal(); });
+    aiOutreachBtn.addEventListener("click", personalizeOutreachWithAI);
+
+    document.addEventListener("keydown", function (event) { if (event.key === "Escape") { closeOfferModal(); closeOutreachModal(); } });
+
+    tableViewBtn.addEventListener("click", function () { setView("table"); });
+    pipelineViewBtn.addEventListener("click", function () { setView("pipeline"); });
+    leadSearchInput.addEventListener("input", renderCurrentView);
+    leadFilterStatus.addEventListener("change", renderCurrentView);
+    leadFilterTemperature.addEventListener("change", renderCurrentView);
+    document.querySelectorAll("th.sortable").forEach(function (th) {
+      th.addEventListener("click", function () { setSort(th.dataset.sort); });
+    });
+
+    /* ===================== Init ===================== */
+    loadIcp();
+    loadLeads();
+    clearLeadForm();
+    setView("table");
+  </script>
+</body>
+</html>
