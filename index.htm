@@ -110,7 +110,7 @@
         transition:background 0.3s, box-shadow 0.3s;
     }
     header.scrolled { background:rgba(3,3,3,0.88); box-shadow:0 8px 32px rgba(0,0,0,0.4); }
-    .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; display:flex; align-items:center; gap:10px; letter-spacing:0.5px; }
+    .logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; display:flex; align-items:center; gap:10px; letter-spacing:0.5px; cursor:pointer; }
 
 @media (max-width:600px) {
     .logo { font-size:0.55rem; gap:6px; letter-spacing:0.2px; }
@@ -118,8 +118,8 @@
 }
     .logo-icon { width:28px; height:28px; flex-shrink:0; }.logo-img { height:36px; width:auto; display:block; }
 
-    nav { display:flex; gap:2rem; }
-    nav a { color:var(--muted); font-size:0.88rem; font-weight:500; transition:color 0.2s; letter-spacing:0.3px; }
+    nav { display:flex; gap:2rem; align-items:center; }
+    nav a { color:var(--muted); font-size:0.88rem; font-weight:500; transition:color 0.2s; letter-spacing:0.3px; white-space:nowrap; }
     nav a:hover { color:var(--text); }
     .btn-nav {
         padding:10px 22px; border-radius:50px;
@@ -693,6 +693,12 @@
     .pricing-btn-solid:hover  { background:var(--accent); }
     .pricing-btn-blue { background:linear-gradient(135deg,var(--blue),var(--purple)); color:#fff; }
     .pricing-btn-blue:hover { opacity:0.9; }
+    .price-row { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+    .price-old { font-size:1.1rem; color:var(--muted2); text-decoration:line-through; font-family:'Syne',sans-serif; font-weight:600; }
+    .price-new { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; color:var(--text); line-height:1; }
+    .price-new sup { font-size:0.95rem; font-weight:700; color:var(--muted); margin-left:2px; }
+    .price-discount-tag { display:inline-flex; align-items:center; gap:5px; font-size:0.7rem; font-weight:700; padding:3px 10px; border-radius:50px; background:rgba(52,211,153,0.15); color:#34d399; margin-bottom:4px; }
+    .price-note { font-size:0.74rem; color:var(--muted2); margin-top:2px; }
     .shimmer-bar { height:14px; border-radius:6px; position:relative; overflow:hidden; }
     .shimmer-bar::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent); animation:shimmerSlide 2s infinite; }
     @keyframes shimmerSlide { 0%{transform:translateX(-100%)} 100%{transform:translateX(300%)} }
@@ -764,7 +770,7 @@
        FOOTER
     ============================================================ */
     footer { position:relative; z-index:1; border-top:1px solid var(--glass-border); padding:40px 5%; max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
-    .footer-brand { display:flex; align-items:center; gap:10px; font-family:'Syne',sans-serif; font-weight:700; }
+    .footer-brand { display:flex; align-items:center; gap:10px; font-family:'Syne',sans-serif; font-weight:700; cursor:pointer; }
     .footer-copy { font-size:0.82rem; color:var(--muted2); }
     .footer-social-link { width:36px; height:36px; border-radius:50%; border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:0.9rem; transition:color 0.2s, border-color 0.2s, background 0.2s; }
     .footer-social-link:hover { color:var(--text); border-color:var(--glass-border-bright); background:var(--glass); }
@@ -869,7 +875,7 @@
 
 <!-- ============ NAVIGATION ============ -->
 <header id="site-header">
-    <div class="logo">
+    <div class="logo" id="logo-home-link" onclick="goHome()" title="Back to homepage">
         <img src="histree-logo.png" alt="Histree Studios" class="logo-img">
         HISTREE STUDIOS
     </div>
@@ -1264,14 +1270,18 @@ Ideas to Life</span></span>
         <div style="text-align:center;" class="reveal">
             <div class="section-label">Pricing</div>
             <h2 class="section-title">Pick Your Plan.<br>Watch It Pay Back.</h2>
-            <p style="color:var(--muted);max-width:520px;margin:0 auto;">Book a free audit to get your custom quote — no lock-in, no hidden fees, no fluff.</p>
+            <p style="color:var(--muted);max-width:520px;margin:0 auto;">50% off your first 2 months on every plan. No lock-in, no hidden fees, no fluff.</p>
         </div>
         <div class="pricing-grid">
             <div class="pricing-card reveal reveal-delay-1">
                 <div class="pricing-plan">Starter</div>
                 <div style="margin:18px 0 14px;">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><div class="shimmer-bar" style="flex:1;background:rgba(255,255,255,0.06);"></div><div style="width:40px;height:14px;background:rgba(255,255,255,0.06);border-radius:6px;"></div></div>
-                    <div style="font-size:0.78rem;color:var(--muted);display:flex;align-items:center;gap:6px;"><span style="color:#fbbf24;">🔒</span> Price revealed on audit call</div>
+                    <span class="price-discount-tag">🔥 50% OFF for First 2 Months</span>
+                    <div class="price-row">
+                        <span class="price-old">$599</span>
+                        <span class="price-new">$299<sup>/mo</sup></span>
+                    </div>
+                    <div class="price-note">Then $799/mo from month 3 onward</div>
                 </div>
                 <div class="pricing-desc">Perfect for creators just getting started with done-for-you content.</div>
                 <ul class="pricing-features">
@@ -1288,28 +1298,34 @@ Ideas to Life</span></span>
                 <div class="pricing-badge">Most Popular</div>
                 <div class="pricing-plan">Growth</div>
                 <div style="margin:18px 0 10px;">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div class="shimmer-bar" style="flex:1;background:rgba(91,110,248,0.1);"></div><div style="width:40px;height:14px;background:rgba(91,110,248,0.1);border-radius:6px;"></div></div>
-                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                        <span style="display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#ff4d6d,#c8102e);color:#fff;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:50px;animation:pulseSoft 2s ease-in-out infinite;">🔥 50% OFF - Limited Time</span>
+                    <span class="price-discount-tag" style="background:linear-gradient(135deg,#ff4d6d,#c8102e);color:#fff;">🔥 50% OFF First 2 Months</span>
+                    <div class="price-row">
+                        <span class="price-old">$1,499</span>
+                        <span class="price-new">$745<sup>/mo</sup></span>
                     </div>
+                    <div class="price-note">Then $1,499/mo from month 3 onward</div>
                 </div>
                 <div class="pricing-desc" style="color:rgba(255,255,255,0.7);">For entrepreneurs ready to scale with a full organic content system. Builds <strong style="color:#fff">consistent content</strong> that compounds every month.</div>
                 <ul class="pricing-features">
                     <li><span class="pf-check">✔</span> 4 Videos / month</li>
-                    <li><span class="pf-check">✔</span> 32 Short Clips / Reels Repurposed</li>
+                    <li><span class="pf-check">✔</span> 22 Short Clips / Reels Repurposed</li>
                     <li><span class="pf-check">✔</span> Pro Editing + Motion Graphics</li>
                     <li><span class="pf-check">✔</span> Custom Thumbnails + A/B Testing</li>
                     <li><span class="pf-check">✔</span> Multi-platform Distribution</li>
                     <li><span class="pf-check">✔</span> Real-Time Tracker</li>
                     <li><span class="pf-check">✔</span> Dedicated Account Manager</li>
                 </ul>
-                <button class="pricing-btn pricing-btn-blue" onclick="window.open('https://calendar.app.google/x9iiZ9u2x3ze4MxDA','_blank')">🚀 Claim 50% Off — Book Now</button>
+                <button class="pricing-btn pricing-btn-blue" onclick="window.open('https://calendar.app.google/x9iiZ9u2x3ze4MxDA','_blank')">🚀 Claim 50% Off <br> Book Now</button>
             </div>
             <div class="pricing-card reveal reveal-delay-3">
                 <div class="pricing-plan">Agency</div>
                 <div style="margin:18px 0 14px;">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><div class="shimmer-bar" style="flex:1;background:rgba(255,255,255,0.06);"></div><div style="width:40px;height:14px;background:rgba(255,255,255,0.06);border-radius:6px;"></div></div>
-                    <div style="font-size:0.78rem;color:var(--muted);display:flex;align-items:center;gap:6px;"><span style="color:#fbbf24;">🔒</span> Custom quote after audit</div>
+                    <span class="price-discount-tag">🔥 50% OFF - Limited Spot</span>
+                    <div class="price-row">
+                        <span class="price-old">$2,999</span>
+                        <span class="price-new">$1,499<sup>/mo</sup></span>
+                    </div>
+                    <div class="price-note">Then $2,999/mo from month 3 onward</div>
                 </div>
                 <div class="pricing-desc">Fully custom for agencies and businesses with high-volume content needs.</div>
                 <ul class="pricing-features">
@@ -1320,7 +1336,7 @@ Ideas to Life</span></span>
                     <li><span class="pf-check">✔</span> Multi-platform Distribution</li>
                     <li><span class="pf-check">✔</span> Priority Support + Weekly Calls</li>
                 </ul>
-                <button class="pricing-btn pricing-btn-solid" onclick="window.open('https://calendar.app.google/x9iiZ9u2x3ze4MxDA','_blank')">📋 Book Free Audit ↗</button>
+                <button class="pricing-btn pricing-btn-solid" onclick="window.open('https://calendar.app.google/x9iiZ9u2x3ze4MxDA','_blank')">📋 Get 50% Off Now ↗</button>
             </div>
         </div>
     </div>
@@ -1503,7 +1519,7 @@ Ideas to Life</span></span>
 
 <!-- ============ FOOTER ============ -->
 <footer>
-    <div class="footer-brand">
+    <div class="footer-brand" id="footer-home-link" onclick="goHome()" title="Back to homepage">
         <img src="histree-logo.png" alt="Histree Studios" style="height:24px;width:auto;">
         HISTREE STUDIOS
     </div>
@@ -1588,6 +1604,13 @@ Ideas to Life</span></span>
 </style>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ══════════════════════════════════════════
+   GO HOME — logo click handler
+══════════════════════════════════════════ */
+function goHome() {
+    window.location.href = window.location.origin + window.location.pathname;
+}
+
 /* ══════════════════════════════════════════
    VIDEO HELPERS
 ══════════════════════════════════════════ */
