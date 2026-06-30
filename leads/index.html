@@ -336,7 +336,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       <p class="card-help">Choose a focused service, client type, location, and budget level.</p>
       <label>Service Type</label>
       <select id="serviceType">
-        <option value="SaaS Explainer Videos">Financial Planner</option>
+        <option value="Financial Planner">Financial Planner</option>
         <option value="YouTube Long-Form Editing">YouTube Long-Form Editing</option>
         <option value="Short-Form Reels & Shorts">Short-Form Reels &amp; Shorts</option>
         <option value="Podcast Editing & Clipping">Podcast Editing &amp; Clipping</option>
@@ -360,7 +360,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
         <option value="Interior designers">Interior designers</option>
         <option value="Hotels">Hotels</option>
         <option value="Local ecommerce brands">Local ecommerce brands</option>
-        <option value="SaaS founders">Financial Advisor</option>
+        <option value="Financial Advisor">Financial Advisor</option>
         <option value="Authors & speakers">Authors &amp; speakers</option>
       </select>
       <div class="row-2">
@@ -756,7 +756,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "YouTube Long-Form Editing": "Pitch monthly long-form YouTube editing — hooks, retention cuts, captions, motion graphics, and thumbnail direction that turns watch time into inbound leads.",
       "Short-Form Reels & Shorts": "Pitch 12 to 20 short-form Reels, TikToks, or Shorts a month, repurposed from footage they already have, built to grow reach without extra filming.",
       "Podcast Editing & Clipping": "Pitch full episode editing plus 15 to 30 short clips per episode for Instagram, TikTok, YouTube Shorts, and LinkedIn.",
-      "SaaS Explainer Videos": "Pitch a clean explainer or demo video plus a short-form clip set that turns trial sign-ups into paying customers.",
+      "Financial Planner": "Pitch a clean explainer or demo video plus a short-form clip set that turns trial sign-ups into paying customers.",
       "Script Writing": "Pitch proven, hook-driven scripts and a content calendar built around what's already working in their niche.",
       "Thumbnail Design & A/B Testing": "Pitch A/B-tested, high-CTR thumbnails designed from what's working in their niche right now.",
       "Content Strategy & Calendar": "Pitch a full content calendar reverse-engineered from their real goal — leads, authority, or sponsorships.",
@@ -776,7 +776,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Interior designers": "Portfolios sell projects. Before/after reveals and walkthroughs turn browsers into signed clients.",
       "Hotels": "Bookings start with a feed. Room tours and experience reels do the convincing before a guest checks rates.",
       "Local ecommerce brands": "Product video outperforms static photos every time. Demos and ad creatives are what move units.",
-      "SaaS founders": "A confusing product loses trial sign-ups. Clear explainer videos and founder clips turn free trials into paying customers.",
+      "Financial Advisor": "A confusing product loses trial sign-ups. Clear explainer videos and founder clips turn free trials into paying customers.",
       "Authors & speakers": "Stages and books sell on presence. Clipped talks and authority reels are what book the next gig."
     };
     const platformMap = {
@@ -793,7 +793,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Interior designers": "Instagram first, then their website.",
       "Hotels": "Google Maps first, then Instagram.",
       "Local ecommerce brands": "Instagram first, then their website.",
-      "SaaS founders": "LinkedIn first, then their website.",
+      "Financial Advisor": "LinkedIn first, then their website.",
       "Authors & speakers": "LinkedIn first, then YouTube."
     };
     const baseOffers = {
@@ -810,7 +810,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Interior designers": "Before/after reveals, room transformations, and walkthrough edits built to convert browsers into signed clients.",
       "Hotels": "Room tour reels, guest experience clips, and seasonal offer videos built to drive direct bookings.",
       "Local ecommerce brands": "Product reels, ad creatives, and testimonial videos built for Meta ads and organic social.",
-      "SaaS founders": "A clear explainer or demo video plus a short clip set that turns trial sign-ups into paying customers.",
+      "Financial Advisor": "A clear explainer or demo video plus a short clip set that turns trial sign-ups into paying customers.",
       "Authors & speakers": "Clipped talks, authority reels, and highlight videos built to book your next stage or podcast slot."
     };
     const packageNameMap = {
@@ -827,7 +827,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Interior designers": "Portfolio Reveal Pack",
       "Hotels": "Guest Experience Pack",
       "Local ecommerce brands": "Product Video Ads Pack",
-      "SaaS founders": "Founder & Demo Pack",
+      "Financial Advisor": "Founder & Demo Pack",
       "Authors & speakers": "Authority Clips Package"
     };
     const deliverablesMap = {
@@ -844,7 +844,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Interior designers": "6 to 8 before/after reveal reels, 2 walkthrough edits, captions, premium pacing, vertical exports.",
       "Hotels": "8 to 10 room tour and experience reels, captions, seasonal offer edits, vertical exports.",
       "Local ecommerce brands": "6 to 10 product videos, 3 ad creative variations, captions, hooks, square plus vertical exports.",
-      "SaaS founders": "1 explainer or demo video, 6 to 8 founder/feature clips, captions, vertical and landing-page cuts.",
+      "Financial Advisor": "1 explainer or demo video, 6 to 8 founder/feature clips, captions, vertical and landing-page cuts.",
       "Authors & speakers": "8 to 10 authority clips from talks or interviews, captions, hook titles, vertical exports."
     };
 
@@ -1195,7 +1195,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       if (value.includes("interior")) return "Interior designers";
       if (value.includes("hotel")) return "Hotels";
       if (value.includes("ecommerce") || value.includes("e-commerce") || value.includes("product")) return "Local ecommerce brands";
-      if (value.includes("saas") || value.includes("startup") || value.includes("founder")) return "SaaS founders";
+      if (value.includes("finance") || value.includes("startup") || value.includes("founder")) return "Financial Advisor";
       if (value.includes("author") || value.includes("speaker")) return "Authors & speakers";
       return category || "Default";
     }
