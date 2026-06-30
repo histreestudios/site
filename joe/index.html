@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -64,7 +65,7 @@ nav.scr{background:rgba(28,3,3,.59);backdrop-filter:blur(15px);border-bottom:1px
 .ph-big{font-family:var(--F1);font-size:clamp(8rem,16vw,13rem);letter-spacing:4px;color:rgba(240,235,228,.05);line-height:1;position:relative;z-index:1;}
 .ph-hint{font-family:var(--F2);font-size:.58rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(200,16,46,.45);position:relative;z-index:1;}
 /* corner badge */
-.photo-badge{position:absolute;bottom:24px;left:24px;z-index:5;display:flex;align-items:center;gap:9px;font-family:var(--F2);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8152e;background:rgba(8,8,8,.65);border:1.5px solid rgba(255,255,255,.07);padding:10px 16px;border-radius:18px;backdrop-filter:blur(14px);}
+.photo-badge{position:absolute;bottom:24px;left:24px;z-index:5;display:flex;align-items:center;gap:9px;font-family:var(--F2);font-size:.55rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8152e;background:rgba(8,8,8,.65);border:1.5px solid rgba(255,255,255,.07);padding:10px 16px;border-radius:18px;backdrop-filter:blur(14px);}
 .pb-dot{width:5px;height:5px;border-radius:50%;background:var(--red2);animation:np 2s ease-in-out infinite;}
 
 /* RIGHT — text */
@@ -75,7 +76,7 @@ nav.scr{background:rgba(28,3,3,.59);backdrop-filter:blur(15px);border-bottom:1px
 .i-eye::before{content:'';width:56px;height:1px;background:var(--red2);flex-shrink:0;}
 .i-eye-text{letter-spacing:1px;min-width:0;flex:1 1 160px;}
 
-.i-name{font-family:var(--F1);font-size:2rem;font-weight:700;letter-spacing:1px;line-height:1;margin-bottom:12px;opacity:0;animation:su .9s .55s cubic-bezier(.25,1,.5,1) forwards;}
+.i-name{font-family:var(--F1);font-size:2rem;font-weight:740;letter-spacing:1px;line-height:1;margin-bottom:12px;opacity:0;animation:su .9s .55s cubic-bezier(.25,1,.5,1) forwards;}
 
 .i-role{font-family:var(--F2);font-size:clamp(.8rem,1.2vw,.95rem);font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:36px;opacity:0;animation:su .7s .7s cubic-bezier(.25,1,.5,1) forwards;}
 .i-role span{color:var(--red2);}
@@ -97,7 +98,7 @@ nav.scr{background:rgba(28,3,3,.59);backdrop-filter:blur(15px);border-bottom:1px
 
 /* scroll nudge */
 .intro-scroll{position:absolute;bottom:28px;right:28px;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--F2);font-size:.52rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(240,235,228,.2);z-index:5;}
-.isl{width:1px;height:42px;background:linear-gradient(to bottom,var(--red2),transparent);animation:sln 2s ease-in-out infinite;}
+.isl{width:3px;height:42px;background:linear-gradient(to bottom,var(--red2),transparent);animation:sln 2s ease-in-out infinite;}
 @keyframes sln{0%,100%{opacity:.2;transform:scaleY(1)}50%{opacity:.65;transform:scaleY(1.2)}}
 @keyframes su{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
@@ -237,7 +238,7 @@ nav.scr{background:rgba(28,3,3,.59);backdrop-filter:blur(15px);border-bottom:1px
 @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
 
 .ceye{position:relative;z-index:2;font-family:var(--F2);font-size:.6rem;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--red2);margin-bottom:18px;}
-.chead{position:relative;z-index:2;font-family:var(--F1);font-size:4;letter-spacing:1px;line-height:1.1;font-weight:800;margin-bottom:18px;}
+.chead{position:relative;z-index:2;font-family:var(--F1);font-size:clamp(2.4rem,8vw,7.5rem);letter-spacing:1px;line-height:1.1;font-weight:800;margin-bottom:18px;}
 .chead em{display:block;font-style:normal;color:var(--red2);}
 .csub{position:relative;z-index:2;font-size:.88rem;font-weight:300;color:var(--muted);max-width:390px;margin:0 auto 40px;line-height:1.82;}
 
