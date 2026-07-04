@@ -781,6 +781,76 @@
     #particle-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.3; }
 
     /* ============================================================
+       HOME ENGAGEMENT POPUP (2-min dwell)
+    ============================================================ */
+    .home-popup-overlay {
+        position:fixed; inset:0; z-index:10000;
+        background:rgba(0,0,0,0.75); backdrop-filter:blur(8px);
+        display:flex; align-items:center; justify-content:center;
+        opacity:0; pointer-events:none; transition:opacity 0.4s ease;
+        padding:20px;
+    }
+    .home-popup-overlay.show { opacity:1; pointer-events:all; }
+    .home-popup-card {
+        position:relative; width:100%; max-width:420px;
+        background:linear-gradient(160deg, rgba(12,12,20,0.98), rgba(22,10,28,0.98));
+        border:1px solid rgba(200,16,46,0.35); border-radius:28px;
+        padding:42px 34px 36px; text-align:center;
+        transform:scale(0.85) translateY(24px); opacity:0;
+        transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+        box-shadow:0 30px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .home-popup-overlay.show .home-popup-card { transform:scale(1) translateY(0); opacity:1; }
+    .home-popup-close {
+        position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%;
+        background:rgba(255,255,255,0.06); border:1px solid var(--glass-border-bright);
+        color:var(--muted); display:flex; align-items:center; justify-content:center;
+        cursor:pointer; font-size:0.9rem; transition:all 0.2s;
+    }
+    .home-popup-close:hover { background:rgba(200,16,46,0.2); border-color:rgba(200,16,46,0.4); color:#ff4d6d; }
+    .home-popup-badge {
+        display:inline-flex; align-items:center; gap:6px; padding:6px 16px; border-radius:50px;
+        background:rgba(200,16,46,0.14); border:1px solid rgba(200,16,46,0.35);
+        color:#ff4d6d; font-size:0.72rem; font-weight:700; letter-spacing:1.5px;
+        text-transform:uppercase; margin-bottom:20px; font-family:'Syne',sans-serif;
+    }
+    .home-popup-title {
+        font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:800;
+        letter-spacing:-0.5px; margin-bottom:12px; color:#fff; line-height:1.2;
+    }
+    .home-popup-desc { color:var(--muted); font-size:0.92rem; line-height:1.65; margin-bottom:10px; }
+    .home-popup-discount-row {
+        display:flex; align-items:baseline; justify-content:center; gap:10px; margin:18px 0 22px;
+    }
+    .home-popup-discount-old { font-size:1rem; color:var(--muted2); text-decoration:line-through; font-family:'Syne',sans-serif; font-weight:600; }
+    .home-popup-discount-new { font-family:'Syne',sans-serif; font-size:1.9rem; font-weight:800; color:#fff; }
+    .home-popup-discount-tag {
+        display:inline-flex; align-items:center; gap:5px; font-size:0.7rem; font-weight:700;
+        padding:4px 12px; border-radius:50px; background:rgba(52,211,153,0.15); color:#34d399;
+        margin-bottom:14px;
+    }
+    .home-popup-btn {
+        display:inline-flex; align-items:center; justify-content:center; gap:8px;
+        width:100%; padding:15px 24px; border-radius:50px;
+        background:linear-gradient(135deg,var(--accent2),var(--accent)); color:#fff;
+        font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem;
+        border:none; cursor:pointer; transition:all 0.25s; text-decoration:none;
+    }
+    .home-popup-btn:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(200,16,46,0.4); }
+    .home-popup-dismiss {
+        display:block; margin:16px auto 0; background:none; border:none; cursor:pointer;
+        color:var(--muted2); font-size:0.8rem; text-decoration:underline; transition:color 0.2s;
+    }
+    .home-popup-dismiss:hover { color:var(--muted); }
+    .confetti-piece { position:fixed; top:0; left:0; z-index:10001; pointer-events:none; border-radius:2px; }
+    @media (max-width:480px) {
+        .home-popup-card { padding:34px 22px 28px; border-radius:22px; }
+        .home-popup-title { font-size:1.25rem; }
+        .home-popup-desc { font-size:0.85rem; }
+        .home-popup-discount-new { font-size:1.5rem; }
+    }
+
+    /* ============================================================
        WORD POP
     ============================================================ */
     .word-pop { opacity:0; display:inline-block; animation:wordPop 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards; }
@@ -864,6 +934,7 @@
             <a class="mega-nav-link" href="#portfolio" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(52,211,153,0.12);color:#34d399;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div><div class="mega-nav-text"><strong>Portfolio</strong><span>Browse our video work</span></div></a>
             <a class="mega-nav-link" href="#testimonials" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div><div class="mega-nav-text"><strong>Testimonials</strong><span>What clients say</span></div></a>
             <a class="mega-nav-link" href="/blog" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(255,77,109,0.12);color:#ff4d6d;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div><div class="mega-nav-text"><strong>Blog</strong><span>Tips &amp; case studies</span></div></a>
+            <a class="mega-nav-link" href="resources.html" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(52,211,153,0.14);color:#34d399;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div><div class="mega-nav-text"><strong>Free Resources</strong><span>Guides, templates &amp; tools</span></div></a>
             <a class="mega-nav-link" href="#process" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(59,79,216,0.15);color:var(--blue2);"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v-2h2V8H10v2h2v2H7v-2h2V6H5v4h2v2H2v6h5v-4h10v4h5v-6h-5z"/></svg></div><div class="mega-nav-text"><strong>Process</strong><span>How we work</span></div></a>
             <a class="mega-nav-link" href="#pricing" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(244,114,182,0.12);color:#f472b6;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7zm11.77 8.27L13 19.54l-4.27-4.27A2.52 2.52 0 0 1 8 13.5c0-1.38 1.12-2.5 2.5-2.5.69 0 1.32.28 1.77.74l.73.72.73-.73A2.49 2.49 0 0 1 15.5 11c1.38 0 2.5 1.12 2.5 2.5 0 .69-.28 1.32-.73 1.77z"/></svg></div><div class="mega-nav-text"><strong>Pricing</strong><span>Transparent plans</span></div></a>
             <a class="mega-nav-link" href="#faq" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(255,255,255,0.05);color:var(--muted);"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg></div><div class="mega-nav-text"><strong>FAQ</strong><span>Common questions</span></div></a>
@@ -888,6 +959,7 @@
         <a href="#work">Work</a>
         <a href="#testimonials">Testimonials</a>
         <a href="blog.html">Blog</a>
+        <a href="resources.html">Resources</a>
         <a href="#process">Process</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact">Find Us</a>
@@ -2698,5 +2770,180 @@ document.querySelectorAll('a[href="#testimonials"]').forEach(a=>{
     });
 });
 </script>
+<!-- ============ HOME ENGAGEMENT POPUP ============ -->
+<div class="home-popup-overlay" id="home-popup-overlay">
+    <div class="home-popup-card" id="home-popup-card">
+        <div class="home-popup-close" id="home-popup-close">✕</div>
+        <div class="home-popup-badge" id="home-popup-badge">🔥 Limited Time Offer</div>
+        <div class="home-popup-title" id="home-popup-title">Get 50% Off Your First 2 Months</div>
+        <div class="home-popup-desc" id="home-popup-desc">Start your Done-For-You content system today and lock in massive savings for your first 60 days with us.</div>
+        <div id="home-popup-discount-block">
+            <span class="home-popup-discount-tag">🔥 New Client Offer</span>
+            <div class="home-popup-discount-row">
+                <span class="home-popup-discount-old">$1,499</span>
+                <span class="home-popup-discount-new">50% OFF</span>
+            </div>
+        </div>
+        <a href="#" class="home-popup-btn" id="home-popup-btn" target="_blank">Claim 50% Off Now</a>
+        <button class="home-popup-dismiss" id="home-popup-dismiss">Not right now</button>
+    </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   HOME ENGAGEMENT POPUP — 2 min dwell trigger
+   5 rotating CTAs (1 per visit) + first-time
+   2-month 50% discount offer with confetti.
+══════════════════════════════════════════ */
+(function() {
+    var POPUP_DELAY_MS = 120000; // 2 minutes
+    var BOOK_CALL_URL = 'https://calendar.app.google/x9iiZ9u2x3ze4MxDA';
+    var IG_URL = 'https://instagram.com/joe.sh0w/';
+
+    var visits = parseInt(localStorage.getItem('histree_home_visits') || '0', 10);
+    var isFirstVisit = visits === 0;
+    localStorage.setItem('histree_home_visits', String(visits + 1));
+
+    var variants = [
+        { // 0 — first-time visitor discount offer (with confetti)
+            badge: '🔥 Limited Time Offer',
+            title: 'Get 50% Off Your First 2 Months',
+            desc: 'Start your Done-For-You content system today and lock in massive savings for your first 60 days with us.',
+            showDiscount: true,
+            btnText: 'Claim 50% Off Now',
+            action: { type: 'scroll', target: '#pricing' }
+        },
+        {
+            badge: '🎯 Free Strategy Call',
+            title: 'Want a Free Growth Plan?',
+            desc: "Book a free 30-minute call and we'll map out exactly how to grow your channel — no cost, no pressure.",
+            showDiscount: false,
+            btnText: 'Book Free Call ↗',
+            action: { type: 'link', url: BOOK_CALL_URL }
+        },
+        {
+            badge: '🎬 See The Work',
+            title: 'Curious What We Can Do?',
+            desc: "Take a look at real videos we've produced for podcasters and creators just like you.",
+            showDiscount: false,
+            btnText: 'View Our Portfolio',
+            action: { type: 'scroll', target: '#portfolio' }
+        },
+        {
+            badge: "💬 Let's Talk",
+            title: 'Have Questions? DM Us.',
+            desc: 'Message us directly on Instagram — the fastest way to get answers about your project.',
+            showDiscount: false,
+            btnText: 'Send a DM ↗',
+            action: { type: 'link', url: IG_URL }
+        },
+        {
+            badge: '⭐ Proven Results',
+            title: "Don't Just Take Our Word For It",
+            desc: 'See what real clients on Upwork say about working with Histree Studios.',
+            showDiscount: false,
+            btnText: 'Read Reviews',
+            action: { type: 'scroll', target: '[data-alias="testimonials"]' }
+        }
+    ];
+
+    var variantIndex;
+    if (isFirstVisit) {
+        variantIndex = 0;
+    } else {
+        variantIndex = ((visits - 1) % (variants.length - 1)) + 1;
+    }
+    var variant = variants[variantIndex];
+
+    function launchConfetti() {
+        var colors = ['#C8102E', '#e01535', '#5b6ef8', '#7c3aed', '#fbbf24', '#34d399'];
+        var container = document.createElement('div');
+        container.style.position = 'fixed';
+        container.style.inset = '0';
+        container.style.zIndex = '10002';
+        container.style.pointerEvents = 'none';
+        document.body.appendChild(container);
+
+        var centerX = window.innerWidth / 2;
+        var centerY = window.innerHeight / 2 - 120;
+        var pieceCount = window.innerWidth < 600 ? 45 : 80;
+
+        for (var i = 0; i < pieceCount; i++) {
+            (function() {
+                var el = document.createElement('div');
+                el.className = 'confetti-piece';
+                var isCircle = Math.random() > 0.5;
+                var size = 6 + Math.random() * 7;
+                el.style.width = size + 'px';
+                el.style.height = (isCircle ? size : size * 1.7) + 'px';
+                el.style.borderRadius = isCircle ? '50%' : '2px';
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.left = centerX + 'px';
+                el.style.top = centerY + 'px';
+                container.appendChild(el);
+
+                var angle = Math.random() * Math.PI * 2;
+                var distance = 160 + Math.random() * 260;
+                var endX = Math.cos(angle) * distance;
+                var endY = Math.sin(angle) * distance + 180;
+                var rotate = Math.random() * 720 - 360;
+                var duration = 1300 + Math.random() * 900;
+
+                if (el.animate) {
+                    el.animate([
+                        { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+                        { transform: 'translate(' + endX + 'px,' + endY + 'px) rotate(' + rotate + 'deg)', opacity: 0 }
+                    ], { duration: duration, easing: 'cubic-bezier(0.25,0.65,0.35,1)', fill: 'forwards' });
+                }
+            })();
+        }
+        setTimeout(function() { container.remove(); }, 2600);
+    }
+
+    function closePopup() {
+        var overlay = document.getElementById('home-popup-overlay');
+        overlay.classList.remove('show');
+    }
+
+    function showPopup() {
+        if (sessionStorage.getItem('histree_popup_shown')) return;
+        sessionStorage.setItem('histree_popup_shown', '1');
+
+        document.getElementById('home-popup-badge').textContent = variant.badge;
+        document.getElementById('home-popup-title').textContent = variant.title;
+        document.getElementById('home-popup-desc').textContent = variant.desc;
+        document.getElementById('home-popup-btn').textContent = variant.btnText;
+        document.getElementById('home-popup-discount-block').style.display = variant.showDiscount ? 'block' : 'none';
+
+        var btn = document.getElementById('home-popup-btn');
+        btn.onclick = function(e) {
+            e.preventDefault();
+            if (variant.action.type === 'link') {
+                window.open(variant.action.url, '_blank');
+            } else if (variant.action.type === 'scroll') {
+                var target = document.querySelector(variant.action.target);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            }
+            closePopup();
+        };
+
+        var overlay = document.getElementById('home-popup-overlay');
+        overlay.classList.add('show');
+
+        if (isFirstVisit) {
+            setTimeout(launchConfetti, 200);
+        }
+    }
+
+    document.getElementById('home-popup-close').addEventListener('click', closePopup);
+    document.getElementById('home-popup-dismiss').addEventListener('click', closePopup);
+    document.getElementById('home-popup-overlay').addEventListener('click', function(e) {
+        if (e.target === this) closePopup();
+    });
+
+    setTimeout(showPopup, POPUP_DELAY_MS);
+})();
+</script>
+
 </body>
 </html>
