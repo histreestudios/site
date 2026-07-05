@@ -520,7 +520,6 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
           <div class="ftab active" data-filter="all"><span>All Resources</span></div>
           <div class="ftab" data-filter="scripts"><span>Scripts</span></div>
           <div class="ftab" data-filter="templates"><span>Templates</span></div>
-          <div class="ftab" data-filter="checklists"><span>Checklists</span></div>
           <div class="ftab" data-filter="guides"><span>Guides</span></div>
       </div>
   </div>
@@ -542,61 +541,69 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
                   <button class="resource-btn" onclick="window.open('thumbnail','_blank')">Open Free Tool ↗</button>
               </div>
 
-              <!-- COMING SOON PLACEHOLDERS (real description, no title shown) -->
-              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="scripts">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <!-- COMING SOON — NAMED RESOURCES (title + description shown for stronger conversion) -->
+              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="guides" data-title="title tips headline copywriting guide">
+                  <div class="resource-icon"><i class="fa-solid fa-heading"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">A swipe file of proven opening lines used across our highest-retention client videos, organized by niche and format.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('YouTube Hook Swipe File')">Join Waitlist</button>
+                  <h3>Title Tips</h3>
+                  <p class="coming-soon-text">The exact word patterns, structures, and psychological triggers we use to write titles that get clicked — pulled straight from client A/B tests.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Title Tips','guides')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="templates">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="guides" data-title="podcast thumbnail psychology guide">
+                  <div class="resource-icon"><i class="fa-solid fa-brain"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">The exact planning system we use with retainer clients to batch, schedule, and track every piece of content.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('30-Day Content Calendar (Notion)')">Join Waitlist</button>
+                  <h3>Podcast Thumbnail Psychology Guide</h3>
+                  <p class="coming-soon-text">Why some thumbnails stop the scroll and others get ignored — the color, face, and composition principles behind our highest-CTR podcast covers.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Podcast Thumbnail Psychology Guide','guides')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active" data-cat="checklists">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="resource-card coming-soon reveal active" data-cat="templates" data-title="content calendar generator planning tool">
+                  <div class="resource-icon"><i class="fa-solid fa-calendar-days"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">The checks we run before any client video goes live — titles, thumbnails, chapters, captions, and more.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Pre-Publish Video Checklist')">Join Waitlist</button>
+                  <h3>Content Calendar Generator</h3>
+                  <p class="coming-soon-text">Plug in your niche and posting frequency and get a ready-made content calendar — the same batching system we run for retainer clients.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Content Calendar Generator','templates')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="scripts">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="scripts" data-title="cta framework call to action script">
+                  <div class="resource-icon"><i class="fa-solid fa-bullhorn"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">Plug-and-play intro and outro scripts for podcasters who want a stronger first and last 15 seconds.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Podcast Intro/Outro Script Pack')">Join Waitlist</button>
+                  <h3>CTA Framework</h3>
+                  <p class="coming-soon-text">A fill-in-the-blank framework for writing calls-to-action that convert viewers into subscribers, sales, or sign-ups without feeling salesy.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('CTA Framework','scripts')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="templates">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="guides" data-title="short form repurposing blueprint clips">
+                  <div class="resource-icon"><i class="fa-solid fa-scissors"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">A ready-to-send rate card layout to help creators price and pitch sponsors with confidence.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Sponsorship Rate Card Template')">Join Waitlist</button>
+                  <h3>The Short-Form Repurposing Blueprint</h3>
+                  <p class="coming-soon-text">How we turn one long-form video into 10+ high-performing clips without losing context, hook strength, or watch time.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('The Short-Form Repurposing Blueprint','guides')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active" data-cat="checklists">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="resource-card coming-soon reveal active" data-cat="scripts" data-title="first 30 seconds blueprint hook retention">
+                  <div class="resource-icon"><i class="fa-solid fa-stopwatch"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">The same 20-point audit we run on prospective clients before offering strategy recommendations.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Channel Audit Checklist')">Join Waitlist</button>
+                  <h3>First 30 Seconds Blueprint</h3>
+                  <p class="coming-soon-text">The exact opening structure we use to stop the scroll and hold viewers past the drop-off point — proven across hundreds of client uploads.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('First 30 Seconds Blueprint','scripts')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="guides">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="templates" data-title="sponsor pitch kit sponsorship deck">
+                  <div class="resource-icon"><i class="fa-solid fa-handshake"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">How we turn one long-form video into 10+ clips without losing context or hook strength.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Short-Form Repurposing Guide')">Join Waitlist</button>
+                  <h3>Sponsor Pitch Kit</h3>
+                  <p class="coming-soon-text">A ready-to-send pitch deck and rate card template to help creators approach, price, and close sponsors with confidence.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Sponsor Pitch Kit','templates')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="templates">
-                  <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="guides" data-title="font pairing guide for creators design">
+                  <div class="resource-icon"><i class="fa-solid fa-font"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">A fill-in-the-blank script structure our writers use on every long-form video we produce.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Hook–Retain–CTA Script Framework')">Join Waitlist</button>
+                  <h3>The Font Pairing Guide for Creators</h3>
+                  <p class="coming-soon-text">A curated set of font pairings for thumbnails, titles, and lower-thirds so your channel looks consistent and professional without hiring a designer.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('The Font Pairing Guide for Creators','guides')">Join Waitlist</button>
               </div>
 
           </div>
@@ -642,6 +649,8 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
 <div class="notify-modal-overlay" id="notify-overlay">
     <div class="notify-modal">
         <button class="notify-modal-close" onclick="closeNotifyModal()">✕</button>
+
+        <!-- FORM -->
         <div id="notify-form-view">
             <div class="notify-modal-badge" id="notify-resource-badge">● Early Access</div>
             <h3>Join the Waitlist</h3>
@@ -658,58 +667,58 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
             <div class="notify-phone-row">
                 <select class="notify-country-select" id="notify-country">
                     
-    <option value="+971">🇦🇪 +971</option> <!-- United Arab Emirates -->
-    <option value="+44">🇬🇧 +44</option>   <!-- United Kingdom -->
-    <option value="+1" selected>🇺🇸 +1</option> <!-- United States -->
-    <option value="+54">🇦🇷 +54</option>   <!-- Argentina -->
-    <option value="+61">🇦🇺 +61</option>   <!-- Australia -->
-    <option value="+43">🇦🇹 +43</option>   <!-- Austria -->
-    <option value="+973">🇧🇭 +973</option> <!-- Bahrain -->
-    <option value="+880">🇧🇩 +880</option> <!-- Bangladesh -->
-    <option value="+32">🇧🇪 +32</option>   <!-- Belgium -->
-    <option value="+267">🇧🇼 +267</option> <!-- Botswana -->
-    <option value="+55">🇧🇷 +55</option>   <!-- Brazil -->
-    <option value="+1">🇨🇦 +1</option>     <!-- Canada -->
-    <option value="+56">🇨🇱 +56</option>   <!-- Chile -->
-    <option value="+57">🇨🇴 +57</option>   <!-- Colombia -->
-    <option value="+506">🇨🇷 +506</option> <!-- Costa Rica -->
-    <option value="+45">🇩🇰 +45</option>   <!-- Denmark -->
-    <option value="+20">🇪🇬 +20</option>   <!-- Egypt -->
-    <option value="+358">🇫🇮 +358</option> <!-- Finland -->
-    <option value="+33">🇫🇷 +33</option>   <!-- France -->
-    <option value="+49">🇩🇪 +49</option>   <!-- Germany -->
-    <option value="+30">🇬🇷 +30</option>   <!-- Greece -->
-    <option value="+852">🇭🇰 +852</option> <!-- Hong Kong -->
-    <option value="+353">🇮🇪 +353</option> <!-- Ireland -->
-    <option value="+39">🇮🇹 +39</option>   <!-- Italy -->
-    <option value="+81">🇯🇵 +81</option>   <!-- Japan -->
-    <option value="+254">🇰🇪 +254</option> <!-- Kenya -->
-    <option value="+965">🇰🇼 +965</option> <!-- Kuwait -->
-    <option value="+60">🇲🇾 +60</option>   <!-- Malaysia -->
-    <option value="+230">🇲🇺 +230</option> <!-- Mauritius -->
-    <option value="+52">🇲🇽 +52</option>   <!-- Mexico -->
-    <option value="+212">🇲🇦 +212</option> <!-- Morocco -->
-    <option value="+31">🇳🇱 +31</option>   <!-- Netherlands -->
-    <option value="+64">🇳🇿 +64</option>   <!-- New Zealand -->
-    <option value="+234">🇳🇬 +234</option> <!-- Nigeria -->
-    <option value="+47">🇳🇴 +47</option>   <!-- Norway -->
-    <option value="+968">🇴🇲 +968</option> <!-- Oman -->
-    <option value="+507">🇵🇦 +507</option> <!-- Panama -->
-    <option value="+51">🇵🇪 +51</option>   <!-- Peru -->
-    <option value="+48">🇵🇱 +48</option>   <!-- Poland -->
-    <option value="+351">🇵🇹 +351</option> <!-- Portugal -->
-    <option value="+974">🇶🇦 +974</option> <!-- Qatar -->
-    <option value="+966">🇸🇦 +966</option> <!-- Saudi Arabia -->
-    <option value="+248">🇸🇨 +248</option> <!-- Seychelles -->
-    <option value="+65">🇸🇬 +65</option>   <!-- Singapore -->
-    <option value="+27">🇿🇦 +27</option>   <!-- South Africa -->
-    <option value="+82">🇰🇷 +82</option>   <!-- South Korea -->
-    <option value="+34">🇪🇸 +34</option>   <!-- Spain -->
-    <option value="+46">🇸🇪 +46</option>   <!-- Sweden -->
-    <option value="+41">🇨🇭 +41</option>   <!-- Switzerland -->
-    <option value="+886">🇹🇼 +886</option> <!-- Taiwan -->
-    <option value="+66">🇹🇭 +66</option>   <!-- Thailand -->
-    <option value="+598">🇺🇾 +598</option> <!-- Uruguay -->
+    <option value="+971" data-country="United Arab Emirates">🇦🇪 +971</option>
+    <option value="+44" data-country="United Kingdom">🇬🇧 +44</option>
+    <option value="+1" data-country="United States" selected>🇺🇸 +1</option>
+    <option value="+54" data-country="Argentina">🇦🇷 +54</option>
+    <option value="+61" data-country="Australia">🇦🇺 +61</option>
+    <option value="+43" data-country="Austria">🇦🇹 +43</option>
+    <option value="+973" data-country="Bahrain">🇧🇭 +973</option>
+    <option value="+880" data-country="Bangladesh">🇧🇩 +880</option>
+    <option value="+32" data-country="Belgium">🇧🇪 +32</option>
+    <option value="+267" data-country="Botswana">🇧🇼 +267</option>
+    <option value="+55" data-country="Brazil">🇧🇷 +55</option>
+    <option value="+1" data-country="Canada">🇨🇦 +1</option>
+    <option value="+56" data-country="Chile">🇨🇱 +56</option>
+    <option value="+57" data-country="Colombia">🇨🇴 +57</option>
+    <option value="+506" data-country="Costa Rica">🇨🇷 +506</option>
+    <option value="+45" data-country="Denmark">🇩🇰 +45</option>
+    <option value="+20" data-country="Egypt">🇪🇬 +20</option>
+    <option value="+358" data-country="Finland">🇫🇮 +358</option>
+    <option value="+33" data-country="France">🇫🇷 +33</option>
+    <option value="+49" data-country="Germany">🇩🇪 +49</option>
+    <option value="+30" data-country="Greece">🇬🇷 +30</option>
+    <option value="+852" data-country="Hong Kong">🇭🇰 +852</option>
+    <option value="+353" data-country="Ireland">🇮🇪 +353</option>
+    <option value="+39" data-country="Italy">🇮🇹 +39</option>
+    <option value="+81" data-country="Japan">🇯🇵 +81</option>
+    <option value="+254" data-country="Kenya">🇰🇪 +254</option>
+    <option value="+965" data-country="Kuwait">🇰🇼 +965</option>
+    <option value="+60" data-country="Malaysia">🇲🇾 +60</option>
+    <option value="+230" data-country="Mauritius">🇲🇺 +230</option>
+    <option value="+52" data-country="Mexico">🇲🇽 +52</option>
+    <option value="+212" data-country="Morocco">🇲🇦 +212</option>
+    <option value="+31" data-country="Netherlands">🇳🇱 +31</option>
+    <option value="+64" data-country="New Zealand">🇳🇿 +64</option>
+    <option value="+234" data-country="Nigeria">🇳🇬 +234</option>
+    <option value="+47" data-country="Norway">🇳🇴 +47</option>
+    <option value="+968" data-country="Oman">🇴🇲 +968</option>
+    <option value="+507" data-country="Panama">🇵🇦 +507</option>
+    <option value="+51" data-country="Peru">🇵🇪 +51</option>
+    <option value="+48" data-country="Poland">🇵🇱 +48</option>
+    <option value="+351" data-country="Portugal">🇵🇹 +351</option>
+    <option value="+974" data-country="Qatar">🇶🇦 +974</option>
+    <option value="+966" data-country="Saudi Arabia">🇸🇦 +966</option>
+    <option value="+248" data-country="Seychelles">🇸🇨 +248</option>
+    <option value="+65" data-country="Singapore">🇸🇬 +65</option>
+    <option value="+27" data-country="South Africa">🇿🇦 +27</option>
+    <option value="+82" data-country="South Korea">🇰🇷 +82</option>
+    <option value="+34" data-country="Spain">🇪🇸 +34</option>
+    <option value="+46" data-country="Sweden">🇸🇪 +46</option>
+    <option value="+41" data-country="Switzerland">🇨🇭 +41</option>
+    <option value="+886" data-country="Taiwan">🇹🇼 +886</option>
+    <option value="+66" data-country="Thailand">🇹🇭 +66</option>
+    <option value="+598" data-country="Uruguay">🇺🇾 +598</option>
 </select>
                 <input type="tel" id="notify-whatsapp" placeholder="415 555 0132" required>
             </div>
@@ -717,6 +726,8 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
 
             <button class="notify-modal-submit" id="notify-submit" onclick="submitNotify()">Join Waitlist →</button>
         </div>
+
+        <!-- SUCCESS -->
         <div id="notify-success-view" style="display:none;">
             <div class="notify-modal-success">
                 <i class="fa-solid fa-circle-check"></i>
@@ -727,14 +738,17 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
     </div>
 </div>
 
+
 <script>
 /* WAITLIST MODAL LOGIC */
-const NOTIFY_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGFsxGILLCBMEJDt7LbjtuXgsD9Sf8stJIRZToKjIg7_9nksWcXAPN6odMcMr_NA18zA/exec";
+const NOTIFY_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxSh5rQuo0D9cIbcy4mm5wZN4c5WaHb_LvmFM0pIqy1PPxaIsGhi34iEcrSFNYt6i5nGA/exec";
 
 let currentNotifyResource = '';
+let currentNotifyCategory = '';
 
-function openNotifyModal(resourceName){
+function openNotifyModal(resourceName, category){
     currentNotifyResource = resourceName || 'Unknown Resource';
+    currentNotifyCategory = category || 'uncategorized';
     document.getElementById('notify-resource-badge').textContent = '● ' + currentNotifyResource;
     document.getElementById('notify-overlay').classList.add('open');
     document.getElementById('notify-form-view').style.display = 'block';
@@ -781,10 +795,13 @@ function fireConfetti(){
     }
 }
 
+/* SIMPLE ONE-STEP SUBMIT -> writes directly to the sheet, no verification */
 function submitNotify(){
     const name = document.getElementById('notify-name').value.trim();
     const email = document.getElementById('notify-email').value.trim();
-    const countryCode = document.getElementById('notify-country').value;
+    const countrySelect = document.getElementById('notify-country');
+    const countryCode = countrySelect.value;
+    const countryName = countrySelect.selectedOptions[0]?.dataset.country || '';
     const rawPhone = document.getElementById('notify-whatsapp').value.trim();
     const fullPhone = countryCode + rawPhone.replace(/[^0-9]/g, '');
 
@@ -799,7 +816,6 @@ function submitNotify(){
     if(name.length < 2){ nameError.style.display = 'block'; hasError = true; }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ emailError.style.display = 'block'; hasError = true; }
     if(!/^[0-9]{6,14}$/.test(rawPhone.replace(/[^0-9]/g, ''))){ phoneError.style.display = 'block'; hasError = true; }
-
     if(hasError) return;
 
     const btn = document.getElementById('notify-submit');
@@ -812,7 +828,9 @@ function submitNotify(){
             name,
             email,
             phone: fullPhone,
+            countryName,
             resource: currentNotifyResource,
+            category: currentNotifyCategory,
             source: 'resources-page-waitlist'
         })
     })
