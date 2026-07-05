@@ -295,6 +295,18 @@ section { position:relative; z-index:1; }
     margin-bottom:16px;
 }
 .notify-modal input:focus { border-color:rgba(91,110,248,0.55); box-shadow:0 0 0 3px rgba(91,110,248,0.12); }
+.notify-phone-row { display:flex; gap:8px; margin-bottom:6px; }
+.notify-country-select {
+    flex:0 0 110px; background:#0f0f14; border:1px solid var(--glass-border);
+    border-radius:12px; padding:13px 8px; color:var(--text); font-size:0.85rem;
+    font-family:'DM Sans',sans-serif; outline:none; cursor:pointer; transition:border-color 0.2s;
+}
+.notify-country-select option {
+    background:#0f0f14; color:var(--text);
+}
+.notify-country-select:focus { border-color:rgba(91,110,248,0.55); }
+.notify-phone-row input { margin-bottom:0; flex:1; }
+.notify-field-error { color:#ff4d6d; font-size:0.75rem; margin:-10px 0 14px; display:none; }
 .notify-modal-submit {
     width:100%; padding:14px; border-radius:50px; background:var(--accent2); border:none;
     color:#fff; font-weight:700; font-size:0.92rem; font-family:'Syne',sans-serif;
@@ -305,6 +317,19 @@ section { position:relative; z-index:1; }
 .notify-modal-success { text-align:center; padding:20px 0; }
 .notify-modal-success i { font-size:2.5rem; color:#34d399; margin-bottom:14px; display:block; }
 .notify-modal-error { color:#ff4d6d; font-size:0.8rem; margin-top:-10px; margin-bottom:14px; display:none; }
+
+/* CONFETTI */
+#confetti-container {
+    position:fixed; inset:0; z-index:7000; pointer-events:none; overflow:hidden;
+}
+.confetti-piece {
+    position:absolute; top:-20px; width:8px; height:14px; opacity:0.9;
+    animation:confettiFall linear forwards;
+}
+@keyframes confettiFall {
+    0% { transform:translateY(0) rotate(0deg); opacity:1; }
+    100% { transform:translateY(105vh) rotate(720deg); opacity:0.3; }
+}
 
 /* COMING SOON PLACEHOLDER CARD */
 .resource-card.coming-soon {
@@ -517,61 +542,61 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
                   <button class="resource-btn" onclick="window.open('thumbnail','_blank')">Open Free Tool ↗</button>
               </div>
 
-              <!-- COMING SOON PLACEHOLDERS (no titles revealed) -->
+              <!-- COMING SOON PLACEHOLDERS (real description, no title shown) -->
               <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="scripts">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">A swipe file of proven opening lines used across our highest-retention client videos, organized by niche and format.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('YouTube Hook Swipe File')">Join Waitlist</button>
               </div>
 
               <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="templates">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">The exact planning system we use with retainer clients to batch, schedule, and track every piece of content.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('30-Day Content Calendar (Notion)')">Join Waitlist</button>
               </div>
 
               <div class="resource-card coming-soon reveal active" data-cat="checklists">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">The checks we run before any client video goes live — titles, thumbnails, chapters, captions, and more.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Pre-Publish Video Checklist')">Join Waitlist</button>
               </div>
 
               <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="scripts">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">Plug-and-play intro and outro scripts for podcasters who want a stronger first and last 15 seconds.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Podcast Intro/Outro Script Pack')">Join Waitlist</button>
               </div>
 
               <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="templates">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">A ready-to-send rate card layout to help creators price and pitch sponsors with confidence.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Sponsorship Rate Card Template')">Join Waitlist</button>
               </div>
 
               <div class="resource-card coming-soon reveal active" data-cat="checklists">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">The same 20-point audit we run on prospective clients before offering strategy recommendations.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Channel Audit Checklist')">Join Waitlist</button>
               </div>
 
               <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="guides">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">How we turn one long-form video into 10+ clips without losing context or hook strength.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Short-Form Repurposing Guide')">Join Waitlist</button>
               </div>
 
               <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="templates">
                   <div class="resource-icon"><i class="fa-solid fa-hourglass-half"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <p class="coming-soon-text">We're cooking this one up for you 👨‍🍳<br>Check back soon.</p>
-                  <button class="notify-btn" onclick="openNotifyModal()">Join Waitlist</button>
+                  <p class="coming-soon-text">A fill-in-the-blank script structure our writers use on every long-form video we produce.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Hook–Retain–CTA Script Framework')">Join Waitlist</button>
               </div>
 
           </div>
@@ -612,18 +637,84 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
     <div style="display:flex;gap:10px;"></div>
 </footer>
 
+<div id="confetti-container"></div>
+
 <div class="notify-modal-overlay" id="notify-overlay">
     <div class="notify-modal">
         <button class="notify-modal-close" onclick="closeNotifyModal()">✕</button>
         <div id="notify-form-view">
-            <div class="notify-modal-badge">● Early Access</div>
+            <div class="notify-modal-badge" id="notify-resource-badge">● Early Access</div>
             <h3>Join the Waitlist</h3>
             <p>Be the first to know when this drops — plus get early access before we open it to everyone else.</p>
+            <label for="notify-name">Full Name</label>
+            <input type="text" id="notify-name" placeholder="Jane Doe" required>
+            <div class="notify-field-error" id="notify-name-error">Please enter your name.</div>
+
             <label for="notify-email">Email Address</label>
             <input type="email" id="notify-email" placeholder="you@email.com" required>
-            <label for="notify-whatsapp">WhatsApp Number</label>
-            <input type="tel" id="notify-whatsapp" placeholder="+1 234 567 8900" required>
-            <div class="notify-modal-error" id="notify-error">Please fill in both fields correctly.</div>
+            <div class="notify-field-error" id="notify-email-error">Please enter a valid email.</div>
+
+            <label for="notify-country">WhatsApp Number</label>
+            <div class="notify-phone-row">
+                <select class="notify-country-select" id="notify-country">
+                    
+    <option value="+971">🇦🇪 +971</option> <!-- United Arab Emirates -->
+    <option value="+44">🇬🇧 +44</option>   <!-- United Kingdom -->
+    <option value="+1" selected>🇺🇸 +1</option> <!-- United States -->
+    <option value="+54">🇦🇷 +54</option>   <!-- Argentina -->
+    <option value="+61">🇦🇺 +61</option>   <!-- Australia -->
+    <option value="+43">🇦🇹 +43</option>   <!-- Austria -->
+    <option value="+973">🇧🇭 +973</option> <!-- Bahrain -->
+    <option value="+880">🇧🇩 +880</option> <!-- Bangladesh -->
+    <option value="+32">🇧🇪 +32</option>   <!-- Belgium -->
+    <option value="+267">🇧🇼 +267</option> <!-- Botswana -->
+    <option value="+55">🇧🇷 +55</option>   <!-- Brazil -->
+    <option value="+1">🇨🇦 +1</option>     <!-- Canada -->
+    <option value="+56">🇨🇱 +56</option>   <!-- Chile -->
+    <option value="+57">🇨🇴 +57</option>   <!-- Colombia -->
+    <option value="+506">🇨🇷 +506</option> <!-- Costa Rica -->
+    <option value="+45">🇩🇰 +45</option>   <!-- Denmark -->
+    <option value="+20">🇪🇬 +20</option>   <!-- Egypt -->
+    <option value="+358">🇫🇮 +358</option> <!-- Finland -->
+    <option value="+33">🇫🇷 +33</option>   <!-- France -->
+    <option value="+49">🇩🇪 +49</option>   <!-- Germany -->
+    <option value="+30">🇬🇷 +30</option>   <!-- Greece -->
+    <option value="+852">🇭🇰 +852</option> <!-- Hong Kong -->
+    <option value="+353">🇮🇪 +353</option> <!-- Ireland -->
+    <option value="+39">🇮🇹 +39</option>   <!-- Italy -->
+    <option value="+81">🇯🇵 +81</option>   <!-- Japan -->
+    <option value="+254">🇰🇪 +254</option> <!-- Kenya -->
+    <option value="+965">🇰🇼 +965</option> <!-- Kuwait -->
+    <option value="+60">🇲🇾 +60</option>   <!-- Malaysia -->
+    <option value="+230">🇲🇺 +230</option> <!-- Mauritius -->
+    <option value="+52">🇲🇽 +52</option>   <!-- Mexico -->
+    <option value="+212">🇲🇦 +212</option> <!-- Morocco -->
+    <option value="+31">🇳🇱 +31</option>   <!-- Netherlands -->
+    <option value="+64">🇳🇿 +64</option>   <!-- New Zealand -->
+    <option value="+234">🇳🇬 +234</option> <!-- Nigeria -->
+    <option value="+47">🇳🇴 +47</option>   <!-- Norway -->
+    <option value="+968">🇴🇲 +968</option> <!-- Oman -->
+    <option value="+507">🇵🇦 +507</option> <!-- Panama -->
+    <option value="+51">🇵🇪 +51</option>   <!-- Peru -->
+    <option value="+48">🇵🇱 +48</option>   <!-- Poland -->
+    <option value="+351">🇵🇹 +351</option> <!-- Portugal -->
+    <option value="+974">🇶🇦 +974</option> <!-- Qatar -->
+    <option value="+966">🇸🇦 +966</option> <!-- Saudi Arabia -->
+    <option value="+248">🇸🇨 +248</option> <!-- Seychelles -->
+    <option value="+65">🇸🇬 +65</option>   <!-- Singapore -->
+    <option value="+27">🇿🇦 +27</option>   <!-- South Africa -->
+    <option value="+82">🇰🇷 +82</option>   <!-- South Korea -->
+    <option value="+34">🇪🇸 +34</option>   <!-- Spain -->
+    <option value="+46">🇸🇪 +46</option>   <!-- Sweden -->
+    <option value="+41">🇨🇭 +41</option>   <!-- Switzerland -->
+    <option value="+886">🇹🇼 +886</option> <!-- Taiwan -->
+    <option value="+66">🇹🇭 +66</option>   <!-- Thailand -->
+    <option value="+598">🇺🇾 +598</option> <!-- Uruguay -->
+</select>
+                <input type="tel" id="notify-whatsapp" placeholder="415 555 0132" required>
+            </div>
+            <div class="notify-field-error" id="notify-whatsapp-error">Please enter a valid number.</div>
+
             <button class="notify-modal-submit" id="notify-submit" onclick="submitNotify()">Join Waitlist →</button>
         </div>
         <div id="notify-success-view" style="display:none;">
@@ -638,15 +729,22 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
 
 <script>
 /* WAITLIST MODAL LOGIC */
-const NOTIFY_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyG9a2mk5tAGibF_rjKD_xhOZMAySL28zIAVrReXioS5Oy63ZMK953nU95kF9s2bGfNdw/exec";
+const NOTIFY_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGFsxGILLCBMEJDt7LbjtuXgsD9Sf8stJIRZToKjIg7_9nksWcXAPN6odMcMr_NA18zA/exec";
 
-function openNotifyModal(){
+let currentNotifyResource = '';
+
+function openNotifyModal(resourceName){
+    currentNotifyResource = resourceName || 'Unknown Resource';
+    document.getElementById('notify-resource-badge').textContent = '● ' + currentNotifyResource;
     document.getElementById('notify-overlay').classList.add('open');
     document.getElementById('notify-form-view').style.display = 'block';
     document.getElementById('notify-success-view').style.display = 'none';
+    document.getElementById('notify-name').value = '';
     document.getElementById('notify-email').value = '';
     document.getElementById('notify-whatsapp').value = '';
-    document.getElementById('notify-error').style.display = 'none';
+    ['notify-name-error','notify-email-error','notify-whatsapp-error'].forEach(id=>{
+        document.getElementById(id).style.display = 'none';
+    });
     document.body.style.overflow = 'hidden';
 }
 function closeNotifyModal(){
@@ -660,19 +758,49 @@ document.addEventListener('keydown', e=>{
     if(e.key === 'Escape') closeNotifyModal();
 });
 
-function submitNotify(){
-    const email = document.getElementById('notify-email').value.trim();
-    const whatsapp = document.getElementById('notify-whatsapp').value.trim();
-    const errorEl = document.getElementById('notify-error');
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const waValid = whatsapp.length >= 7;
-
-    if(!emailValid || !waValid){
-        errorEl.textContent = 'Please fill in both fields correctly.';
-        errorEl.style.display = 'block';
-        return;
+/* CONFETTI BURST */
+function fireConfetti(){
+    const container = document.getElementById('confetti-container');
+    const colors = ['#e01535','#5b6ef8','#7c3aed','#34d399','#fbbf24','#ffffff'];
+    const pieceCount = 90;
+    for(let i=0;i<pieceCount;i++){
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        const size = 6 + Math.random()*6;
+        piece.style.width = size+'px';
+        piece.style.height = (size*1.6)+'px';
+        piece.style.left = (Math.random()*100)+'vw';
+        piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        const duration = 2.2 + Math.random()*1.6;
+        const delay = Math.random()*0.3;
+        piece.style.animationDuration = duration+'s';
+        piece.style.animationDelay = delay+'s';
+        container.appendChild(piece);
+        setTimeout(()=>piece.remove(), (duration+delay)*1000 + 200);
     }
-    errorEl.style.display = 'none';
+}
+
+function submitNotify(){
+    const name = document.getElementById('notify-name').value.trim();
+    const email = document.getElementById('notify-email').value.trim();
+    const countryCode = document.getElementById('notify-country').value;
+    const rawPhone = document.getElementById('notify-whatsapp').value.trim();
+    const fullPhone = countryCode + rawPhone.replace(/[^0-9]/g, '');
+
+    const nameError = document.getElementById('notify-name-error');
+    const emailError = document.getElementById('notify-email-error');
+    const phoneError = document.getElementById('notify-whatsapp-error');
+    nameError.style.display = 'none';
+    emailError.style.display = 'none';
+    phoneError.style.display = 'none';
+
+    let hasError = false;
+    if(name.length < 2){ nameError.style.display = 'block'; hasError = true; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ emailError.style.display = 'block'; hasError = true; }
+    if(!/^[0-9]{6,14}$/.test(rawPhone.replace(/[^0-9]/g, ''))){ phoneError.style.display = 'block'; hasError = true; }
+
+    if(hasError) return;
 
     const btn = document.getElementById('notify-submit');
     btn.disabled = true;
@@ -680,15 +808,22 @@ function submitNotify(){
 
     fetch(NOTIFY_SCRIPT_URL, {
         method: 'POST',
-        body: JSON.stringify({ email, whatsapp, source: 'resources-page-waitlist' })
+        body: JSON.stringify({
+            name,
+            email,
+            phone: fullPhone,
+            resource: currentNotifyResource,
+            source: 'resources-page-waitlist'
+        })
     })
     .then(()=>{
         document.getElementById('notify-form-view').style.display = 'none';
         document.getElementById('notify-success-view').style.display = 'block';
+        fireConfetti();
     })
     .catch(()=>{
-        errorEl.textContent = 'Something went wrong — please try again.';
-        errorEl.style.display = 'block';
+        phoneError.textContent = 'Something went wrong — please try again.';
+        phoneError.style.display = 'block';
     })
     .finally(()=>{
         btn.disabled = false;
