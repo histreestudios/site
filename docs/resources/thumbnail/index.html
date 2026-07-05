@@ -266,6 +266,61 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
     .title-row { flex-wrap:wrap; }
     .title-row-text { font-size:0.88rem; }
 }
+
+/* DOWNLOAD GATE MODAL */
+.dl-modal-overlay {
+    position:fixed; inset:0; z-index:6000; background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(6px); opacity:0; pointer-events:none; transition:opacity 0.3s;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.dl-modal-overlay.open { opacity:1; pointer-events:all; }
+.dl-modal {
+    background:rgba(10,10,14,0.98); border:1px solid var(--glass-border-bright);
+    border-radius:24px; padding:36px; max-width:420px; width:100%;
+    transform:scale(0.92); transition:transform 0.3s; position:relative;
+}
+.dl-modal-overlay.open .dl-modal { transform:scale(1); }
+.dl-modal-close {
+    position:absolute; top:16px; right:16px; width:32px; height:32px;
+    border-radius:50%; border:1px solid var(--glass-border); background:transparent;
+    color:var(--muted); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:0.9rem; transition:all 0.2s;
+}
+.dl-modal-close:hover { background:rgba(200,16,46,0.15); border-color:rgba(200,16,46,0.4); color:#ff4d6d; }
+.dl-modal-badge {
+    display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:50px;
+    background:rgba(200,16,46,0.12); border:1px solid rgba(200,16,46,0.3);
+    font-size:0.7rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    color:#ff4d6d; margin-bottom:16px;
+}
+.dl-modal h3 { font-size:1.35rem; margin-bottom:8px; }
+.dl-modal p { color:var(--muted); font-size:0.88rem; margin-bottom:24px; line-height:1.6; }
+.dl-modal label { display:block; font-size:0.78rem; font-weight:600; color:var(--muted); margin-bottom:6px; }
+.dl-modal input {
+    width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+    border-radius:12px; padding:13px 16px; color:var(--text); font-size:0.9rem;
+    font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.2s;
+    margin-bottom:16px;
+}
+.dl-modal input:focus { border-color:rgba(91,110,248,0.55); box-shadow:0 0 0 3px rgba(91,110,248,0.12); }
+.dl-phone-row { display:flex; gap:8px; margin-bottom:6px; }
+.dl-country-select {
+    flex:0 0 110px; background:#0f0f14; border:1px solid var(--glass-border);
+    border-radius:12px; padding:13px 8px; color:var(--text); font-size:0.85rem;
+    font-family:'DM Sans',sans-serif; outline:none; cursor:pointer;
+}
+.dl-country-select option { background:#0f0f14; color:var(--text); }
+.dl-phone-row input { margin-bottom:0; flex:1; }
+.dl-field-error { color:#ff4d6d; font-size:0.75rem; margin:-10px 0 14px; display:none; }
+.dl-modal-submit {
+    width:100%; padding:14px; border-radius:50px; background:var(--accent2); border:none;
+    color:#fff; font-weight:700; font-size:0.92rem; font-family:'Syne',sans-serif;
+    cursor:pointer; transition:all 0.25s;
+}
+.dl-modal-submit:hover { background:var(--accent); transform:translateY(-2px); }
+.dl-modal-submit:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+.dl-modal-success { text-align:center; padding:20px 0; }
+.dl-modal-success i { font-size:2.5rem; color:var(--green); margin-bottom:14px; display:block; }
 </style>
 </head>
 <body>
@@ -339,7 +394,7 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
 
   <!-- ========== HOW IT WORKS ========== -->
             <div class="page-header-actions">
-       <a href="pdfs/20_Viral_Thumbnail.pdf" target="_blank" class="btn-ghost"><i class="fa-solid fa-file-arrow-down"></i> Download the PDF Guide</a>
+       <button class="btn-ghost" onclick="openDownloadGate()"><i class="fa-solid fa-file-arrow-down"></i> Download the PDF Guide</button>
        <button class="btn-ghost" onclick="shareTool()"><i class="fa-solid fa-share-nodes"></i> Share This Tool</button>
       </div>
 
@@ -440,6 +495,54 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
     <div style="display:flex;gap:10px;"></div>
 </footer>
 
+<!-- ============ DOWNLOAD GATE MODAL ============ -->
+<div class="dl-modal-overlay" id="dl-overlay">
+    <div class="dl-modal">
+        <button class="dl-modal-close" onclick="closeDownloadGate()">✕</button>
+        <div id="dl-form-view">
+            <div class="dl-modal-badge">● Free PDF Guide</div>
+            <h3>Get the PDF Guide</h3>
+            <p>Enter your details and the download starts instantly.</p>
+
+            <label for="dl-name">Full Name</label>
+            <input type="text" id="dl-name" placeholder="Jane Doe" required>
+            <div class="dl-field-error" id="dl-name-error">Please enter your name.</div>
+
+            <label for="dl-email">Email Address</label>
+            <input type="email" id="dl-email" placeholder="you@email.com" required>
+            <div class="dl-field-error" id="dl-email-error">Please enter a valid email.</div>
+
+            <label for="dl-country">WhatsApp Number</label>
+            <div class="dl-phone-row">
+                <select class="dl-country-select" id="dl-country">
+                    <option value="+1" data-country="United States" selected>🇺🇸 +1</option>
+                    <option value="+44" data-country="United Kingdom">🇬🇧 +44</option>
+                    <option value="+971" data-country="United Arab Emirates">🇦🇪 +971</option>
+                    <option value="+880" data-country="Bangladesh">🇧🇩 +880</option>
+                    <option value="+91" data-country="India">🇮🇳 +91</option>
+                    <option value="+61" data-country="Australia">🇦🇺 +61</option>
+                    <option value="+49" data-country="Germany">🇩🇪 +49</option>
+                    <option value="+33" data-country="France">🇫🇷 +33</option>
+                    <option value="+65" data-country="Singapore">🇸🇬 +65</option>
+                    <option value="+27" data-country="South Africa">🇿🇦 +27</option>
+                </select>
+                <input type="tel" id="dl-whatsapp" placeholder="415 555 0132" required>
+            </div>
+            <div class="dl-field-error" id="dl-whatsapp-error">Please enter a valid number.</div>
+
+            <button class="dl-modal-submit" id="dl-submit" onclick="submitDownloadGate()">Download PDF →</button>
+        </div>
+
+        <div id="dl-success-view" style="display:none;">
+            <div class="dl-modal-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <h3>Your download is starting…</h3>
+                <p>If it doesn't open automatically, <a href="pdfs/20_Viral_Thumbnail.pdf" target="_blank" style="color:var(--blue2);text-decoration:underline;">click here</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i> <span id="toast-text">Copied!</span></div>
 
 <script>
@@ -462,7 +565,7 @@ function closeMega(){megaMenu.classList.remove('open');megaOver.classList.remove
 dotsBtn.addEventListener('click',()=>megaMenu.classList.contains('open')?closeMega():openMega());
 megaClose.addEventListener('click',closeMega);
 megaOver.addEventListener('click',closeMega);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMega();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMega(); closeDownloadGate();}});
 
 (function(){
     const canvas=document.getElementById('particle-canvas'),ctx=canvas.getContext('2d');
@@ -506,6 +609,84 @@ function copyText(text){
 function shareTool(){
     const url=window.location.origin+window.location.pathname;
     copyText(url).then(()=>showToast('Tool link copied — paste it in any video description'));
+}
+
+/* ══════════════════════════════════════════
+   DOWNLOAD GATE — logs every download to your Google Sheet
+══════════════════════════════════════════ */
+const DL_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjvUUcNdC6Ngsu9zTTuCG2PZ6phTbreuhQ8pwzNHGIW_TXbbCUb9HcY_y2RMOGYrz/exec";
+const PDF_PATH = "pdfs/20_Viral_Thumbnail.pdf";
+
+function openDownloadGate(){
+    document.getElementById('dl-overlay').classList.add('open');
+    document.getElementById('dl-form-view').style.display = 'block';
+    document.getElementById('dl-success-view').style.display = 'none';
+    document.getElementById('dl-name').value = '';
+    document.getElementById('dl-email').value = '';
+    document.getElementById('dl-whatsapp').value = '';
+    ['dl-name-error','dl-email-error','dl-whatsapp-error'].forEach(id=>{
+        document.getElementById(id).style.display = 'none';
+    });
+    document.body.style.overflow = 'hidden';
+}
+function closeDownloadGate(){
+    const overlay=document.getElementById('dl-overlay');
+    if(overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+}
+document.getElementById('dl-overlay').addEventListener('click',(e)=>{
+    if(e.target.id === 'dl-overlay') closeDownloadGate();
+});
+
+function submitDownloadGate(){
+    const name = document.getElementById('dl-name').value.trim();
+    const email = document.getElementById('dl-email').value.trim();
+    const countrySelect = document.getElementById('dl-country');
+    const countryCode = countrySelect.value;
+    const countryName = countrySelect.selectedOptions[0]?.dataset.country || '';
+    const rawPhone = document.getElementById('dl-whatsapp').value.trim();
+    const fullPhone = countryCode + rawPhone.replace(/[^0-9]/g,'');
+
+    const nameError = document.getElementById('dl-name-error');
+    const emailError = document.getElementById('dl-email-error');
+    const phoneError = document.getElementById('dl-whatsapp-error');
+    nameError.style.display = 'none';
+    emailError.style.display = 'none';
+    phoneError.style.display = 'none';
+
+    let hasError = false;
+    if(name.length < 2){ nameError.style.display = 'block'; hasError = true; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ emailError.style.display = 'block'; hasError = true; }
+    if(!/^[0-9]{6,14}$/.test(rawPhone.replace(/[^0-9]/g,''))){ phoneError.style.display = 'block'; hasError = true; }
+    if(hasError) return;
+
+    const btn = document.getElementById('dl-submit');
+    btn.disabled = true;
+    btn.textContent = 'Preparing download...';
+
+    fetch(DL_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+            name, email, phone: fullPhone, countryName,
+            resource: '20 Viral Thumbnail Titles PDF',
+            category: 'pdf-download',
+            source: 'thumbnail-tool-page'
+        })
+    })
+    .then(()=>{
+        document.getElementById('dl-form-view').style.display = 'none';
+        document.getElementById('dl-success-view').style.display = 'block';
+        window.open(PDF_PATH, '_blank');
+    })
+    .catch(()=>{
+        window.open(PDF_PATH, '_blank'); // don't block the download if the sheet call fails
+        document.getElementById('dl-form-view').style.display = 'none';
+        document.getElementById('dl-success-view').style.display = 'block';
+    })
+    .finally(()=>{
+        btn.disabled = false;
+        btn.textContent = 'Download PDF →';
+    });
 }
 
 /* ══════════════════════════════════════════
