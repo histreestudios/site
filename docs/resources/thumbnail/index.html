@@ -151,6 +151,8 @@ section { position:relative; z-index:1; }
 .page-header p { color:var(--muted); font-size:1.05rem; max-width:620px; margin:0 auto; line-height:1.7; }
 .page-header-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px; }
 
+.version-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:50px; background:rgba(91,110,248,0.12); border:1px solid rgba(91,110,248,0.3); font-size:0.7rem; font-weight:700; letter-spacing:1px; color:var(--blue2); margin-left:6px; vertical-align:middle; }
+
 /* STEPS STRIP */
 .steps-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:900px; margin:0 auto 20px; padding:0 5%; }
 .step-mini { background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:18px; padding:20px; display:flex; gap:14px; align-items:flex-start; }
@@ -181,6 +183,14 @@ textarea#transcript-input::placeholder { color:var(--muted2); }
 
 .error-box { display:none; margin-top:16px; padding:14px 18px; border-radius:14px; background:rgba(224,21,53,0.1); border:1px solid rgba(224,21,53,0.3); color:#ff8fa3; font-size:0.85rem; }
 .error-box.show { display:block; }
+
+/* ANALYZE LOADING STATE */
+.analyzing-panel { display:none; margin-top:36px; text-align:center; padding:40px 20px; }
+.analyzing-panel.show { display:block; }
+.analyzing-spinner { width:38px; height:38px; margin:0 auto 18px; border-radius:50%; border:3px solid rgba(91,110,248,0.2); border-top-color:var(--blue2); animation:spin 0.9s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.analyzing-panel h4 { font-size:1rem; color:var(--text); margin-bottom:6px; }
+.analyzing-panel p { font-size:0.85rem; color:var(--muted); }
 
 /* SIGNALS PANEL */
 .signals-panel { display:none; margin-top:40px; }
@@ -388,8 +398,8 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
   <!-- ========== PAGE HEADER ========== -->
   <div class="page-header reveal active">
       <div class="breadcrumb"><a href="/">Home</a> <span>/</span> <a href="/resources">Free Resources</a> <span>/</span> <span>Thumbnail Title Generator</span></div>
-      <h1>Turn Any Transcript Into a <em>Click-Worthy Thumbnail</em></h1>
-      <p>Paste 150–2500 words from a video transcript. This tool reads it, pulls out your real topic and outcome, and drops them into 20 proven viral title formats.</p>
+      <h1>Turn Any Transcript Into a <em>Click-Worthy Thumbnail</em> <span class="version-badge" title="Tool version">v1.2</span></h1>
+      <p>Paste 150–5000 words from a video transcript. This tool reads it, pulls out your real topic and outcome, and drops them into 20 proven viral title formats.</p>
       </div>
 
   <!-- ========== HOW IT WORKS ========== -->
@@ -407,11 +417,11 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
                   <span><i class="fa-solid fa-file-lines"></i>&nbsp; Your Transcript</span>
                   <span id="word-count-top" style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted2);"></span>
               </div>
-              <textarea id="transcript-input" placeholder="Paste your video transcript here (150–2500 words)…"></textarea>
+              <textarea id="transcript-input" placeholder="Paste your video transcript here (150–5000 words)…"></textarea>
 
               <div class="count-row">
                   <div class="word-count" id="word-count"><strong>0</strong> words</div>
-                  <div class="count-hint">Minimum 150 words · Maximum 2500 words</div>
+                  <div class="count-hint">Minimum 150 words · Maximum 5000 words</div>
               </div>
 
               <div class="error-box" id="error-box"></div>
@@ -419,6 +429,13 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
               <div class="tool-actions">
                   <button class="btn-primary" id="analyze-btn" disabled onclick="analyzeTranscript()"><i class="fa-solid fa-magnifying-glass-chart"></i> Analyze Transcript</button>
                   <button class="btn-ghost" onclick="clearTranscript()"><i class="fa-solid fa-eraser"></i> Clear</button>
+              </div>
+
+              <!-- ANALYZING (loading) STATE -->
+              <div class="analyzing-panel" id="analyzing-panel">
+                  <div class="analyzing-spinner"></div>
+                  <h4 id="analyzing-title">Analyzing your transcript…</h4>
+                  <p id="analyzing-subtext">Scanning for topic, tone, and outcome signals.</p>
               </div>
 
               <!-- SIGNALS -->
@@ -491,7 +508,7 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
         <img src="apple-touch-icon.png" alt="Histree Studios" style="height:24px;width:auto;">
         HISTREE STUDIOS
     </div>
-    <div class="footer-copy">© 2026 Histree Studios · All rights reserved.</div>
+    <div class="footer-copy">© 2026 Histree Studios · All rights reserved. <span class="version-badge" style="margin-left:8px;">v1.2</span></div>
     <div style="display:flex;gap:10px;"></div>
 </footer>
 
@@ -587,6 +604,12 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
 <div class="toast" id="toast"><i class="fa-solid fa-circle-check"></i> <span id="toast-text">Copied!</span></div>
 
 <script>
+/* ══════════════════════════════════════════
+   TOOL VERSION
+══════════════════════════════════════════ */
+const TOOL_VERSION = "1.2";
+console.log("Histree Thumbnail Title Generator — v" + TOOL_VERSION);
+
 /* ══════════════════════════════════════════
    SCROLL PROGRESS + REVEAL (shared behavior)
 ══════════════════════════════════════════ */
@@ -733,7 +756,7 @@ function submitDownloadGate(){
 /* ══════════════════════════════════════════
    WORD COUNT + VALIDATION
 ══════════════════════════════════════════ */
-const MIN_WORDS=149, MAX_WORDS=2549;
+const MIN_WORDS=149, MAX_WORDS=5000;
 const input=document.getElementById('transcript-input');
 const wordCountEl=document.getElementById('word-count');
 const wordCountTop=document.getElementById('word-count-top');
@@ -766,6 +789,7 @@ input.addEventListener('input',updateCount);
 function clearTranscript(){
     input.value='';
     updateCount();
+    document.getElementById('analyzing-panel').classList.remove('show');
     document.getElementById('signals-panel').classList.remove('show');
     document.getElementById('results-panel').classList.remove('show');
 }
@@ -865,6 +889,9 @@ function extractSignals(rawText, forcedTopic){
 
 /* ══════════════════════════════════════════
    ANALYZE → RENDER SIGNALS
+   (v1.2: adds a 3–8s "analyzing" delay before the signals
+   panel reveals — gives the extraction a beat to feel
+   deliberate/accurate rather than instant.)
 ══════════════════════════════════════════ */
 let currentText='';
 let currentSignals=null;
@@ -872,6 +899,15 @@ let selectedTopicWord=null;
 
 const FIELD_LABELS=[
     ['Topic','Topic'],['Result','Result'],['Goal','Goal'],['Time','Time']
+];
+
+const ANALYZING_MESSAGES=[
+    "Reading through your transcript…",
+    "Identifying your core topic…",
+    "Scanning for outcome & result language…",
+    "Cross-checking keyword patterns…",
+    "Fitting signals into title formats…",
+    "Finalizing your results…"
 ];
 
 function analyzeTranscript(){
@@ -884,12 +920,37 @@ function analyzeTranscript(){
         errorBox.classList.add('show');
         return;
     }
+    errorBox.classList.remove('show');
     selectedTopicWord=null;
-    currentSignals=extractSignals(currentText, null);
-    renderSignals();
-    document.getElementById('signals-panel').classList.add('show');
+
+    // Lock the UI and show the analyzing state
+    analyzeBtn.disabled=true;
+    document.getElementById('signals-panel').classList.remove('show');
     document.getElementById('results-panel').classList.remove('show');
-    document.getElementById('signals-panel').scrollIntoView({behavior:'smooth', block:'start'});
+    const analyzingPanel=document.getElementById('analyzing-panel');
+    const analyzingTitle=document.getElementById('analyzing-title');
+    const analyzingSubtext=document.getElementById('analyzing-subtext');
+    analyzingPanel.classList.add('show');
+    analyzingPanel.scrollIntoView({behavior:'smooth', block:'start'});
+
+    // Random delay between 3s and 8s, cycling through status messages
+    const delayMs = 3000 + Math.random()*5000;
+    let msgIndex = 0;
+    analyzingTitle.textContent = ANALYZING_MESSAGES[0];
+    const msgInterval = setInterval(()=>{
+        msgIndex = (msgIndex+1) % ANALYZING_MESSAGES.length;
+        analyzingTitle.textContent = ANALYZING_MESSAGES[msgIndex];
+    }, Math.max(700, delayMs/ANALYZING_MESSAGES.length));
+
+    setTimeout(()=>{
+        clearInterval(msgInterval);
+        currentSignals=extractSignals(currentText, null);
+        analyzingPanel.classList.remove('show');
+        analyzeBtn.disabled = countWords(input.value) < MIN_WORDS || countWords(input.value) > MAX_WORDS;
+        renderSignals();
+        document.getElementById('signals-panel').classList.add('show');
+        document.getElementById('signals-panel').scrollIntoView({behavior:'smooth', block:'start'});
+    }, delayMs);
 }
 
 function renderSignals(){
