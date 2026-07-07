@@ -6,7 +6,7 @@
 <meta name="description" content="Free swipe files, scripts, checklists and templates from Histree Studios — done-for-you content systems for creators and podcasters.">
 <title>Free Resources: Histree Studios</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="shortcut icon" type="image/png" href="apple-touch-icon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
@@ -213,21 +213,6 @@ section { position:relative; z-index:1; }
 .theme-card-cta { margin-top:8px; display:inline-flex; align-items:center; gap:6px; font-size:0.82rem; font-weight:700; color:var(--blue2); font-family:'Syne',sans-serif; }
 .theme-card:hover .theme-card-cta { color:#fff; }
 
-/* FAQ ACCORDION */
-.faq-grid { margin-top:50px; display:grid; gap:12px; max-width:800px; margin-left:auto; margin-right:auto; }
-.faq-item { border:1px solid var(--glass-border); border-radius:var(--radius); overflow:hidden; transition:border-color 0.25s; }
-.faq-item.open { border-color:rgba(91,110,248,0.3); }
-.faq-question { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:22px 28px; cursor:pointer; background:rgba(255,255,255,0.02); transition:background 0.2s; user-select:none; }
-.faq-question:hover { background:rgba(255,255,255,0.04); }
-.faq-q-text { font-weight:600; font-size:0.98rem; }
-.faq-icon { width:28px; height:28px; border-radius:50%; border:1px solid var(--glass-border-bright); display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; color:var(--muted); transition:transform 0.3s, background 0.3s, border-color 0.3s, color 0.3s; }
-.faq-item.open .faq-icon { transform:rotate(45deg); background:rgba(91,110,248,0.15); border-color:rgba(91,110,248,0.4); color:var(--blue2); }
-.faq-answer { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.25,1,0.5,1); }
-.faq-answer-inner { padding:0 28px 22px; color:var(--muted); font-size:0.95rem; line-height:1.7; }
-.faq-item.open .faq-answer { max-height:400px; }
-.faq-category-title { font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted2); margin:44px 0 18px; text-align:center; font-family:'Syne',sans-serif; }
-.faq-category-title:first-of-type { margin-top:0; }
-
 /* RESOURCE CARD */
 .resource-card { background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:28px; transition:border-color 0.3s, transform 0.3s; display:flex; flex-direction:column; gap:14px; }
 .resource-card:hover { border-color:rgba(91,110,248,0.3); transform:translateY(-4px); }
@@ -316,20 +301,6 @@ section { position:relative; z-index:1; }
 .notify-modal-submit:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
 .notify-modal-success { text-align:center; padding:20px 0; }
 .notify-modal-success i { font-size:2.5rem; color:#34d399; margin-bottom:14px; display:block; }
-.notify-modal-error { color:#ff4d6d; font-size:0.8rem; margin-top:-10px; margin-bottom:14px; display:none; }
-
-/* CONFETTI */
-#confetti-container {
-    position:fixed; inset:0; z-index:7000; pointer-events:none; overflow:hidden;
-}
-.confetti-piece {
-    position:absolute; top:-20px; width:8px; height:14px; opacity:0.9;
-    animation:confettiFall linear forwards;
-}
-@keyframes confettiFall {
-    0% { transform:translateY(0) rotate(0deg); opacity:1; }
-    100% { transform:translateY(105vh) rotate(720deg); opacity:0.3; }
-}
 
 /* COMING SOON PLACEHOLDER CARD */
 .resource-card.coming-soon {
@@ -359,6 +330,19 @@ section { position:relative; z-index:1; }
 }
 .share-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 .share-toast i { color:var(--green,#34d399); }
+
+/* CONFETTI */
+#confetti-container {
+    position:fixed; inset:0; z-index:7000; pointer-events:none; overflow:hidden;
+}
+.confetti-piece {
+    position:absolute; top:-20px; width:8px; height:14px; opacity:0.9;
+    animation:confettiFall linear forwards;
+}
+@keyframes confettiFall {
+    0% { transform:translateY(0) rotate(0deg); opacity:1; }
+    100% { transform:translateY(105vh) rotate(720deg); opacity:0.3; }
+}
 
 /* CTA BLOCK */
 .cta-section { text-align:center; }
@@ -397,12 +381,6 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
     .theme-card-body { padding:18px 18px 20px; }
     .theme-card-title { font-size:0.95rem; }
     .theme-card-excerpt { font-size:0.82rem; }
-
-    .faq-grid { margin-top:30px; gap:8px; }
-    .faq-question { padding:14px 16px; }
-    .faq-q-text { font-size:0.85rem; }
-    .faq-answer-inner { padding:0 16px 16px; font-size:0.85rem; }
-    .faq-icon { width:24px; height:24px; font-size:0.75rem; }
 
     .resource-card { padding:16px; gap:10px; }
     .resource-card h3 { font-size:1rem; }
@@ -466,7 +444,7 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
             <a class="mega-nav-link" href="/#work" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(59,79,216,0.15);color:var(--blue2);"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg></div><div class="mega-nav-text"><strong>Services</strong><span>What we do for you</span></div></a>
             <a class="mega-nav-link" href="/#portfolio" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(52,211,153,0.12);color:#34d399;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div><div class="mega-nav-text"><strong>Portfolio</strong><span>Browse our video work</span></div></a>
             <a class="mega-nav-link" href="/#testimonials" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div><div class="mega-nav-text"><strong>Testimonials</strong><span>What clients say</span></div></a>
-            <a class="mega-nav-link" href="/blog" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(255,77,109,0.12);color:#ff4d6d;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg></div><div class="mega-nav-text"><strong>Blog</strong><span>Tips &amp; case studies</span></div></a>
+            <a class="mega-nav-link" href="/blog" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(255,77,109,0.12);color:#ff4d6d;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h7v2zm0-4H8v-2h7v2zm-3-5V3.5L18.5 9H13z"/></svg></div><div class="mega-nav-text"><strong>Blog</strong><span>Tips &amp; case studies</span></div></a>
             <a class="mega-nav-link" href="/resources" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(52,211,153,0.14);color:#34d399;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div><div class="mega-nav-text"><strong>Free Resources</strong><span>Guides, templates &amp; tools</span></div></a>
             <a class="mega-nav-link" href="/#process" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(59,79,216,0.15);color:var(--blue2);"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v-2h2V8H10v2h2v2H7v-2h2V6H5v4h2v2H2v6h5v-4h10v4h5v-6h-5z"/></svg></div><div class="mega-nav-text"><strong>Process</strong><span>How we work</span></div></a>
             <a class="mega-nav-link" href="/#pricing" onclick="closeMega()"><div class="mega-nav-icon" style="background:rgba(244,114,182,0.12);color:#f472b6;"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7zm11.77 8.27L13 19.54l-4.27-4.27A2.52 2.52 0 0 1 8 13.5c0-1.38 1.12-2.5 2.5-2.5.69 0 1.32.28 1.77.74l.73.72.73-.73A2.49 2.49 0 0 1 15.5 11c1.38 0 2.5 1.12 2.5 2.5 0 .69-.28 1.32-.73 1.77z"/></svg></div><div class="mega-nav-text"><strong>Pricing</strong><span>Transparent plans</span></div></a>
@@ -518,9 +496,9 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
 
       <div class="filter-tabs">
           <div class="ftab active" data-filter="all"><span>All Resources</span></div>
-          <div class="ftab" data-filter="scripts"><span>Scripts</span></div>
-          <div class="ftab" data-filter="templates"><span>Templates</span></div>
           <div class="ftab" data-filter="guides"><span>Guides</span></div>
+          <div class="ftab" data-filter="templates"><span>Templates</span></div>
+          <div class="ftab" data-filter="tools"><span>Tools</span></div>
       </div>
   </div>
 
@@ -530,7 +508,7 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
 <div class="card-grid" id="resource-cards">
 
               <!-- LIVE RESOURCE: kept as-is -->
-              <div class="resource-card reveal active" id="res-thumbnail-guide" data-cat="guides" data-title="thumbnail title generator high ctr thumbnail guide">
+              <div class="resource-card reveal active" id="res-thumbnail-guide" data-cat="tools" data-title="thumbnail title generator high ctr thumbnail guide">
                   <div class="resource-card-top">
                       <div class="resource-icon" style="background:rgba(124,58,237,0.15);color:#a78bfa;"><i class="fa-solid fa-image"></i></div>
                       <button class="share-btn" title="Copy share link" onclick="shareResource('res-thumbnail-guide', this)"><i class="fa-solid fa-share-nodes"></i></button>
@@ -541,69 +519,76 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
                   <button class="resource-btn" onclick="window.open('thumbnail','_blank')">Open Free Tool ↗</button>
               </div>
 
-              <!-- COMING SOON — NAMED RESOURCES (title + description shown for stronger conversion) -->
-              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="guides" data-title="title tips headline copywriting guide">
-                  <div class="resource-icon"><i class="fa-solid fa-heading"></i></div>
-                  <div class="coming-soon-badge">Coming Soon</div>
-                  <h3>YouTube Title Playbook</h3>
-                  <p class="coming-soon-text">Discover the title formulas and proven patterns behind videos that earn more clicks.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Title Tips','guides')">Join Waitlist</button>
-              </div>
-
-              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="guides" data-title="podcast thumbnail psychology guide">
-                  <div class="resource-icon"><i class="fa-solid fa-brain"></i></div>
-                  <div class="coming-soon-badge">Coming Soon</div>
-                  <h3>Thumbnail Psychology Playbook</h3>
-                  <p class="coming-soon-text">Learn the visual principles behind thumbnails that stop the scroll and increase click-through rates.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Podcast Thumbnail Psychology Guide','guides')">Join Waitlist</button>
-              </div>
-
-              <div class="resource-card coming-soon reveal active" data-cat="templates" data-title="content calendar generator planning tool">
-                  <div class="resource-icon"><i class="fa-solid fa-calendar-days"></i></div>
-                  <div class="coming-soon-badge">Coming Soon</div>
-                  <h3>Next AI Planning Tool</h3>
-                  <p class="coming-soon-text">Plan, organize, and publish your content more consistently with a smarter workflow. Join the waitlist for early access.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Content Calendar Generator','templates')">Join Waitlist</button>
-              </div>
-
-              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="scripts" data-title="cta framework call to action script">
-                  <div class="resource-icon"><i class="fa-solid fa-bullhorn"></i></div>
-                  <div class="coming-soon-badge">Coming Soon</div>
-                  <h3>Grow Faster with Better Content</h3>
-                  <p class="coming-soon-text">Join the waitlist to get early access.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('CTA Framework','scripts')">Join Waitlist</button>
-              </div>
-
-              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="guides" data-title="short form repurposing blueprint clips">
-                  <div class="resource-icon"><i class="fa-solid fa-scissors"></i></div>
-                  <div class="coming-soon-badge">Coming Soon</div>
-                  <h3>Our Next AI Tool</h3>
-                  <p class="coming-soon-text">Be the first to try it before public release.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('The Short-Form Repurposing Blueprint','guides')">Join Waitlist</button>
-              </div>
-
-              <div class="resource-card coming-soon reveal active" data-cat="scripts" data-title="first 30 seconds blueprint hook retention">
-                  <div class="resource-icon"><i class="fa-solid fa-stopwatch"></i></div>
+              <!-- CARD 1: Exclusive Creator Resource -->
+              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="tools" data-title="exclusive creator resource waitlist">
+                  <div class="resource-icon"><i class="fa-solid fa-gem"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
                   <h3>Exclusive Creator Resource</h3>
                   <p class="coming-soon-text">Available first to waitlist members.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('First 30 Seconds Blueprint','scripts')">Join Waitlist</button>
+                  <button class="notify-btn" onclick="openNotifyModal('Exclusive Creator Resource','tools')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="templates" data-title="sponsor pitch kit sponsorship deck">
-                  <div class="resource-icon"><i class="fa-solid fa-handshake"></i></div>
+              <!-- CARD 2: Next AI Tool -->
+              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="tools" data-title="next ai tool creator ai">
+                  <div class="resource-icon"><i class="fa-solid fa-robot"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <h3>📚 Playbooks</h3>
-                  <p class="coming-soon-text">Proven frameworks we use with clients.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('Sponsor Pitch Kit','templates')">Join Waitlist</button>
+                  <h3>Next AI Tool</h3>
+                  <p class="coming-soon-text">Be the first to try our next free creator tool.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Next AI Tool','tools')">Join Waitlist</button>
               </div>
 
-              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="guides" data-title="font pairing guide for creators design">
-                  <div class="resource-icon"><i class="fa-solid fa-font"></i></div>
+              <!-- CARD 3: Creator Playbook -->
+              <div class="resource-card coming-soon reveal active" data-cat="guides" data-title="creator playbook content framework">
+                  <div class="resource-icon"><i class="fa-solid fa-book"></i></div>
                   <div class="coming-soon-badge">Coming Soon</div>
-                  <h3>Exclusive Resource</h3>
-                  <p class="coming-soon-text">Join the waitlist to get early access before the public launch.</p>
-                  <button class="notify-btn" onclick="openNotifyModal('The Font Pairing Guide for Creators','guides')">Join Waitlist</button>
+                  <h3>Creator Playbook</h3>
+                  <p class="coming-soon-text">Practical frameworks used to plan, create, and grow content.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Creator Playbook','guides')">Join Waitlist</button>
+              </div>
+
+              <!-- CARD 4: Content Growth Guide -->
+              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="guides" data-title="content growth guide systems">
+                  <div class="resource-icon"><i class="fa-solid fa-chart-line"></i></div>
+                  <div class="coming-soon-badge">Coming Soon</div>
+                  <h3>Content Growth Guide</h3>
+                  <p class="coming-soon-text">Learn the systems behind high-performing content.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Content Growth Guide','guides')">Join Waitlist</button>
+              </div>
+
+              <!-- CARD 5: Members-Only Resource -->
+              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="templates" data-title="members only resource early access">
+                  <div class="resource-icon"><i class="fa-solid fa-lock"></i></div>
+                  <div class="coming-soon-badge">Coming Soon</div>
+                  <h3>Members-Only Resource</h3>
+                  <p class="coming-soon-text">Early access for waitlist members.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Members-Only Resource','templates')">Join Waitlist</button>
+              </div>
+
+              <!-- CARD 6: Creator Toolkit -->
+              <div class="resource-card coming-soon reveal active" data-cat="templates" data-title="creator toolkit templates prompts frameworks">
+                  <div class="resource-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                  <div class="coming-soon-badge">Coming Soon</div>
+                  <h3>Creator Toolkit</h3>
+                  <p class="coming-soon-text">Templates, prompts, and frameworks for modern creators.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Creator Toolkit','templates')">Join Waitlist</button>
+              </div>
+
+              <!-- CARD 7: Content Blueprint -->
+              <div class="resource-card coming-soon reveal active reveal-delay-1" data-cat="guides" data-title="content blueprint proven systems">
+                  <div class="resource-icon"><i class="fa-solid fa-diagram-project"></i></div>
+                  <div class="coming-soon-badge">Coming Soon</div>
+                  <h3>Content Blueprint</h3>
+                  <p class="coming-soon-text">Proven systems to help you create content that performs.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('Content Blueprint','guides')">Join Waitlist</button>
+              </div>
+
+              <!-- CARD 8: Coming Soon -->
+              <div class="resource-card coming-soon reveal active reveal-delay-2" data-cat="tools" data-title="more free tools coming soon">
+                  <div class="resource-icon"><i class="fa-solid fa-rocket"></i></div>
+                  <div class="coming-soon-badge">Coming Soon</div>
+                  <h3>Coming Soon</h3>
+                  <p class="coming-soon-text">More free tools and resources are on the way.</p>
+                  <button class="notify-btn" onclick="openNotifyModal('More Tools & Resources','tools')">Join Waitlist</button>
               </div>
 
           </div>
@@ -956,16 +941,6 @@ window.addEventListener('load', ()=>{
             setTimeout(()=>card.classList.remove('highlight'), 2400);
         }, 300);
     }
-});
-
-/* FAQ ACCORDION */
-document.querySelectorAll('.faq-question').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-        const item=btn.closest('.faq-item');
-        const isOpen=item.classList.contains('open');
-        item.parentElement.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
-        if(!isOpen) item.classList.add('open');
-    });
 });
 
 /* PARTICLE CANVAS */
