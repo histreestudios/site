@@ -915,6 +915,106 @@
         footer { flex-direction:column; text-align:center; }
         .header-cta-text { display:none; }
     }
+
+    /* ============================================================
+       HERO TRUST LINE
+    ============================================================ */
+    .hero-trust-line { display:flex; align-items:center; gap:8px; margin-top:20px; color:var(--muted); font-size:0.85rem; }
+    .hero-trust-line svg { flex-shrink:0; color:#34d399; }
+
+    /* ============================================================
+       PROBLEM SECTION
+    ============================================================ */
+    .problem-section { position:relative; z-index:1; }
+    .problem-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:50px; }
+    .problem-card { background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:28px 30px; display:flex; align-items:flex-start; gap:16px; transition:border-color 0.3s, transform 0.3s; }
+    .problem-card:hover { border-color:rgba(200,16,46,0.3); transform:translateY(-3px); }
+    .problem-x { width:40px; height:40px; border-radius:12px; background:rgba(248,113,113,0.12); color:#f87171; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .problem-card p { color:var(--muted); font-size:0.98rem; line-height:1.6; margin:0; }
+    .problem-transition { text-align:center; margin-top:50px; }
+    .problem-transition p { font-family:'Syne',sans-serif; font-size:clamp(1.3rem,2.5vw,1.8rem); font-weight:700; color:var(--text); }
+    .problem-transition span { background:linear-gradient(135deg,#e01535,#888); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+    /* ============================================================
+       GROWTH SYSTEM FLOW
+    ============================================================ */
+    .flow-section { position:relative; z-index:1; }
+    .flow-diagram { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:0; margin-top:50px; }
+    .flow-node { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:50px; padding:12px 24px; font-family:'Syne',sans-serif; font-weight:700; font-size:0.9rem; white-space:nowrap; transition:border-color 0.3s, transform 0.3s; }
+    .flow-node:hover { border-color:rgba(91,110,248,0.4); transform:translateY(-2px); }
+    .flow-node.origin { background:linear-gradient(135deg,rgba(200,16,46,0.15),rgba(124,58,237,0.1)); border-color:rgba(200,16,46,0.35); color:#fff; }
+    .flow-node.result { background:linear-gradient(135deg,rgba(52,211,153,0.15),rgba(59,79,216,0.1)); border-color:rgba(52,211,153,0.35); color:#34d399; }
+    .flow-arrow { color:var(--muted2); font-size:1.1rem; margin:0 10px; flex-shrink:0; }
+    .flow-note { text-align:center; margin-top:40px; color:var(--muted); font-size:1.05rem; }
+    .flow-note strong { color:var(--text); }
+    @media (max-width:700px) {
+        .flow-diagram { flex-direction:column; }
+        .flow-arrow { transform:rotate(90deg); margin:4px 0; }
+    }
+
+    /* ============================================================
+       FREE RESOURCES (START FREE)
+    ============================================================ */
+    .free-resources-section { position:relative; z-index:1; }
+    .free-resource-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:50px; }
+    .free-resource-card { background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:26px; display:flex; flex-direction:column; gap:12px; transition:border-color 0.3s, transform 0.3s; }
+    .free-resource-card:hover { border-color:rgba(91,110,248,0.3); transform:translateY(-4px); }
+    .free-resource-card.live { border-color:rgba(52,211,153,0.35); }
+    .fr-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.15rem; }
+    .free-resource-card h4 { font-size:1rem; font-weight:700; }
+    .free-resource-card p { color:var(--muted); font-size:0.86rem; line-height:1.55; flex:1; margin:0; }
+    .fr-badge { display:inline-flex; align-items:center; gap:5px; font-size:0.68rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:3px 10px; border-radius:50px; width:fit-content; }
+    .fr-badge.live { background:rgba(52,211,153,0.15); color:#34d399; }
+    .fr-badge.soon { background:rgba(255,255,255,0.05); color:var(--muted2); }
+    .free-resources-cta { text-align:center; margin-top:44px; }
+
+    /* ============================================================
+       RESULTS STRIP
+    ============================================================ */
+    .results-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:60px; }
+    .results-item { text-align:center; padding:24px 16px; background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:var(--radius); }
+    .results-num { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; color:var(--text); }
+    .results-label { font-size:0.82rem; color:var(--muted); margin-top:4px; }
+    @media (max-width:768px) { .results-strip { grid-template-columns:1fr 1fr; } }
+
+    /* ============================================================
+       SIMPLE PROCESS SUMMARY
+    ============================================================ */
+    .simple-steps-row { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin:44px 0 10px; }
+    .simple-step-chip { display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:50px; padding:12px 22px 12px 12px; }
+    .simple-step-num { width:32px; height:32px; border-radius:50%; background:var(--accent2); color:#fff; font-family:'Syne',sans-serif; font-weight:800; font-size:0.85rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .simple-step-chip span.txt { font-size:0.92rem; font-weight:600; color:var(--text); }
+
+    /* ============================================================
+       SIMPLE PRICING STATEMENT
+    ============================================================ */
+    .pricing-simple { text-align:center; max-width:640px; margin:0 auto; }
+    .pricing-simple-strip { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin:40px 0 36px; }
+    .pricing-simple-chip { background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:var(--radius); padding:18px 26px; min-width:180px; transition:border-color 0.3s, transform 0.3s; }
+    .pricing-simple-chip:hover { border-color:rgba(91,110,248,0.3); transform:translateY(-3px); }
+    .pricing-simple-chip .psc-name { font-size:0.75rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted2); }
+    .pricing-simple-chip .psc-price { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; margin-top:6px; }
+    .pricing-simple-chip .psc-price span { font-size:0.8rem; font-weight:600; color:var(--muted); }
+    .pricing-start-line { font-family:'Syne',sans-serif; font-weight:700; color:var(--text); margin-bottom:28px; font-size:1.05rem; }
+
+    /* ============================================================
+       ABOUT JOE (FOUNDER)
+    ============================================================ */
+    .founder-section { position:relative; z-index:1; }
+    .founder-inner { max-width:900px; margin:0 auto; text-align:center; }
+    .founder-avatar { width:88px; height:88px; border-radius:50%; margin:0 auto 24px; background:linear-gradient(135deg,#c8102e,#7c3aed); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:1.8rem; color:#fff; border:2px solid rgba(255,255,255,0.1); }
+    .founder-quote { font-family:'Syne',sans-serif; font-size:clamp(1.4rem,3vw,2rem); font-weight:700; line-height:1.4; letter-spacing:-0.5px; max-width:760px; margin:0 auto 24px; }
+    .founder-name { color:var(--muted); font-size:0.95rem; margin-bottom:32px; }
+    .founder-name strong { color:var(--text); }
+
+    @media (max-width:768px) {
+        .problem-grid { grid-template-columns:1fr; }
+        .free-resource-grid { grid-template-columns:1fr 1fr; }
+        .results-strip { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:480px) {
+        .free-resource-grid { grid-template-columns:1fr; }
+    }
     </style>
 
 <script type="application/ld+json">
@@ -1071,14 +1171,18 @@
         <div class="hero-left">
             <div class="hero-label"><span style="background:linear-gradient(135deg,#e01535,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Done-For-You Content Systems</div>
             <h1>
-                <span class="word-pop" style="animation-delay:0.1s">We-</span><span class="word-pop" style="animation-delay:0.2s">Bring</span><br>
-                <span class="word-pop" style="animation-delay:0.95s"><span class="shimmer-text">Your
-Ideas to Life</span></span>
+                <span class="word-pop" style="animation-delay:0.1s">Turn One Recording Into</span><br>
+                <span class="word-pop" style="animation-delay:0.5s"><span class="shimmer-text">Months of Content</span></span><br>
+                <span class="word-pop" style="animation-delay:0.95s">That Grows Your Business</span>
             </h1>
-            <p>We build and run your entire video content system, so creators, podcasters, and business owners go from invisible to undeniable, without spending a dollar on ads.</p>
+            <p>We help creators, founders, coaches, and businesses turn every podcast, webinar, or video into a complete content marketing system.</p>
             <div class="hero-ctas">
-                <a href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" class="btn-primary">🎯 Get Free Growth Plan ↗</a>
-                <button class="btn-ghost" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> See Our Work</button>
+                <a href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" class="btn-primary">🟢 Book a Free Strategy Call ↗</a>
+                <a href="resources/" class="btn-ghost">⚪ Explore Free Resources</a>
+            </div>
+            <div class="hero-trust-line">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+                Trusted by creators, businesses, and founders to turn ideas into high-performing content.
             </div>
             <div class="hero-stats">
                 <div class="stat-item"><div class="stat-num"><span class="count-up" data-target="99" data-suffix="+">100+</span></div><div class="stat-label">Clients Worldwide</div></div>
@@ -1131,6 +1235,101 @@ Ideas to Life</span></span>
     </div>
 </div>
 </div>
+
+<!-- ============ THE PROBLEM ============ -->
+<section class="problem-section" id="problem">
+    <div class="section-inner">
+        <div style="text-align:center;" class="reveal">
+            <div class="section-label">The Real Problem</div>
+            <h2 class="section-title">Why Most Content Doesn't<br>Grow Your Business</h2>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card reveal reveal-delay-1"><div class="problem-x">✕</div><p>Spending hours editing instead of running your business.</p></div>
+            <div class="problem-card reveal reveal-delay-2"><div class="problem-x">✕</div><p>Running out of content ideas week after week.</p></div>
+            <div class="problem-card reveal reveal-delay-3"><div class="problem-x">✕</div><p>Posting without any real strategy behind it.</p></div>
+            <div class="problem-card reveal reveal-delay-4"><div class="problem-x">✕</div><p>Creating content that never actually brings customers.</p></div>
+        </div>
+        <div class="problem-transition reveal">
+            <p>Content isn't the problem. <span>The system behind it is.</span></p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ THE SOLUTION / GROWTH SYSTEM ============ -->
+<section class="flow-section" id="solution">
+    <div class="section-inner">
+        <div style="text-align:center;" class="reveal">
+            <div class="section-label">Our Solution</div>
+            <h2 class="section-title">The Histree<br><span style="background:linear-gradient(135deg,#e01535,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Content Growth System</span></h2>
+        </div>
+        <div class="flow-diagram reveal">
+            <div class="flow-node origin">🎙️ Record Once</div><span class="flow-arrow">→</span>
+            <div class="flow-node">✂️ Professional Editing</div><span class="flow-arrow">→</span>
+            <div class="flow-node">▶️ YouTube</div><span class="flow-arrow">→</span>
+            <div class="flow-node">🎬 Shorts</div><span class="flow-arrow">→</span>
+            <div class="flow-node">📸 Instagram</div><span class="flow-arrow">→</span>
+            <div class="flow-node">💼 LinkedIn</div><span class="flow-arrow">→</span>
+            <div class="flow-node">📝 Blog</div><span class="flow-arrow">→</span>
+            <div class="flow-node">📩 Newsletter</div><span class="flow-arrow">→</span>
+            <div class="flow-node">🔍 SEO</div><span class="flow-arrow">→</span>
+            <div class="flow-node">🎯 Leads</div><span class="flow-arrow">→</span>
+            <div class="flow-node result">💰 Customers</div>
+        </div>
+        <div class="flow-note reveal"><strong>Every piece of content becomes multiple business assets.</strong></div>
+    </div>
+</section>
+
+<!-- ============ FREE RESOURCES (START FREE) ============ -->
+<section class="free-resources-section" id="free-resources">
+    <div class="section-inner">
+        <div style="text-align:center;" class="reveal">
+            <div class="section-label">Start Free</div>
+            <h2 class="section-title">Free Tools, Guides &amp;<br>Templates to Get You Started</h2>
+            <p style="color:var(--muted);max-width:560px;margin:0 auto;font-size:1.05rem;">Create better content before you ever become a client. This is how we build trust first.</p>
+        </div>
+        <div class="free-resource-grid">
+            <div class="free-resource-card live reveal reveal-delay-1">
+                <div class="fr-icon" style="background:rgba(124,58,237,0.15);color:#a78bfa;">🖼️</div>
+                <span class="fr-badge live">Free Tool · Live</span>
+                <h4>Thumbnail Title Generator</h4>
+                <p>Generate high-CTR thumbnail titles in seconds, based on proven click psychology.</p>
+            </div>
+            <div class="free-resource-card reveal reveal-delay-2">
+                <div class="fr-icon" style="background:rgba(200,16,46,0.12);color:#ff4d6d;">🧠</div>
+                <span class="fr-badge soon">Guide</span>
+                <h4>Thumbnail Psychology Guide</h4>
+                <p>The psychology behind thumbnails that get clicked, and the mistakes that kill your CTR.</p>
+            </div>
+            <div class="free-resource-card reveal reveal-delay-3">
+                <div class="fr-icon" style="background:rgba(59,79,216,0.15);color:var(--blue2);">📺</div>
+                <span class="fr-badge soon">Playbook</span>
+                <h4>YouTube Title Playbook</h4>
+                <p>Proven title formulas and frameworks used by top-performing channels.</p>
+            </div>
+            <div class="free-resource-card reveal reveal-delay-1">
+                <div class="fr-icon" style="background:rgba(52,211,153,0.15);color:#34d399;">⏱️</div>
+                <span class="fr-badge soon">Blueprint</span>
+                <h4>First 30 Seconds Blueprint</h4>
+                <p>The exact hook structure that stops viewers from scrolling past your video.</p>
+            </div>
+            <div class="free-resource-card reveal reveal-delay-2">
+                <div class="fr-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;">🔤</div>
+                <span class="fr-badge soon">Guide</span>
+                <h4>Font Pairing Guide</h4>
+                <p>Simple font combinations that make your thumbnails and titles look premium.</p>
+            </div>
+            <div class="free-resource-card reveal reveal-delay-3">
+                <div class="fr-icon" style="background:rgba(244,114,182,0.12);color:#f472b6;">🗓️</div>
+                <span class="fr-badge soon">Tool</span>
+                <h4>Content Planning Tool</h4>
+                <p>Plan a month of content across every platform in one simple system.</p>
+            </div>
+        </div>
+        <div class="free-resources-cta reveal">
+            <a href="resources/" class="btn-primary">📚 View All Resources</a>
+        </div>
+    </div>
+</section>
 
 <!-- ============ INTRO / ABOUT ============ -->
 <section class="intro-section" id="about">
@@ -1191,13 +1390,48 @@ Ideas to Life</span></span>
     </div>
 </section>
 
+<!-- ============ WHY HISTREE ============ -->
+<section class="why-histree-section" id="why-histree">
+    <div class="section-inner">
+        <div style="text-align:center;" class="reveal">
+            <div class="section-label">Why Histree?</div>
+            <h2 class="section-title">Most Agencies Deliver Videos.<br><span style="background:linear-gradient(135deg,#e01535,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">We Build Content Systems.</span></h2>
+        </div>
+        <div class="comparison-wrapper">
+            <div class="comp-card comp-them reveal reveal-delay-1">
+                <div class="comp-card-title">📹 Typical Agency</div>
+                <div class="comp-item"><span class="comp-icon no">✕</span><span class="comp-item-text">Video editing only</span></div>
+                <div class="comp-item"><span class="comp-icon no">✕</span><span class="comp-item-text">Delivers files</span></div>
+                <div class="comp-item"><span class="comp-icon no">✕</span><span class="comp-item-text">Focused on more videos</span></div>
+                <div class="comp-item"><span class="comp-icon no">✕</span><span class="comp-item-text">Chases views</span></div>
+                <div class="comp-item"><span class="comp-icon no">✕</span><span class="comp-item-text">Acts as a freelancer</span></div>
+            </div>
+            <div class="comp-card comp-us reveal reveal-delay-2">
+                <div class="comp-card-title">🚀 Histree Studios</div>
+                <div class="comp-item"><span class="comp-icon yes">✔</span><span class="comp-item-text"><strong>Content strategy</strong>, built around your goals</span></div>
+                <div class="comp-item"><span class="comp-icon yes">✔</span><span class="comp-item-text">Builds a <strong>full content system</strong></span></div>
+                <div class="comp-item"><span class="comp-icon yes">✔</span><span class="comp-item-text">Focused on <strong>more business</strong></span></div>
+                <div class="comp-item"><span class="comp-icon yes">✔</span><span class="comp-item-text">Optimized for <strong>business growth</strong></span></div>
+                <div class="comp-item"><span class="comp-icon yes">✔</span><span class="comp-item-text">Acts as a <strong>long-term partner</strong></span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ============ PORTFOLIO ============ -->
 <section id="portfolio" class="portfolio-section">
     <div class="portfolio-inner">
         <div class="reveal">
-            <div class="section-label">Portfolio</div>
+            <div class="section-label">What We've Delivered</div>
             <h2 class="section-title">Work That <span style="background:linear-gradient(135deg,#e01535,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Speaks for Itself.</span></h2>
             <p style="color:var(--muted);max-width:520px;font-size:1.05rem;margin-top:8px;">Every piece below represents a brand we believed in and a result we delivered. No redirects. No filler. Just the work, exactly as it went live.</p>
+        </div>
+        <div class="results-strip reveal" style="margin-top:40px;">
+            <div class="results-item"><div class="results-num">300+</div><div class="results-label">Videos Edited</div></div>
+            <div class="results-item"><div class="results-num">200+</div><div class="results-label">Short-Form Clips</div></div>
+            <div class="results-item"><div class="results-num">99+</div><div class="results-label">Creators &amp; Businesses</div></div>
+            <div class="results-item"><div class="results-num" style="font-size:1.1rem;line-height:1.4;">Podcasts · Coaches<br>Businesses</div><div class="results-label">Industries Served</div></div>
+        </div>
         </div>
 
         <!-- TABS -->
@@ -1254,8 +1488,14 @@ Ideas to Life</span></span>
 <section id="process" class="process-section">
     <div class="section-inner">
         <div style="text-align:center;" class="reveal">
-            <div class="section-label">Our Process</div>
-            <h2 class="section-title">Five Steps From<br><span style="background:linear-gradient(135deg,#e01535,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Zero to Lead Machine</h2>
+            <div class="section-label">How We Work</div>
+            <h2 class="section-title">A Simple 4-Step Process<br><span style="background:linear-gradient(135deg,#e01535,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">From Recording to Growth</span></h2>
+            <div class="simple-steps-row">
+                <div class="simple-step-chip"><span class="simple-step-num">1</span><span class="txt">Record your content</span></div>
+                <div class="simple-step-chip"><span class="simple-step-num">2</span><span class="txt">Upload it to us</span></div>
+                <div class="simple-step-chip"><span class="simple-step-num">3</span><span class="txt">We build your content system</span></div>
+                <div class="simple-step-chip"><span class="simple-step-num">4</span><span class="txt">You focus on growing your business</span></div>
+            </div>
         </div>
         <div class="process-steps">
 
@@ -1439,20 +1679,12 @@ Ideas to Life</span></span>
     <div class="section-inner">
         <div style="text-align:center;" class="reveal">
             <div class="section-label">Pricing</div>
-            <h2 class="section-title">Pick Your Plan.<br>Watch It Pay Back.</h2>
-            <p style="color:var(--muted);max-width:520px;margin:0 auto;">50% off your first 2 months on every plan. No lock-in, no hidden fees, no fluff.</p>
+            <h2 class="section-title">Plans for Every Stage</h2>
+            <p style="color:var(--muted);max-width:520px;margin:0 auto;">Whether you're just starting or publishing every week, we have a plan that fits your business.</p>
         </div>
         <div class="pricing-grid">
             <div class="pricing-card reveal reveal-delay-1">
                 <div class="pricing-plan">Starter</div>
-                <div style="margin:18px 0 14px;">
-                    <span class="price-discount-tag">🚀 Limited Time Offer</span>
-                    <div class="price-row">
-                        <span class="price-old">$599</span>
-                        <span class="price-new">$299<sup>/month</sup></span>
-                    </div>
-                    <div class="price-note">Regular pricing: $599/month</div>
-                </div>
                 <div class="pricing-desc">Perfect for creators just getting started with done-for-you content.</div>
                 <ul class="pricing-features">
                     <li><span class="pf-check">✔</span> Up to 2 Long-Form Videos</li>
@@ -1469,14 +1701,6 @@ Ideas to Life</span></span>
             <div class="pricing-card featured reveal reveal-delay-2 tilt-card">
                 <div class="pricing-badge">Most Popular</div>
                 <div class="pricing-plan">Growth</div>
-                <div style="margin:18px 0 10px;">
-                    <span class="price-discount-tag" style="background:linear-gradient(135deg,#ff4d6d,#0102e);color:#fff;">🎉 Early Bird</span>
-                    <div class="price-row">
-                        <span class="price-old">$1,499</span>
-                        <span class="price-new">$745<sup>/month</sup></span>
-                    </div>
-                    <div class="price-note">Regular pricing: $1,499/month</div>
-                </div>
                 <div class="pricing-desc" style="color:rgba(255,255,255,0.7);">For entrepreneurs ready to scale with a full organic content system. Builds <strong style="color:#fff">consistent content</strong> that compounds every month.</div>
                 <ul class="pricing-features">
                     <li><span class="pf-check">✔</span> Up to 5 Long-Form Videos</li>
@@ -1488,18 +1712,10 @@ Ideas to Life</span></span>
                     <li><span class="pf-check">✔</span> Monthly Strategy Call</li>
                     <li><span class="pf-check">✔</span> Dedicated Account Manager</li>
                 </ul>
-                <button class="pricing-btn pricing-btn-blue" onclick="window.open('https://calendar.app.google/x9iiZ9u2x3ze4MxDA','_blank')">🚀 Claim 50% Off <br> Book Now</button>
+                <button class="pricing-btn pricing-btn-blue" onclick="window.open('https://calendar.app.google/x9iiZ9u2x3ze4MxDA','_blank')">🚀 Book a Call</button>
             </div>
             <div class="pricing-card reveal reveal-delay-3">
                 <div class="pricing-plan">Content Growth System</div>
-                <div style="margin:18px 0 14px;">
-                    <span class="price-discount-tag">🔒 Limited Availability</span>
-                    <div class="price-row">
-                        <span class="price-old">$3,500</span>
-                        <span class="price-new">$1,920<sup>/month</sup></span>
-                    </div>
-                    <div class="price-note">Regular Price: $3,500/month</div>
-                </div>
                 <div class="pricing-desc">Your complete content team for one fixed monthly price. We handle everything, so your team can stay focused on creating.</div>
                 <ul class="pricing-features">
                     <li><span class="pf-check">✔</span> Unlimited Video Production</li>
@@ -1513,6 +1729,18 @@ Ideas to Life</span></span>
                 </ul>
                 <button class="pricing-btn pricing-btn-solid" onclick="window.open('https://calendar.app.google/x9iiZ9u2x3ze4MxDA','_blank')">📋 Book Your Free Strategy Call ↗</button>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ABOUT JOE ============ -->
+<section class="founder-section" id="founder">
+    <div class="section-inner">
+        <div class="founder-inner reveal">
+            <div class="founder-avatar">JA</div>
+            <div class="founder-quote">"I started Histree Studios because I realized businesses don't need more content — they need better systems."</div>
+            <div class="founder-name">— <strong>Joe Ahammed</strong>, Founder of Histree Studios</div>
+            <a href="/joe" class="btn-ghost">Meet Joe</a>
         </div>
     </div>
 </section>
@@ -1688,6 +1916,18 @@ Ideas to Life</span></span>
                 </div>
             </div>
 
+        </div>
+    </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="cta-section" style="position:relative;z-index:1;padding:0 5% 120px;">
+    <div class="cta-card reveal">
+        <h2>Ready to Turn Your Content Into a Growth Engine?</h2>
+        <p>Book a free strategy call and see how we can help you build a content system that works long after you hit publish.</p>
+        <div class="cta-buttons">
+            <a href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" class="btn-primary">🟢 Book Strategy Call ↗</a>
+            <a href="resources/" class="btn-ghost">⚪ Explore Free Resources</a>
         </div>
     </div>
 </section>
