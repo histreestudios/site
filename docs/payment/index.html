@@ -273,13 +273,27 @@
   .inv-title{text-align:right;}
   .inv-title h1{
     font-family:var(--display);
-    font-size:26px;
+    font-size:24px;
     margin:0;
     letter-spacing:0.02em;
-    color:#c7c7ce;
-    font-weight:700;
+    color:var(--accent2);
+    font-weight:800;
   }
-  .inv-number{font-family:var(--mono);font-size:9.5px;color:var(--ink-soft);margin-top:5px;}
+  .inv-number{font-family:var(--mono);font-size:10px;color:#9a9aa4;margin-top:6px;letter-spacing:0.02em;}
+  .inv-number-edit{
+    font-family:var(--mono);
+    font-size:10px;
+    color:#9a9aa4;
+    margin-top:6px;
+    letter-spacing:0.02em;
+    text-align:right;
+    border:none;
+    background:transparent;
+    outline:none;
+    width:100%;
+    padding:0;
+  }
+  .inv-number-edit:focus{color:var(--ink);}
 
   .inv-meta-box{
     display:flex;
@@ -348,6 +362,11 @@
     vertical-align:top;
     word-break:break-word;
   }
+  table.items tbody tr:nth-child(even) td{
+    background:#f5f5f8;
+  }
+  table.items tbody tr td:first-child{padding-left:8px;}
+  table.items tbody tr td:last-child{padding-right:8px;}
   table.items tbody td.num{text-align:right;font-family:var(--mono);}
   table.items tbody td.code{font-family:var(--mono);color:var(--ink-soft);font-size:9.5px;}
   .totals{
@@ -404,8 +423,8 @@
   }
   .notes:empty{display:none;}
   .payment-details{
-    margin-top:16px;
-    padding-top:12px;
+    margin-top:26px;
+    padding-top:14px;
     border-top:1px solid var(--ink-line);
   }
   .pd-title{
@@ -435,15 +454,24 @@
     line-height:1.45;
     word-break:break-word;
   }
+  .notes-bottom{
+    margin-top:18px;
+    padding:12px 0;
+    border-top:1px solid var(--ink-line);
+    border-bottom:none;
+  }
   .foot{
     margin-top:auto;
-    padding-top:14px;
+    padding:9px 0;
     text-align:center;
-    font-family:var(--mono);
-    font-size:8px;
-    color:var(--ink-soft);
-    letter-spacing:0.08em;
-    border-top:1px solid var(--ink-line);
+    font-family:var(--display);
+    font-weight:700;
+    font-size:9px;
+    color:#fff;
+    background:var(--accent2);
+    letter-spacing:0.1em;
+    border-radius:5px;
+    border-top:none;
   }
 
   @media print{
@@ -452,6 +480,69 @@
     .preview-wrap{background:#fff;padding:0;height:auto;}
     #invoice{box-shadow:none;width:100%;aspect-ratio:auto;}
   }
+
+  /* ---------- Share/Send modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(5,5,7,0.72);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:var(--panel);
+    border:1px solid var(--card-line);
+    border-radius:14px;
+    width:100%;
+    max-width:400px;
+    padding:20px;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+  .modal-title{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:16px;
+    color:var(--text);
+    margin-bottom:4px;
+  }
+  .modal-sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+  .modal-thumb{
+    width:100%;
+    border-radius:8px;
+    border:1px solid var(--card-line);
+    margin-bottom:16px;
+    display:block;
+  }
+  .modal-btn{
+    width:100%;
+    padding:11px;
+    border-radius:8px;
+    border:none;
+    font-family:var(--body);
+    font-weight:600;
+    font-size:12.5px;
+    cursor:pointer;
+    margin-bottom:8px;
+  }
+  .modal-btn.primary{background:linear-gradient(135deg, var(--accent2), var(--purple)); color:#fff;}
+  .modal-btn.secondary{background:var(--card); color:var(--text); border:1px solid var(--card-line);}
+  .modal-btn.email{background:var(--green); color:#fff;}
+  .modal-btn:disabled{opacity:0.55; cursor:default;}
+  .modal-close{
+    width:100%;
+    padding:9px;
+    border:none;
+    background:none;
+    color:var(--muted2);
+    font-size:11px;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .modal-status{font-size:10.5px; color:var(--muted); margin-top:2px; margin-bottom:8px; line-height:1.5; display:none;}
 </style>
 </head>
 <body>
@@ -486,8 +577,8 @@
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Address</label>
-        <input type="text" id="cAddress" placeholder="Street, city">
+        <label>Address <span style="text-transform:none; color:var(--muted2); font-weight:400;">(press Enter for new line)</span></label>
+        <textarea id="cAddress" placeholder="Street&#10;City, ZIP" rows="2" style="resize:vertical;"></textarea>
       </div>
       <div class="field">
         <label>Country</label>
@@ -543,9 +634,7 @@
       <select id="paymentMethod">
         <option value="none">None</option>
         <option value="wallet">Mobile Wallet — bKash / Nagad</option>
-        <option value="ach_elevate">ACH (USD) — Elevate Pay</option>
-        <option value="ach_nsave">ACH / Wire (USD) — nsave</option>
-        <option value="wire_gbp">Wire Transfer (GBP) — nsave</option>
+        <option value="ach">Bank Transfer (USD/GBP) — Elevate Pay / nsave</option>
       </select>
     </div>
     <div class="field" id="walletProviderField" style="display:none;">
@@ -553,6 +642,14 @@
       <select id="walletProvider">
         <option value="bKash">bKash</option>
         <option value="Nagad">Nagad</option>
+      </select>
+    </div>
+    <div class="field" id="achProviderField" style="display:none;">
+      <label>Account / provider</label>
+      <select id="achProvider">
+        <option value="ach_elevate">Elevate Pay — ACH (USD)</option>
+        <option value="ach_nsave">nsave — ACH/Wire (USD)</option>
+        <option value="wire_gbp">nsave — Wire Transfer (GBP)</option>
       </select>
     </div>
 
@@ -581,7 +678,7 @@ www.histreestudios.com</div>
           </div>
           <div class="inv-title">
             <h1>Invoice</h1>
-            <div class="inv-number" id="pInvNumber">#INV-0001</div>
+            <div class="inv-number" id="pInvNumber" contenteditable="true" spellcheck="false">#INV-0001</div>
           </div>
         </div>
 
@@ -619,8 +716,6 @@ www.histreestudios.com</div>
           <tbody id="pItems"></tbody>
         </table>
 
-        <div class="notes notes-mid" id="pNotes"></div>
-
         <div class="totals">
           <div class="totals-row"><span>Subtotal</span><span id="pSubtotal">$0.00</span></div>
           <div class="totals-row"><span>Discount</span><span id="pDiscount">-$0.00</span></div>
@@ -634,6 +729,8 @@ www.histreestudios.com</div>
           <div class="pd-grid" id="pPaymentGrid"></div>
         </div>
 
+        <div class="notes notes-bottom" id="pNotes"></div>
+
         <div class="foot">HISTREE STUDIOS · GENERATED WITH INVOICE MAKER</div>
         </div>
       </div>
@@ -642,8 +739,23 @@ www.histreestudios.com</div>
 
 </div>
 
+<!-- ============ SHARE / SEND MODAL ============ -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal-box">
+    <div class="modal-title">Invoice ready</div>
+    <div class="modal-sub" id="modalFileName">Histree-HS-0000.pdf</div>
+    <img class="modal-thumb" id="modalThumb" alt="Invoice preview">
+    <button class="modal-btn primary" id="modalDownloadBtn">Download PDF</button>
+    <button class="modal-btn secondary" id="modalShareBtn">Share…</button>
+    <button class="modal-btn email" id="modalEmailBtn">Send to client</button>
+    <div class="modal-status" id="modalStatus"></div>
+    <button class="modal-close" id="modalCloseBtn">Close</button>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 (function(){
   let items = [
@@ -679,6 +791,12 @@ www.histreestudios.com</div>
 
   document.getElementById('invDate').addEventListener('change', () => { recalcDueDate(); renderPreview(); });
   document.getElementById('dueDays').addEventListener('input', () => { recalcDueDate(); renderPreview(); });
+
+  document.getElementById('pInvNumber').addEventListener('input', (e) => {
+    const val = e.target.textContent.replace(/^#/, '');
+    document.getElementById('invNumber').value = val;
+  });
+  document.getElementById('pInvNumber').addEventListener('blur', () => { renderPreview(); });
 
   function renderItemRows(){
     itemsBox.innerHTML = '';
@@ -760,14 +878,16 @@ www.histreestudios.com</div>
   }
 
   function renderPreview(){
-    document.getElementById('pInvNumber').textContent = '#' + (document.getElementById('invNumber').value || '');
+    if(document.activeElement !== document.getElementById('pInvNumber')){
+      document.getElementById('pInvNumber').textContent = '#' + (document.getElementById('invNumber').value || '');
+    }
 
     const cName = document.getElementById('cName').value;
     const cEmail = document.getElementById('cEmail').value;
     const cPhone = document.getElementById('cPhone').value;
     const cAddress = document.getElementById('cAddress').value;
     const cCountry = document.getElementById('cCountry').value;
-    const clientLines = [cEmail, cPhone, cAddress, cCountry].filter(Boolean).map(escapeHtml).join('<br>');
+    const clientLines = [cEmail, cPhone, cAddress, cCountry].filter(Boolean).map(escapeHtml).join('<br>').replace(/\n/g, '<br>');
     document.getElementById('pClient').innerHTML =
       '<strong>' + escapeHtml(cName || 'Client Name') + '</strong>' + (clientLines ? '<br>' + clientLines : '');
 
@@ -875,23 +995,31 @@ www.histreestudios.com</div>
   const paymentMethodSel = document.getElementById('paymentMethod');
   const walletProviderField = document.getElementById('walletProviderField');
   const walletProviderSel = document.getElementById('walletProvider');
+  const achProviderField = document.getElementById('achProviderField');
+  const achProviderSel = document.getElementById('achProvider');
 
   paymentMethodSel.addEventListener('change', () => {
     walletProviderField.style.display = paymentMethodSel.value === 'wallet' ? 'block' : 'none';
+    achProviderField.style.display = paymentMethodSel.value === 'ach' ? 'block' : 'none';
     renderPreview();
   });
   walletProviderSel.addEventListener('change', renderPreview);
+  achProviderSel.addEventListener('change', renderPreview);
 
   function renderPaymentDetails(){
     const method = paymentMethodSel.value;
     const wrap = document.getElementById('pPaymentDetails');
     const grid = document.getElementById('pPaymentGrid');
-    if(method === 'none' || !PAYMENT_PRESETS[method]){
+    let presetKey = null;
+    if(method === 'wallet') presetKey = 'wallet';
+    else if(method === 'ach') presetKey = achProviderSel.value;
+
+    if(!presetKey || !PAYMENT_PRESETS[presetKey]){
       wrap.style.display = 'none';
       grid.innerHTML = '';
       return;
     }
-    const rows = PAYMENT_PRESETS[method]();
+    const rows = PAYMENT_PRESETS[presetKey]();
     grid.innerHTML = rows.map(([label, value]) => `
       <div class="pd-item">
         <div class="pd-label">${escapeHtml(label)}</div>
@@ -904,6 +1032,118 @@ www.histreestudios.com</div>
   document.querySelectorAll('.panel input, .panel textarea, .panel select').forEach(el => {
     el.addEventListener('input', renderPreview);
     el.addEventListener('change', renderPreview);
+  });
+
+  // ---- EmailJS config (fill these in to enable "Send to client") ----
+  // 1. Create a free account at https://www.emailjs.com
+  // 2. Add an Email Service (e.g. Gmail) and an Email Template with vars:
+  //    to_email, to_name, invoice_number, total, message
+  // 3. Paste your IDs below. Works from static hosting (GitHub Pages) since
+  //    EmailJS sends straight from the browser — no backend needed.
+  const EMAILJS_PUBLIC_KEY  = '';
+  const EMAILJS_SERVICE_ID  = '';
+  const EMAILJS_TEMPLATE_ID = '';
+  if (EMAILJS_PUBLIC_KEY && window.emailjs) {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }
+
+  let lastPdfBlob = null;
+  let lastPdfFilename = 'invoice.pdf';
+
+  function bumpInvoiceNumber(){
+    const field = document.getElementById('invNumber');
+    const current = field.value || '';
+    const match = current.match(/^(.*?)(\d+)(\D*)$/);
+    if(match){
+      const [, prefix, num, suffix] = match;
+      const nextNum = String(parseInt(num, 10) + 1).padStart(num.length, '0');
+      field.value = prefix + nextNum + suffix;
+    } else {
+      field.value = current + '-2';
+    }
+    renderPreview();
+  }
+
+  function openShareModal(blob, filename){
+    lastPdfBlob = blob;
+    lastPdfFilename = filename;
+    document.getElementById('modalFileName').textContent = filename;
+    const url = URL.createObjectURL(blob);
+    // Render a quick visual thumbnail of the invoice for the popup
+    html2canvas(document.getElementById('invoice'), { scale: 0.5 }).then(canvas => {
+      document.getElementById('modalThumb').src = canvas.toDataURL('image/png');
+    });
+    document.getElementById('modalStatus').style.display = 'none';
+    const emailBtn = document.getElementById('modalEmailBtn');
+    const clientEmail = document.getElementById('cEmail').value.trim();
+    emailBtn.textContent = clientEmail ? ('Send to ' + clientEmail) : 'Send to client';
+    document.getElementById('shareModal').classList.add('open');
+  }
+
+  function closeShareModal(){
+    document.getElementById('shareModal').classList.remove('open');
+  }
+
+  document.getElementById('modalCloseBtn').addEventListener('click', closeShareModal);
+  document.getElementById('shareModal').addEventListener('click', (e) => {
+    if(e.target.id === 'shareModal') closeShareModal();
+  });
+
+  document.getElementById('modalDownloadBtn').addEventListener('click', () => {
+    if(!lastPdfBlob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(lastPdfBlob);
+    a.download = lastPdfFilename;
+    a.click();
+  });
+
+  document.getElementById('modalShareBtn').addEventListener('click', async () => {
+    const status = document.getElementById('modalStatus');
+    if(!lastPdfBlob) return;
+    const file = new File([lastPdfBlob], lastPdfFilename, { type: 'application/pdf' });
+    if(navigator.canShare && navigator.canShare({ files: [file] })){
+      try{
+        await navigator.share({ files: [file], title: lastPdfFilename, text: 'Invoice from Histree Studios' });
+      } catch(err){ /* user cancelled */ }
+    } else {
+      status.style.display = 'block';
+      status.textContent = 'Sharing files isn\'t supported in this browser — use Download instead.';
+    }
+  });
+
+  document.getElementById('modalEmailBtn').addEventListener('click', async () => {
+    const status = document.getElementById('modalStatus');
+    const clientEmail = document.getElementById('cEmail').value.trim();
+    if(!clientEmail){
+      status.style.display = 'block';
+      status.textContent = 'Add a client email in the form first.';
+      return;
+    }
+    if(!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !window.emailjs){
+      status.style.display = 'block';
+      status.textContent = 'Email sending isn\'t configured yet. Add your EmailJS keys near the top of the script (works on GitHub Pages / any static host, no backend required) to enable one-click sending.';
+      return;
+    }
+    const btn = document.getElementById('modalEmailBtn');
+    const original = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    try{
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: clientEmail,
+        to_name: document.getElementById('cName').value || 'Client',
+        invoice_number: document.getElementById('invNumber').value,
+        total: document.getElementById('pTotal').textContent,
+        message: document.getElementById('notes').value
+      });
+      status.style.display = 'block';
+      status.textContent = 'Email sent to ' + clientEmail + '. (Note: attach the downloaded PDF manually unless your EmailJS plan supports attachments.)';
+    } catch(err){
+      status.style.display = 'block';
+      status.textContent = 'Could not send — check your EmailJS setup.';
+    }
+    btn.textContent = original;
+    btn.disabled = false;
   });
 
   document.getElementById('downloadBtn').addEventListener('click', () => {
@@ -922,6 +1162,8 @@ www.histreestudios.com</div>
     const invoiceEl = document.getElementById('invoice');
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'pt', 'a4');
+    const num = document.getElementById('invNumber').value || 'invoice';
+    const filename = 'Histree-' + num + '.pdf';
 
     pdf.html(invoiceEl, {
       margin: 0,
@@ -929,10 +1171,11 @@ www.histreestudios.com</div>
       width: 595,
       windowWidth: invoiceEl.scrollWidth,
       callback: function(doc){
-        const num = document.getElementById('invNumber').value || 'invoice';
-        doc.save('Histree-' + num + '.pdf');
+        const blob = doc.output('blob');
         btn.textContent = original;
         btn.disabled = false;
+        openShareModal(blob, filename);
+        bumpInvoiceNumber();
       }
     });
   });
