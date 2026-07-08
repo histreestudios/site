@@ -80,16 +80,16 @@
   .brand-mark img{width:100%;height:100%;object-fit:contain;}
   .brand-name{
     font-family:var(--display);
-    font-weight:800;
+    font-weight:700;
     font-size:15.5px;
     letter-spacing:0.01em;
     color:var(--text);
     line-height:1.2;
   }
-  .brand-sub{font-family:var(--mono); font-size:9px; letter-spacing:0.1em; color:var(--muted2); text-transform:uppercase;}
+  .brand-sub{font-family:arial; font-size:10px; letter-spacing:0.1em; color:var(--muted2); text-transform:uppercase;}
 
   h2.section-title{
-    font-family:var(--mono);
+    font-family:arial;
     text-transform:uppercase;
     font-size:10px;
     letter-spacing:0.1em;
@@ -200,6 +200,28 @@
   .download-btn:hover{filter:brightness(1.08);}
   .download-btn:active{transform:translateY(1px);}
   .download-btn:disabled{opacity:0.6; cursor:default;}
+  .excel-status{
+    font-size:10.5px;
+    color:var(--muted2);
+    margin-bottom:8px;
+    line-height:1.4;
+  }
+  .excel-status.connected{color:#4fbf7a;}
+  .excel-btn{
+    width:100%;
+    padding:9px;
+    border:1px solid var(--card-line);
+    border-radius:8px;
+    background:var(--card);
+    color:var(--text);
+    font-family:var(--body);
+    font-weight:600;
+    font-size:12px;
+    cursor:pointer;
+    margin-bottom:6px;
+  }
+  .excel-btn:hover{border-color:var(--accent2);}
+  .excel-btn.secondary{color:var(--muted);}
   .hint{font-size:10.5px;color:var(--muted2);margin-top:8px;line-height:1.5;}
   .error-msg{font-size:11px; color:#ff5c78; margin-top:6px; display:none;}
 
@@ -264,9 +286,9 @@
   .inv-brand-mark img{width:100%;height:100%;object-fit:contain;}
   .inv-from-name{
     font-family:var(--display);
-    font-weight:800;
-    font-size:16px;
-    letter-spacing:-0.01em;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing: 0.01em;
     color:var(--ink);
   }
   .inv-from-detail{font-size:9px;color:var(--ink-soft);line-height:1.5;margin-top:2px;white-space:pre-line;}
@@ -275,25 +297,12 @@
     font-family:var(--display);
     font-size:24px;
     margin:0;
-    letter-spacing:0.02em;
+    letter-spacing:0.03em;
     color:var(--accent2);
     font-weight:800;
+    text-transform:uppercase;
   }
-  .inv-number{font-family:var(--mono);font-size:10px;color:#9a9aa4;margin-top:6px;letter-spacing:0.02em;}
-  .inv-number-edit{
-    font-family:var(--mono);
-    font-size:10px;
-    color:#9a9aa4;
-    margin-top:6px;
-    letter-spacing:0.02em;
-    text-align:right;
-    border:none;
-    background:transparent;
-    outline:none;
-    width:100%;
-    padding:0;
-  }
-  .inv-number-edit:focus{color:var(--ink);}
+  .inv-number{font-family:var(--mono);font-size:10.5px;color:#8a8a96;margin-top:6px;letter-spacing:0.04em;}
 
   .inv-meta-box{
     display:flex;
@@ -355,18 +364,17 @@
     border-bottom:1.5px solid var(--ink-line);
   }
   table.items thead th.num{text-align:right;}
+  table.items tbody tr:nth-child(odd){background:#ffffff;}
+  table.items tbody tr:nth-child(even){background:#f5f5f8;}
   table.items tbody td{
-    padding:9px 4px;
+    padding:9px 8px;
     font-size:10.5px;
     border-bottom:1px solid var(--ink-line);
     vertical-align:top;
     word-break:break-word;
   }
-  table.items tbody tr:nth-child(even) td{
-    background:#f5f5f8;
-  }
-  table.items tbody tr td:first-child{padding-left:8px;}
-  table.items tbody tr td:last-child{padding-right:8px;}
+  table.items tbody td:first-child{padding-left:6px;}
+  table.items tbody td:last-child{padding-right:6px;}
   table.items tbody td.num{text-align:right;font-family:var(--mono);}
   table.items tbody td.code{font-family:var(--mono);color:var(--ink-soft);font-size:9.5px;}
   .totals{
@@ -411,20 +419,9 @@
   }
   .stamp.due{border-color:var(--amber);color:var(--amber);}
   .stamp.overdue{border-color:var(--accent2);color:var(--accent2);}
-  .notes{
-    padding:12px 0;
-    margin-bottom:6px;
-    border-top:1px solid var(--ink-line);
-    border-bottom:1px solid var(--ink-line);
-    font-size:9.5px;
-    color:var(--ink-soft);
-    line-height:1.55;
-    white-space:pre-line;
-  }
-  .notes:empty{display:none;}
   .payment-details{
-    margin-top:26px;
-    padding-top:14px;
+    margin-top:6px;
+    padding-top:12px;
     border-top:1px solid var(--ink-line);
   }
   .pd-title{
@@ -455,23 +452,25 @@
     word-break:break-word;
   }
   .notes-bottom{
-    margin-top:18px;
-    padding:12px 0;
+    margin-top:16px;
+    padding-top:12px;
     border-top:1px solid var(--ink-line);
-    border-bottom:none;
+    font-size:9.5px;
+    color:var(--ink-soft);
+    line-height:1.55;
+    white-space:pre-line;
   }
+  .notes-bottom:empty{display:none; border-top:none; padding-top:0; margin-top:0;}
   .foot{
     margin-top:auto;
-    padding:9px 0;
+    padding-top:10px;
     text-align:center;
     font-family:var(--display);
-    font-weight:700;
-    font-size:9px;
-    color:#fff;
-    background:var(--accent2);
+    font-weight:400;
+    font-size:8px;
+    color:var(--accent2);
     letter-spacing:0.1em;
-    border-radius:5px;
-    border-top:none;
+    border-top:2px solid var(--accent2);
   }
 
   @media print{
@@ -481,7 +480,7 @@
     #invoice{box-shadow:none;width:100%;aspect-ratio:auto;}
   }
 
-  /* ---------- Share/Send modal ---------- */
+  /* ---------- Share / preview modal ---------- */
   .modal-overlay{
     position:fixed; inset:0;
     background:rgba(5,5,7,0.72);
@@ -489,7 +488,7 @@
     align-items:center;
     justify-content:center;
     z-index:1000;
-    padding:20px;
+    padding:24px;
   }
   .modal-overlay.open{display:flex;}
   .modal-box{
@@ -497,52 +496,86 @@
     border:1px solid var(--card-line);
     border-radius:14px;
     width:100%;
-    max-width:400px;
-    padding:20px;
-    max-height:90vh;
-    overflow-y:auto;
+    max-width:760px;
+    max-height:92vh;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
   }
-  .modal-title{
-    font-family:var(--display);
-    font-weight:800;
-    font-size:16px;
-    color:var(--text);
-    margin-bottom:4px;
+  .modal-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 18px;
+    border-bottom:1px solid var(--card-line);
   }
-  .modal-sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
-  .modal-thumb{
+  .modal-title{font-family:var(--display); font-weight:800; font-size:5px; color:var(--text);}
+  .modal-sub{font-family:var(--mono); font-size:10px; color:var(--muted2); margin-top:2px;}
+  .modal-close{
+    background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer;
+    padding:4px 8px; border-radius:6px; line-height:1;
+  }
+  .modal-close:hover{background:var(--accent-soft); color:var(--accent2);}
+  .modal-preview-wrap{
+    flex:1;
+    min-height:0;
+    background:#2a2a32;
+    padding:16px;
+    display:flex;
+    justify-content:center;
+    overflow:auto;
+  }
+  .modal-preview-wrap iframe{
     width:100%;
-    border-radius:8px;
-    border:1px solid var(--card-line);
-    margin-bottom:16px;
-    display:block;
+    max-width:520px;
+    aspect-ratio:210/297;
+    border:none;
+    background:#fff;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+  .modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+    padding:16px 18px;
+    border-top:1px solid var(--card-line);
   }
   .modal-btn{
-    width:100%;
-    padding:11px;
-    border-radius:8px;
-    border:none;
+    padding:11px 8px;
+    border-radius:9px;
+    border:1px solid var(--card-line);
+    background:var(--card);
+    color:var(--text);
     font-family:var(--body);
     font-weight:600;
-    font-size:12.5px;
+    font-size:12px;
     cursor:pointer;
-    margin-bottom:8px;
+    text-align:center;
   }
-  .modal-btn.primary{background:linear-gradient(135deg, var(--accent2), var(--purple)); color:#fff;}
-  .modal-btn.secondary{background:var(--card); color:var(--text); border:1px solid var(--card-line);}
-  .modal-btn.email{background:var(--green); color:#fff;}
-  .modal-btn:disabled{opacity:0.55; cursor:default;}
-  .modal-close{
-    width:100%;
-    padding:9px;
+  .modal-btn:hover{border-color:var(--accent2);}
+  .modal-btn.primary{
+    background:linear-gradient(135deg, var(--accent2), var(--purple));
     border:none;
-    background:none;
-    color:var(--muted2);
-    font-size:11px;
-    cursor:pointer;
-    margin-top:4px;
+    color:#fff;
   }
-  .modal-status{font-size:10.5px; color:var(--muted); margin-top:2px; margin-bottom:8px; line-height:1.5; display:none;}
+  .modal-btn.primary:hover{filter:brightness(1.08);}
+  .modal-btn:disabled{opacity:0.55; cursor:default;}
+  .modal-email-row{
+    padding:0 18px 16px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .modal-email-row input{flex:1;}
+  .modal-note{
+    padding:0 18px 16px;
+    font-size:10.5px;
+    color:var(--muted2);
+    line-height:1.5;
+  }
+  @media (max-width:560px){
+    .modal-actions{grid-template-columns:1fr;}
+  }
 </style>
 </head>
 <body>
@@ -555,15 +588,15 @@
         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACAvzbMAAAhMUlEQVR4nO3de3Cd+V3f8c/39zxHkmX5IltHtje762R3kxA32WxiS3KWgLwNJCElQyaJPIU0Ay0wZZhCoFwKacExMECmtA23JJuFtqGlQ3xg+lcJlw62AgnJ7iZkE7M0F1u+Lcnau+u1vdbtPM/v2z/OebyyV9ZKx7o8R+f9mvHYkiX5kf44H/8+v5sJANY516FgOhxPDex/fRr8s5k8uiuTfEamSXO7JNNFSedd/g1zO2Pupyz1iTy3s3ddeOSbPu/XHUuk8yaNR5NcjV8dI13rBwCA1WJyC1JFkhJTtylsDNK2EOz2ICnIZI0PVCbXdIwepGdOVYefMNPXzP24m32x29MvD154ySlTLZ/79Y9qND2gQZdqRaCsawQIgI7SHCZ4lMzlLknm7i7J1Pi9wcykkJhtr5htr8juTYK9K3fXFWXZ2cHTJ8768KMy+1Rq8dM7n3zkcdN49vy/M5Y0/rR+w4QAAdCxTI0BhySz5nvsho+py73u7pK7XC7JgiztsvDKLrNXmtl7LkeP56rDf38u6K9i9E92q/fTdqH2XPE1GiOT8WhSXJ3vbHUQIACwgGbIzMkaKUo+5dGn5bExtrC0EsJreiy8ZjbE98349NlzO0b+PET7k5ne7mMvOz0+LUkuBWnM1suoJKz1AwBAu7HGiCVIljZ+yac8xouxnl31PAbTHRuV/FAa9MnK1NSXzw0O//o3B0fuNSmaarlJflSjqesFA562QoAAwK0zk4LJUpOFunu85I0wSSzc0xfSf1eXf+Hc4Mifna0Ov/u49nQ9oPGs3YOEAAGA5RfUDJPp5sgkl5IeC2/ZEJJa/+Cmv3ticOR9p7e8pr+dg4QAAYAVVIxMJPkVz/IrnuXBbE9vSD6Udvd+6dzgyL//f7v2DhRB8vzqrfIjQABgdZjJEpMlzVFJLtPtfSH5lU15+tgT1f0/+w/b799kquUu2ZE2CBICBABWmUkhyJJZd78Y65lMt21Mwge3pPkXzlVH/qVJflC13DWWlLnWIkAAYI00VnNZei1IZPf0hvBf/3Fw/1+fHhj+tmLFVllrLQIEANZYESQzHuMlz/KK2RsriX3qierIR76w876qlXQ0QoAAQEk0J9yT5zzLZ9x9Y5L8yK7Y/ei5HUMHyzgaIUAAoGQak+2yi7GeRdOdG5R+4lx1+H8Uo5GjGi3FKSIECACUVHN+JF72LO9L0n+xM/Y8fKY69JYHNJ65FA6t8Ws4AQIAJVbUWhdjPTPTS7tC8mdnq8O/ZFI8LMW1rLQIEABoAyZLpz2P0x7j5iT9hScGRz55vDq0szHBvjaVFgECAG3CZEFSeCbWsw0hvHWbhc9MDA7vN41naxEiBAgAtBmTpZdilgWzl/XIjk4MDn1fI0RWd6kvAQIAbchk6aTnsS7v2WTpH56ujvxc44rdQ7ZaIUKAAECbCrKQSf6c5/mWJPm1M9Xh3zQdjpJWJUQIEABoY6ERFuFirGdbk/THzwyO/IGatx2u9DJfAgQA2lxxFMrTsZ5tDcl7zw4O//ExjSYfkHwlQ4QAAYB1ohEiWX1LSN95T3Wy1gwRrVSdRYAAwDpiUuWZmNW3JJV33D049UeSvKaxsBIhQoAAwDpjUuXpmNW3hvRdZwaHPn5QtfyYRpd9iS8BAgDrUDES6Q+V905Uhz70gMYzaXRZjz0hQABg/apcjFl9W1J538nq8M8u9451AgQA1rEopZdiPdsckg9+bWDooGk8W67j4AkQAFjHTLJMlkx5HvtC+PjXB0b2PtA89uRWvzYBAgDrXJCsLpeZ9fQE/+Nztw1tl2rxVveIECAA0AGCLEx6nm+09KVZZv/TJD+g0Vta3kuAAECHCLLkWa9n20L61pOD+37xAY1nx25hZRYBAgAdxZJnY5b1WvqBkwP7Rm9lPoQAAYAOYpLl8uCSKiH89xP9e7dIe7yVKosAAYAOY7Iw7Xm+KaQvtYp9yHQ4tlJlESAA0IFMlj4b69lmq/zAqR1D391KlUWAAECHclmYlbu5ffipbcObpdqSqiwCBAA6lElhxvN8a0jvuBT0KyZFaWzRuUCAAEAHs8aqrLw32I+eGtj/elMtP7LIKosAAYDOZlGuioUkhvxDS/lEAgQAOpzJkiue5Vst/bbT1eGxg6rli5lQJ0AAAJLMZuUezX91Yvdoz2Im1AkQAIBMCpOex/5Quccmp37QpBfdG0KAAAAkSUFmk567y3/+yepo3wGN5wuNQggQAEAhzHjM+5PKSyZt6odM8oVGIQQIAGAOC5Me3aSffGLX3t6FRiEECADgGpPCtOdxi6V31uvJ9y40CiFAAADXCTLNKrqbv881lhzQeD7/xwEAcL1k0nPvC+lrJqqnvsMkn29fCAECAHgBk2Jo/P6jklSb52MIEADAC7gsec5zT83ecmrH8Msau9OvzwwCBADwAtY4IyvfFNLu4P6exntHCRAAwGJYmPaozPV9RzWa6obJdAIEADAvk8KUx7ghJK+6ozozcuNkOgECAFiAxw0WlCofa7x9/tqmQgIEALAAC1MeFWVvP75nT5dpPC8ShAABANxU49rbGDeEcNfGpzbuleSfaNZYBAgAYEHerLHk9jZJGmvWWAQIAGBBJtmsR0l6c+M9jdVYBAgAYEHeXM4bpNee2LX3zsZqLAUCBACwIJMsl+ebQtJdien9jfeOEiAAgEXxYKYs+mjxDgIEALAYYdajgvlI483xnAABACyC2Yy75PbKierQTpOcAAEAvCiTLFOMvSHpTYO9SqLCAgAsXuw2U+a6TyJAAACLZJJckiveKxEgAIDFs7q7TOEVEgECAFgkl4W6okx+55PVPX0ECABgUUxS5i65qlcrvS8hQAAAi2W55BUL3Z4ldxIgAIAlcK+YKVHcTYAAAJbCg0zuuoMAAQAsXbDbCBAAwFJYlMuiDxIgAIAlMEVJbtpOgAAAFq3YjS63LQQIAGDRXDKXK0i9BAgAYEmiS9G0gQABACyde4UAAQAsiUuSKSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC0hQAAALSFAAAAtIUAAAC1JXYdCTY/bWj8IAKyUz+sb4YjGzHwiSMlaP866kZoOx7V+CABYYbkknfLhq8TH8klPDex/fUiU1lVf62cBgBXRpdTc8ui5XuVr/TDrSOqWf6pLycagVPRYANYtT+QmZXKZeLlbDqlMM7PuvbncxQ8VwDpHeCyfVJIVP1B+sACAxWIZLwCgJQQIAKAlBAgAoCUECACgJQQIAKAlBAgAoCUECACgJcFknIUFAFiyIKnO7kEAwFIFuWYIEADAUgXJJ4OZTOKQSgDAogVJl02kBwBgaYLMnmksxSJCAACLF1x+IYgKCwCwNMFk/yiRHgCApQlyneMmKQDAUgUFP12Xy2XsSgcALFrIPZyZ9TwLDEIAAEsQKl12Tq5nUjM5UyEAgEUKd5z77EUznas0BiAECABgUYJJHmVfryjI5BysCABYlCBJJv9yYCMIAGAJGgFi/ljmLjGRDgBYpCBJrnD8imdZkCVMpAMAFiNI0u4nd59x2clua+YJAAAvIhzVaGqq5cH1SDcT6QCARQoHmn/IzT7FDAgAYLGCNB4lKQT/mysxi5Ila/1QAIDyCyZFl2z3N3d/JXP/ao8Fc4kaCwCwoCBJxzSamGp5MP1VjwUX8yAAgBcRJOmABl2SPIb/U3e34v0AANxMMyhqUZL6PPnr52J2oUshsB8EALCQ5lEmctdYUn36M1dM9pe9lrjJ87V+OABAeV2rqo7pvElSNPtELjfnWBMAwAKuhYRLZpJ/Y8e9G6e8+2vdCrtm5W4ECQCgySVPZZYpXrw2AjHJj2o03fXkl66a9CcbQyJRYwEAbuK61VYXmqux8lwfv+q5s6kQAHAz1wXIQdXyQ1K45+lHHp2O8eE+YxQCAJjfC/Z7HNBokKRU+khqZqzlBQDM5wUT5MXqq7+v7tm40fq+0i3bNSt3sbkQADrevJPohcbNtqPJqy88/pxJD/aGxJyjTQAAN5h3VPEBjUeXrEf24OWYX04VuKkQAHCdeQPksBSlsbDz/OeezDz+/qaQGJPpAIC5brpJ0Bvh4mdv33+bZuJXzLQha2w2ZGMhAHSoBedACibFYxpN7jz32ScyxY9uCmlgFAIAKCy4supYMReS9HzwcswuVjilFwDQtGCAHG6OQm775t9cyNw/uCkkjEIAAJIWMZ/R3BdiZ2/f3x1n45e7Ldw17dGNfSEA0HEWNQdSaOwLGbM7z312yuU/09U4tJcaCwA63KJGEaZa7hpLXnb+kf99KWZ/usXSJFJlAUBHW0INVfPG8bzxxyc9TnbJxIQ6AHSuRQeINTcX7r7w+RMzir+wKaQJE+oA0LmWuinQXGNBqsVTg0Of2mTpG694lhv3hgBAR1jSJPoLP7fmJnmM+sFZj5MVqiwA6EhLXoprUnSNJXc/9chXp2P8iT6qLADoSC3t5TDV8qMaTe966pGHnon1P+oPldTl2XI/HACgvFo+GLGxwfCQPbX9LzdOJdnnuy28fNJz5kMAYB27lTmQa0zymh636tOfuZK5xqL7VEWmyHwIAHSEWzqO5GBRZV14+LFJxR/aYEmSNOZDCBEAWOdu+TyrBzSeuUbTu88/8r+ejfVf7g+VVBLzIQCwzi3TgYjj+VGNpndfePQXn86zP+wPaSUyqQ4A69qy3S7oktU0FsZ03s5Wp/5sU0jfdNHrWZCly/VvAADW1rJMot/IJP971Vwaz6dzvfM5zz+/xVKW9wLAOrXs95u7FEyKX9zxhsEBj0d7LOy54llmjEQAoO2tyAikYFI8orHkvif/9vyVfPY7Zzx+ZZOlKXMiALC+LPsIpOAaS0y1/LFtw7dvT/UXGyx51SXPmBMBgDa2oiOQQnEJ1Wufefjcs+7/dNrj3/VbJXWpvlL/JgBg9azoveZFiLz6wiPffHpm8k1XPR/fFtIKE+sA0P5WrMKaq5hYP7p7d8/Lp3b+weaQjD0T65nLElulZwAA3Lq5FdaqvXgXISJJZ6vDv7ExpD91xTPP5R5kKzoSAgAsj1WZA7lR4x4RmUvhjgsP//QVz36kIss3WBKotACg/azq//xNcpPiUY2mu88//OB0jG+S+5ktobHhkJsNAaB9rNn8g2s0NY1njw/s3bUlJL/XF9K3XYyZRyotACitNZkDmf9BGntFJOn04PD7K7JfSsySSc/ZuQ4AJbQmcyDzMdXyQ1JwKew+//CvTno2mktf2hYqqUse5XEtnw8AcHOlWUJbVFqP7trbuytPD0v6qYqZXfU8E8t9AaAUSjMCmcs0nh3RWLLvG5+ffMn5z/3MtOvb667P9YdKmsqMlVoAUC6lCRCpcUVuY6nvWHL3hc/9zafP3/GtV2L2k4n0VPOmQ3njylwAwBorbS10RGPJweYE+1e3Dd++MQ3vl+IPbwhJeinmLnk0WbLWzwkAnaQ0q7AW46hG0wc0nknSuYF9r7OQvN9M7+5W0GVvBIlkgTkSAFh5bRUgUuO6XGksXFvyWx15YyXop136ng0KuuK5GveNMNkOACup7QKk4FKQDsl0uHGm1uDw/sTsx6L7u/pC2n3Vc816zCXJGpsR2+r7A4Cya9sAKbgOBemwisMZn9j+hm9REv+Vy7+v15KX5JKueq7Gyi0LVrLFAgDQrto+QAqNIHncimprYstrt1a6et5h0ntz89HNIU1mPGrSoyTPTDJnvgQAWrZuAqTgUjim0VBMtkvSmR37Xi1P32WK7zDZfX0h0axHTXlUlOcmuTdrLgIFABZn3QVIoZhsl2rR5pzs+4+7RvbGXG9z+Vtden2fJT0m04yiZpqB0vh0mcnMCRUAmNe6DZC55huVSNLpwX13BQ/fKtMDLu13+cv7LE0TM2XumlVU3V1RiiaPrkaSNMLJTHOChZAB0Gk6IkDmMNchO6Zj4YDG87kjE9eh8MTAn96jRPflHvYF6bXR/ZUy3bbBQqViQSYpuiuXlMuVyxVdinK5Gj9MqXHXyRp9fwCwmjxpBMiznRAg1ylGJgc06MXk+3V/f89bu89cuny7bPZlQcldUX5XMLszut8meTXKtpq8T7IeSV2pTI1Z+Y77UQLoQC4plemq55Md/arXqKVkjUCRpPFYLA2+mSd27e0NsatvWrHXzHuV5T0xSSshWpqpLi4xAbC+mUupxeBZRwfIfIpQkcbsmM7bAUnSoEs1f7FwAYBOQoAskT//M2v+fkg1Pc7PEQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADKyqWw1s8AAGgzzknuAIClKsLjVHX/tzIEAQAsyqFmbXV6++tuc8v/GwECAFiUAxoNJnmepL8ZZC9f6+cBALQB11giSSd27Hv7xZ33+0R1+EK61g8FACi3xrzHHp/Y8tqtiScfnlV0SUaFBQBY0DGNJqbD0bu6fmOTJbdPepTMA0uxAAA35RpLTLX8ZHX4zZtC8udXPcsShTRTvMgIBAAwr6K6Ol7d05fKP5rJfe4eEAIEADCvorrqtY2/tiWpvGzK8zh36oMKCwDwAteqq4Ghb+9NkvEZj7lLwSWlMqPCAgC8QFFTTewe7UmCPWiSotx0w6CDAAEAXKdRXdXyODV5eGtIv2XS88zmWbVLhQUAuOaIxpKDquUnduwd3qD0b+vu3jx51yTJJS8qLDYSAgAkPV9d+d69lTNnw8dSszCjmJts3sEGFRYAQNLz1dXE2eT9W0PltVcb1VVys4+nwgIAXKuuzg6O3JtIj2bykEvBbsgJKiwAwDVFdXVEY0nupx/qCUllxrObVlcFKiwA6HBFdfX66smf6k/S4ec8W7C6KlBhAUAHcx0KpsPx3PZ9r7Qk+WKUV7J5qqvnP/75CosRCAB0tMdNkrIkfKzbQk8m183C40YECAB0qOK4khPV4X+zNaTffmWR1VWBCgsAOlBzc6Cf3jH80orbl6K8N5PsxUYfVFgA0OGONe83d/eP9ljoq8t9sdVVgWW8ANBhmtVVdmLH8A/2W/rmi7GeBdmS84AKCwA6SFFdnd22/7aQ+nFJm+vyF62u5nw+FRYAdKKiusqT/Hd7Ldk6q7jk6qpAhQUAHaKoriYGh793S0i+53KL1VWBCgsAOkCzutKJHW8Y6Pb8eCLbPiuXlridgwoLADpMs7qKIWa/2WdpdVrRdYt7AamwAGCdm1NdvWOzJf/8kt9adVVgBAIA69ghKUh7/PSWN/an0u/OKLrPcz1tKwgQAFjHDmg0mA7HvHvmP20K6W3THqMtw2u/6UXOegcAtK/irKuJ6tBb+0L6yUnPMl+W6soUFa8wAgGAdahxSdQe/4ft929KZB/J5B6XobpyyZsjj0iAAMA61Lgk6nDsTuq/vjlJXzrl+bJUVwWXciosAFhniurq5MC+0Y1JemzKYy5p0ce0L/y1m/tA3J9iBAIA64hLVpN05vb9G5IQPuaS/FrrtIzMAwECAOvIMY0mB1XL67P5L20N6SumPM9smZbt3ogKCwDWiSMaSw6qlp/cMTKyQfrMrLs3jzBZttf6osLK3Z9iJzoArAPeDInje/Z0hQvxoSQkISrmtkLbNZwKCwDWh8aqq1q+4ULvf+hPKq+52qiulmXifF5uKzCxAgBYVUV1NVEduq/HkofriiGXQqv3fCxkziqsp6mwAKCNFdWVayw5pdMPpWaVafcVq67mosICgDZWVFcnq6d+ZluS7nvOsxWtruwmfwYAtBHXoWA6HCd2jryqO+oLubySrVB1NVeQFF1PMwIBgPZk0uPmkinGj3VZ6MnkWunw8GZr5vKV2VwCAFhZR5vV1cTA0I/1h8obr6xwdVVoBJRrxZMKALD8mpsD/WvV++/qVf6YzHvqq1BdFYKkKH+GEQgAtJ0xM8lT1T+6IYSN9VWorm7kWqHzUQAAK+PaSbuDQz+8Lal8x+VVqq6e//evrRymwgKAdlFUV+e2Db/EUjsuaVNdbqs5+nDJE8ly+UVGIADQJo5pNJjkWeIf7rVky6yir3Z11ZhBb2AnOgC0gWZ1lZ0aHHrPllB5+6VYz8Iy3G++9OdwNQdCVFgAUHbN6konB0eqXdLxIG2rNwYCq94iuTymCiFTpMICgLJrVlcxKP+tvpAMzCgWw4A18Py4gwoLAEqsqK4mqvveudkqB9equpoPIxAAKKlDUpD2+Jnb929LLfzOrGL0Ndx+4XMm0CUCBABK64BGg+lwzGfjf94U0l1THt3W/nX7WodVimEQAOB616qrgZHv6rPw/WWorkxynxMga51kAIAbNF6k9/hXtw1vToJ/JJN7LMnJIUaAAEB5NS6JOhyTRB/cHNLd057na11d+Q2jD4mjTACgVIqzriZ2DD/Qq/BX0x4zL8F0g0vFrndPZMY+EAAoEZesJumJXXt7g+tBlxTlpXqdnrsMq1QPBgCd7JhGk4Oq5TNZ8stbQ/ryKc8zK8ncx3yosACgBK5VV4NDb+ix5NOzHmPzCJM1f50u9n+YZC55SoUFAOVQTE77nj1dcnsoNI5LN5UgPArznfpLgADAGjvWvN/85IW+X9iWpP9k0vMslKS6unH3+VylSTcA6ERHNJYcVC2fGNj3up6QPFyXWyxJdSVdX18VbxcV1povDQOATlVUV0c1mipM/l5iIZ32LDdZKcKjcLNLq0oxRAKATlRUV3cOXv3ZbaHy+qurfL/5i1movpJKMkQCgE7jOhRMh+OpncN7uqJ9IZenmRRW+4rahczZPHjd+1iFBQBrx6THzSXzqIe6LHRnjStiSxMei0GAAMAqO9qsrk4N7HvftpDef6Vk1ZX04vWV1GZpBwDtrrk50L9e3X/3BvljMu+ul6y6aoqaZ5BBhQUAa2bMTPJU8aMbQuitl7C6mu/k3fkQIACwSorjSr4+uPdf9yfpmy6XsLoqLCbUSpV6ALBeFdXVyf69d3RX0i9L6qvLrWyjD2n+1Vdz/44KCwBW0TGNBpPcKuHDvRY2zyre9EV6LS0UHjdiJzoArLDifvOT1X3v7Q+Vf/ZsCe43Xw6lSz8AWE9cCh+Q9APVocHUwvEg9dcbK2RL1wAtZvRBhQUAq+SYRsNhKbrpt/tCsn1G0VXC8NAi9n3cqO2HUABQVkV1daI6/O4tlrz7UrmrK7clBltZvxEAaGuHpCDV/NxtQ9s9s9+eUYwuC2WcN2juOl/yEcBlHEYBQNs70Fh1FWcy/ZdNIdk57XHJ/8NfLbaElVdzMQIBgGV2rboaGPruLZa+t8yrrlodfUglTUMAaFeNI0D2+FPbhjenwT48K3cvyfW0N9PqfpRSf1MA0G4al0QdjpcS/49bQnrHjOd5Waur5rLdlpVxPgcA2tLzZ10NvWmzJf93yvPMy11dLXn0wT4QAFhmLllN0hd33LsxlT0YJY/rtLoqlPqbA4B2cUyjyUHV8k2x+1f6Q3r3VMmrq+X4OqX85gCgnRzRWPKAxrNT1X3394bkfc/GLC/rMe2F5TjIsZTdHAC0i+Lipa/ec0+3XbKHgmS53EJrK2NX3FJO230xjEAA4BYca95vHp7tP7Q1qeyZ9DwLJZ37uNVVVzcqZUICQDs4orHkoGr56YGRvZVEn8vcFRv/MS/ja6u7br26mrsKiwoLAFpQVFeu0fR0mHooVUimFWOJq6tlv3u9lMMsACi7orqaGJz8uf6Qvu5qiasrSXElbj8sZVICQJm5DgXT4fj1Hfte3evJ53N5kkmh3a+oXezXYyMhALTGpMfNpZDG8LEuC12ZfNnroeWwXPs9boYAAYAlONqsrk4ODv1Ef5K+4YpnWRn3fLR6VMlSlC4xAaCsvFFTxbMDIy8PwR9zqaveIdXV3K9LhQUASzZmkpSH+GCPJRvqJa6uVuO5CBAAWISjGk0bq66GfmRrqDxwuaTVlVZoxdV8SpecAFA23vjPtk/sfMOdXTH/smQb63Ir2+hjNUYeVFgAsATHGvebu2L2kV5LNs0qrkpFtBSrVVvNxU50AFhAcb/5yerQ9/db5bue9fLdb74W4SGVLEEBoEyK6ur0wN6daUiOm2xrvbE6tjTtjTfmPFbteaiwAGARiuoqhuR3Nlq6bUbRVZLw8MbhiL6Wl1aVahgGAGVxrboaGDq41dJ3XipRdbUamwQXoxRJCgBlckgKUs2f2LV3oGL2W9PKo5fkoMSyhIdEgADACxxoVFdxJrMP9SXpjmmPa1oVFcoUHhIVFgBcp6iuTmzf9/bNofKeS7Ec1VXZwkMqQaICQFk0Lona48/0791SSZIPz8p9raurZnBEk0q3cZEAAYCmxiVRh+Mzqf3G5pDcPu35qi6RvdGc49hL+VpdqjQDgLXSrK7yE4Mj37nJ7C+mPM98baur6CUcdbAPBADmcMlqkr6x496NFfeP5pLHNaquiv0dKukx8XMRIAA63jGNJgdVyydjz69uSdK7pj3PV7u6mhMcpZooX0hbPCQArJRr1VV15I0bg31qxmNsHmGyaq+P7RQcVFgAoOerq4ndoz2p+cdMslxuWqUX8jnHkbRFeNyIAAHQsYrqKk5d/cDWkL5q0vMsrMLcxzx1VduFh9SmDw0At+qIxpKDquWndw7t6/Lw2Vl3rXR1NWdZbluOOKTrK6w1310JAKvNmy/ej2pvRdEeSsySXDEG2Yq8qK+H4JgPFRaAjtPYMFjLtw7az28N6X1XV6C6KmqquVXVegoPaZ19MwDwYorq6szg/tdU5I/W5Um+fHsu3CVZ4/d1FxgSq7AAdC4bU+Omwej5Q6mFrlx+S7XSnFFG9OffXfpNgMuBAAHQMVxjwVTLJ6r7/u3WpDJyxbPMZIkaATD3102/xJywiC7FOR9vN9RUC32ddWHdJyQASI1Rh0nxxMDQKzYE+2IudeWLWHU1Zw7Dm29b8+2OfP1kFRaATmPSIX31ns91h8tP//4GSzc865nfMFowzRk1FO+wGwKjI1Pjelb8XPhZAOgYE7tHe8LM5KuzGGa7JOXBM3O/7nWw3tgYrq4bPnd2tR6yDXRJyi3J1/o5AABtihEIgI7S2G1+SNLhtX4UAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3t/wNa73Vhxb11wwAAAABJRU5ErkJggg==" alt="Histree Studios">
       </div>
       <div>
-        <div class="brand-name">Histree Studios</div>
-        <div class="brand-sub">Invoice Maker</div>
+        <div class="brand-name">HISTREE STUDIOS</div>
+        <div class="brand-sub">Invoice</div>
       </div>
     </div>
 
     <h2 class="section-title">Client <span class="opt">(optional)</span></h2>
     <div class="field">
       <label>Client name</label>
-      <input type="text" id="cName" placeholder="e.g. John Carter">
+      <input type="text" id="cName" placeholder="e.g. Amanda Thickk">
     </div>
     <div class="field-row">
       <div class="field">
@@ -575,15 +608,13 @@
         <input type="tel" id="cPhone" placeholder="+1 555 000 0000">
       </div>
     </div>
-    <div class="field-row">
-      <div class="field">
-        <label>Address <span style="text-transform:none; color:var(--muted2); font-weight:400;">(press Enter for new line)</span></label>
-        <textarea id="cAddress" placeholder="Street&#10;City, ZIP" rows="2" style="resize:vertical;"></textarea>
-      </div>
-      <div class="field">
-        <label>Country</label>
-        <input type="text" id="cCountry" placeholder="e.g. United States">
-      </div>
+    <div class="field">
+      <label>Address <span style="text-transform:none; color:var(--muted2); font-weight:400;">(press Enter for a new line)</span></label>
+      <textarea id="cAddress" rows="2" placeholder="Street&#10;City, ZIP"></textarea>
+    </div>
+    <div class="field">
+      <label>Country</label>
+      <input type="text" id="cCountry" placeholder="e.g. United States">
     </div>
 
     <h2 class="section-title">Products / services <span class="req">(required)</span></h2>
@@ -598,7 +629,7 @@
         <input type="text" id="invNumber" value="">
       </div>
       <div class="field">
-        <label>Invoice date</label>
+        <label>Issued on</label>
         <input type="date" id="invDate">
       </div>
     </div>
@@ -607,7 +638,7 @@
       <input type="number" id="dueDays" value="14" min="0" step="1">
     </div>
     <div class="field">
-      <label>Due date <span style="text-transform:none; color:var(--muted2); font-weight:400;">(auto-calculated)</span></label>
+      <label>Payment due <span style="text-transform:none; color:var(--muted2); font-weight:400;">(auto-calculated)</span></label>
       <input type="date" id="invDueDate">
     </div>
 
@@ -623,18 +654,19 @@
       </div>
     </div>
 
-    <h2 class="section-title">Notes <span class="opt">(optional)</span></h2>
+    <h2 class="section-title">One Liner Notes <span class="opt">(optional)</span></h2>
     <div class="field">
       <textarea id="notes">Thank you for your business. Please pay by the due date.</textarea>
     </div>
 
-    <h2 class="section-title">Payment details <span class="opt">(optional — for new clients)</span></h2>
+    <h2 class="section-title">Payment details <span class="opt">(Only for new clients)</span></h2>
     <div class="field">
       <label>Include on invoice</label>
       <select id="paymentMethod">
         <option value="none">None</option>
         <option value="wallet">Mobile Wallet — bKash / Nagad</option>
-        <option value="ach">Bank Transfer (USD/GBP) — Elevate Pay / nsave</option>
+        <option value="ach">Bank Transfer (ACH, USD)</option>
+        <option value="wire_gbp">Wire Transfer (GBP) — nsave</option>
       </select>
     </div>
     <div class="field" id="walletProviderField" style="display:none;">
@@ -645,16 +677,21 @@
       </select>
     </div>
     <div class="field" id="achProviderField" style="display:none;">
-      <label>Account / provider</label>
+      <label>ACH provider</label>
       <select id="achProvider">
-        <option value="ach_elevate">Elevate Pay — ACH (USD)</option>
-        <option value="ach_nsave">nsave — ACH/Wire (USD)</option>
-        <option value="wire_gbp">nsave — Wire Transfer (GBP)</option>
+        <option value="ach_elevate">Elevate Pay</option>
+        <option value="ach_nsave">nsave</option>
       </select>
     </div>
 
     <button class="download-btn" id="downloadBtn" type="button">Download PDF invoice</button>
     <div class="hint">Data stays in your browser tab only — nothing is uploaded anywhere. Refreshing clears the form, so download before closing.</div>
+
+    <h2 class="section-title">Excel invoice log <span class="opt">(auto-saved)</span></h2>
+    <div class="excel-status" id="excelStatus">Not connected — invoices are logged in this browser only.</div>
+    <button class="excel-btn" id="connectExcelBtn" type="button">📎 Connect Excel file (auto-save)</button>
+    <button class="excel-btn secondary" id="exportExcelBtn" type="button">⬇ Export log as .xlsx</button>
+    <div class="hint">"Connect" lets Chrome/Edge write every invoice straight into one Excel file on your computer, updated automatically on each download. Not supported in Safari/Firefox — use "Export" there instead. Your log also stays saved in this browser indefinitely (not just 30 days) — export it any time. Want it in Google Sheets too, viewable from any device? See the GOOGLE_SHEETS_CONFIG comment near the bottom of the code for a 5-minute free setup.</div>
   </div>
 
   <!-- ============ PREVIEW PANEL ============ -->
@@ -670,7 +707,7 @@
               <img src="data:image/png;base64,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" alt="Histree Studios">
             </div>
             <div>
-              <div class="inv-from-name">Histree Studios</div>
+              <div class="inv-from-name">HISTREE STUDIOS</div>
               <div class="inv-from-detail" id="pBizDetail">collab@histreestudios.com
 Uttara, Dhaka 1230, Bangladesh
 www.histreestudios.com</div>
@@ -678,18 +715,18 @@ www.histreestudios.com</div>
           </div>
           <div class="inv-title">
             <h1>Invoice</h1>
-            <div class="inv-number" id="pInvNumber" contenteditable="true" spellcheck="false">#INV-0001</div>
+            <div class="inv-number" id="pInvNumber">#INV-0001</div>
           </div>
         </div>
 
         <div class="inv-meta-box">
           <div class="meta-cols">
             <div class="meta-block">
-              <div class="meta-label">Invoice date</div>
+              <div class="meta-label">Issued on</div>
               <div class="meta-value" id="pDate">—</div>
             </div>
             <div class="meta-block">
-              <div class="meta-label">Due date</div>
+              <div class="meta-label">Payment due</div>
               <div class="meta-value" id="pDueDate">—</div>
             </div>
           </div>
@@ -729,9 +766,9 @@ www.histreestudios.com</div>
           <div class="pd-grid" id="pPaymentGrid"></div>
         </div>
 
-        <div class="notes notes-bottom" id="pNotes"></div>
+        <div class="notes-bottom" id="pNotes"></div>
 
-        <div class="foot">HISTREE STUDIOS · GENERATED WITH INVOICE MAKER</div>
+        <div class="foot">© 2026 Histree Studios. All rights reserved. This invoice was generated securely through our internal billing system.</div>
         </div>
       </div>
     </div>
@@ -739,22 +776,35 @@ www.histreestudios.com</div>
 
 </div>
 
-<!-- ============ SHARE / SEND MODAL ============ -->
-<div class="modal-overlay" id="shareModal">
+<!-- ============ SHARE / PREVIEW MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay">
   <div class="modal-box">
-    <div class="modal-title">Invoice ready</div>
-    <div class="modal-sub" id="modalFileName">Histree-HS-0000.pdf</div>
-    <img class="modal-thumb" id="modalThumb" alt="Invoice preview">
-    <button class="modal-btn primary" id="modalDownloadBtn">Download PDF</button>
-    <button class="modal-btn secondary" id="modalShareBtn">Share…</button>
-    <button class="modal-btn email" id="modalEmailBtn">Send to client</button>
-    <div class="modal-status" id="modalStatus"></div>
-    <button class="modal-close" id="modalCloseBtn">Close</button>
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Invoice ready</div>
+        <div class="modal-sub" id="modalInvNum">#HS-0000-0000</div>
+      </div>
+      <button class="modal-close" id="modalClose" type="button">✕</button>
+    </div>
+    <div class="modal-preview-wrap">
+      <iframe id="modalPreviewFrame" title="Invoice preview"></iframe>
+    </div>
+    <div class="modal-email-row">
+      <input type="email" id="modalClientEmail" placeholder="client@email.com">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn primary" id="modalSaveBtn" type="button">Save PDF</button>
+      <button class="modal-btn" id="modalShareBtn" type="button">Share…</button>
+      <button class="modal-btn" id="modalSendBtn" type="button">Send to client</button>
+    </div>
+    <div class="modal-note" id="modalNote">Tip: fill the client's email above, then hit "Send to client" — your email app will open with the invoice ready to attach.</div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<!-- Optional: only used if EMAILJS_CONFIG below is filled in with your own keys -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 (function(){
@@ -791,12 +841,6 @@ www.histreestudios.com</div>
 
   document.getElementById('invDate').addEventListener('change', () => { recalcDueDate(); renderPreview(); });
   document.getElementById('dueDays').addEventListener('input', () => { recalcDueDate(); renderPreview(); });
-
-  document.getElementById('pInvNumber').addEventListener('input', (e) => {
-    const val = e.target.textContent.replace(/^#/, '');
-    document.getElementById('invNumber').value = val;
-  });
-  document.getElementById('pInvNumber').addEventListener('blur', () => { renderPreview(); });
 
   function renderItemRows(){
     itemsBox.innerHTML = '';
@@ -878,16 +922,15 @@ www.histreestudios.com</div>
   }
 
   function renderPreview(){
-    if(document.activeElement !== document.getElementById('pInvNumber')){
-      document.getElementById('pInvNumber').textContent = '#' + (document.getElementById('invNumber').value || '');
-    }
+    document.getElementById('pInvNumber').textContent = '#' + (document.getElementById('invNumber').value || '');
 
     const cName = document.getElementById('cName').value;
     const cEmail = document.getElementById('cEmail').value;
     const cPhone = document.getElementById('cPhone').value;
     const cAddress = document.getElementById('cAddress').value;
     const cCountry = document.getElementById('cCountry').value;
-    const clientLines = [cEmail, cPhone, cAddress, cCountry].filter(Boolean).map(escapeHtml).join('<br>').replace(/\n/g, '<br>');
+    const addressHtml = cAddress ? escapeHtml(cAddress).split('\n').filter(Boolean).join('<br>') : '';
+    const clientLines = [escapeHtml(cEmail), escapeHtml(cPhone), addressHtml, escapeHtml(cCountry)].filter(Boolean).join('<br>');
     document.getElementById('pClient').innerHTML =
       '<strong>' + escapeHtml(cName || 'Client Name') + '</strong>' + (clientLines ? '<br>' + clientLines : '');
 
@@ -963,6 +1006,7 @@ www.histreestudios.com</div>
       ];
     },
     ach_elevate: () => [
+      ['App / Account', 'Elevate Pay'],
       ['Bank Name', 'Merchants Commercial Bank'],
       ['Beneficiary Name', 'Md Jobaer Ahammed'],
       ['Beneficiary Address', 'House- 07, Road- 01, Sector- 06, Uttara, Dhaka, 1230, Bangladesh'],
@@ -971,6 +1015,7 @@ www.histreestudios.com</div>
       ['Account Type', 'Checking'],
     ],
     ach_nsave: () => [
+      ['App / Account', 'nsave'],
       ['Bank (Based in US)', 'JP Morgan Chase NA'],
       ['Name', 'Md. Jobaer Ahammed'],
       ['Recipient Address', 'Bangladesh, House 07, Road 01, Sector 06, Uttara, DHAKA, 1230'],
@@ -980,6 +1025,7 @@ www.histreestudios.com</div>
       ['Account Type', 'Checking (Current)'],
     ],
     wire_gbp: () => [
+      ['App / Account', 'nsave'],
       ['To', 'Md. Jobaer Ahammed'],
       ['IBAN', 'GB84CLRB04097200852286'],
       ['BIC/SWIFT', 'CLRBGB22XXX'],
@@ -1007,19 +1053,16 @@ www.histreestudios.com</div>
   achProviderSel.addEventListener('change', renderPreview);
 
   function renderPaymentDetails(){
-    const method = paymentMethodSel.value;
+    let method = paymentMethodSel.value;
+    if(method === 'ach') method = achProviderSel.value;
     const wrap = document.getElementById('pPaymentDetails');
     const grid = document.getElementById('pPaymentGrid');
-    let presetKey = null;
-    if(method === 'wallet') presetKey = 'wallet';
-    else if(method === 'ach') presetKey = achProviderSel.value;
-
-    if(!presetKey || !PAYMENT_PRESETS[presetKey]){
+    if(method === 'none' || !PAYMENT_PRESETS[method]){
       wrap.style.display = 'none';
       grid.innerHTML = '';
       return;
     }
-    const rows = PAYMENT_PRESETS[presetKey]();
+    const rows = PAYMENT_PRESETS[method]();
     grid.innerHTML = rows.map(([label, value]) => `
       <div class="pd-item">
         <div class="pd-label">${escapeHtml(label)}</div>
@@ -1034,117 +1077,343 @@ www.histreestudios.com</div>
     el.addEventListener('change', renderPreview);
   });
 
-  // ---- EmailJS config (fill these in to enable "Send to client") ----
-  // 1. Create a free account at https://www.emailjs.com
-  // 2. Add an Email Service (e.g. Gmail) and an Email Template with vars:
-  //    to_email, to_name, invoice_number, total, message
-  // 3. Paste your IDs below. Works from static hosting (GitHub Pages) since
-  //    EmailJS sends straight from the browser — no backend needed.
-  const EMAILJS_PUBLIC_KEY  = '';
-  const EMAILJS_SERVICE_ID  = '';
-  const EMAILJS_TEMPLATE_ID = '';
-  if (EMAILJS_PUBLIC_KEY && window.emailjs) {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+  // ---- Automatic Excel invoice log ----
+  // Every invoice you generate gets appended as a row (all client + item + totals info).
+  // Chrome/Edge can write straight into one .xlsx file on your computer via the File
+  // System Access API — connect once, then every download updates that same file.
+  // Safari/Firefox don't support that API, so there we keep a log in this browser and
+  // you export it to .xlsx whenever you like.
+
+  const LOG_KEY = 'histree_invoice_log_v1';
+  const DB_NAME = 'histree-invoice-db';
+  const STORE_NAME = 'handles';
+  const HANDLE_KEY = 'excelFileHandle';
+
+  function loadLog(){
+    try{ return JSON.parse(localStorage.getItem(LOG_KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function saveLog(log){
+    localStorage.setItem(LOG_KEY, JSON.stringify(log));
   }
 
-  let lastPdfBlob = null;
-  let lastPdfFilename = 'invoice.pdf';
-
-  function bumpInvoiceNumber(){
-    const field = document.getElementById('invNumber');
-    const current = field.value || '';
-    const match = current.match(/^(.*?)(\d+)(\D*)$/);
-    if(match){
-      const [, prefix, num, suffix] = match;
-      const nextNum = String(parseInt(num, 10) + 1).padStart(num.length, '0');
-      field.value = prefix + nextNum + suffix;
-    } else {
-      field.value = current + '-2';
-    }
-    renderPreview();
-  }
-
-  function openShareModal(blob, filename){
-    lastPdfBlob = blob;
-    lastPdfFilename = filename;
-    document.getElementById('modalFileName').textContent = filename;
-    const url = URL.createObjectURL(blob);
-    // Render a quick visual thumbnail of the invoice for the popup
-    html2canvas(document.getElementById('invoice'), { scale: 0.5 }).then(canvas => {
-      document.getElementById('modalThumb').src = canvas.toDataURL('image/png');
+  function openHandleDB(){
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB_NAME, 1);
+      req.onupgradeneeded = () => req.result.createObjectStore(STORE_NAME);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
     });
-    document.getElementById('modalStatus').style.display = 'none';
-    const emailBtn = document.getElementById('modalEmailBtn');
-    const clientEmail = document.getElementById('cEmail').value.trim();
-    emailBtn.textContent = clientEmail ? ('Send to ' + clientEmail) : 'Send to client';
-    document.getElementById('shareModal').classList.add('open');
+  }
+  async function idbGet(key){
+    const db = await openHandleDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const req = tx.objectStore(STORE_NAME).get(key);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => reject(req.error);
+    });
+  }
+  async function idbSet(key, value){
+    const db = await openHandleDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      tx.objectStore(STORE_NAME).put(value, key);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
   }
 
-  function closeShareModal(){
-    document.getElementById('shareModal').classList.remove('open');
+  let excelFileHandle = null;
+  const excelStatusEl = document.getElementById('excelStatus');
+  const connectExcelBtn = document.getElementById('connectExcelBtn');
+  const exportExcelBtn = document.getElementById('exportExcelBtn');
+  const fsApiSupported = typeof window.showSaveFilePicker === 'function';
+
+  function setExcelStatus(text, connected){
+    excelStatusEl.textContent = text;
+    excelStatusEl.classList.toggle('connected', !!connected);
   }
 
-  document.getElementById('modalCloseBtn').addEventListener('click', closeShareModal);
-  document.getElementById('shareModal').addEventListener('click', (e) => {
-    if(e.target.id === 'shareModal') closeShareModal();
+  function buildWorkbook(log){
+    const rows = log.map(r => ({
+      'Invoice #': r.invNumber,
+      'Date': r.invDate,
+      'Due Date': r.dueDate,
+      'Client Name': r.clientName,
+      'Client Email': r.clientEmail,
+      'Client Phone': r.clientPhone,
+      'Client Address': r.clientAddress,
+      'Items': r.itemsSummary,
+      'Subtotal': r.subtotal,
+      'Discount': r.discount,
+      'Total': r.total,
+      'Paid': r.paid,
+      'Balance': r.balance,
+      'Payment Method': r.paymentMethod,
+      'Status': r.status,
+      'Generated At': r.generatedAt
+    }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    ws['!cols'] = Object.keys(rows[0] || {}).map(k => ({ wch: Math.max(12, k.length + 2) }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Invoices');
+    return wb;
+  }
+
+  async function writeToHandle(handle, wb){
+    const arrayBuf = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const writable = await handle.createWritable();
+    await writable.write(arrayBuf);
+    await writable.close();
+  }
+
+  async function tryReconnectHandle(){
+    if(!fsApiSupported) return;
+    try{
+      const handle = await idbGet(HANDLE_KEY);
+      if(!handle) return;
+      const perm = await handle.queryPermission({ mode: 'readwrite' });
+      if(perm === 'granted'){
+        excelFileHandle = handle;
+        setExcelStatus('Connected — auto-saving to "' + handle.name + '".', true);
+      } else {
+        setExcelStatus('Excel file was connected before — click "Connect" to resume auto-save.', false);
+      }
+    }catch(e){ /* handle not usable anymore, ignore */ }
+  }
+
+  connectExcelBtn.addEventListener('click', async () => {
+    if(!fsApiSupported){
+      setExcelStatus('Your browser doesn\'t support auto-save. Use "Export log as .xlsx" instead.', false);
+      return;
+    }
+    try{
+      const handle = await window.showSaveFilePicker({
+        suggestedName: 'Histree-Invoices-Log.xlsx',
+        types: [{ description: 'Excel Workbook', accept: { 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'] } }]
+      });
+      excelFileHandle = handle;
+      await idbSet(HANDLE_KEY, handle);
+      const log = loadLog();
+      if(log.length){ await writeToHandle(handle, buildWorkbook(log)); }
+      setExcelStatus('Connected — auto-saving to "' + handle.name + '".', true);
+    }catch(e){ /* user cancelled the picker */ }
   });
 
-  document.getElementById('modalDownloadBtn').addEventListener('click', () => {
-    if(!lastPdfBlob) return;
+  exportExcelBtn.addEventListener('click', () => {
+    const log = loadLog();
+    if(!log.length){
+      setExcelStatus('No invoices logged yet — generate one first.', false);
+      return;
+    }
+    XLSX.writeFile(buildWorkbook(log), 'Histree-Invoices-Log.xlsx');
+  });
+
+  // ---- Optional: cloud backup to Google Sheets ----
+  // This makes every invoice land in a Google Sheet too — accessible from any device,
+  // and downloadable as Excel/CSV any time straight from Google Sheets (File > Download).
+  // Setup (~5 min, free, no coding beyond pasting this once):
+  //   1. Create a blank Google Sheet.
+  //   2. Extensions > Apps Script, delete the placeholder code, paste this:
+  //
+  //        function doPost(e) {
+  //          const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  //          const data = JSON.parse(e.postData.contents);
+  //          if (sheet.getLastRow() === 0) {
+  //            sheet.appendRow(Object.keys(data));
+  //          }
+  //          sheet.appendRow(Object.values(data));
+  //          return ContentService.createTextOutput('OK');
+  //        }
+  //
+  //   3. Deploy > New deployment > type "Web app". Execute as "Me", Access "Anyone".
+  //   4. Copy the Web app URL it gives you and paste it below as WEBAPP_URL.
+  // Leave WEBAPP_URL blank to skip cloud sync (log still stays in this browser / Excel file).
+  const GOOGLE_SHEETS_CONFIG = {
+    WEBAPP_URL: ''
+  };
+
+  function syncToGoogleSheet(record){
+    if(!GOOGLE_SHEETS_CONFIG.WEBAPP_URL) return;
+    // no-cors because Apps Script web apps don't return CORS headers Claude/browsers can read;
+    // we can't see the response, but the row still gets appended on Google's side.
+    fetch(GOOGLE_SHEETS_CONFIG.WEBAPP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(record)
+    }).catch(() => { /* offline or blocked — invoice is still safe in the local log */ });
+  }
+
+  async function recordInvoiceToLog(record){
+    const log = loadLog();
+    log.push(record);
+    saveLog(log);
+    if(excelFileHandle){
+      try{
+        await writeToHandle(excelFileHandle, buildWorkbook(log));
+        setExcelStatus('Connected — auto-saving to "' + excelFileHandle.name + '". Last updated just now.', true);
+      }catch(e){
+        setExcelStatus('Couldn\'t write to the connected file — click "Connect" to reselect it.', false);
+      }
+    }
+    syncToGoogleSheet(record);
+  }
+
+  tryReconnectHandle();
+
+  // ---- Optional: real one-click email sending ----
+  // GitHub Pages / static hosting can't send email on its own — there's no server here.
+  // To make "Send to client" actually deliver the email automatically (no mail app popup),
+  // sign up at https://www.emailjs.com (free tier), create a service + template, and fill
+  // these three values in. Leave PUBLIC_KEY blank to keep using the mailto: fallback.
+  const EMAILJS_CONFIG = {
+    PUBLIC_KEY: '',
+    SERVICE_ID: '',
+    TEMPLATE_ID: ''
+  };
+  if(EMAILJS_CONFIG.PUBLIC_KEY && window.emailjs){
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  }
+
+  function generateInvoiceNumber(){
+    return 'HS-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000);
+  }
+
+  let currentPdfBlob = null;
+  let currentPdfFilename = 'invoice.pdf';
+  let currentPdfUrl = null;
+
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalPreviewFrame = document.getElementById('modalPreviewFrame');
+  const modalInvNum = document.getElementById('modalInvNum');
+  const modalClientEmail = document.getElementById('modalClientEmail');
+  const modalNote = document.getElementById('modalNote');
+
+  function openModal(blob, filename, invNum){
+    currentPdfBlob = blob;
+    currentPdfFilename = filename;
+    if(currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
+    currentPdfUrl = URL.createObjectURL(blob);
+    modalPreviewFrame.src = currentPdfUrl;
+    modalInvNum.textContent = '#' + invNum;
+    modalClientEmail.value = document.getElementById('cEmail').value || '';
+    modalOverlay.classList.add('open');
+  }
+
+  function closeModal(){
+    modalOverlay.classList.remove('open');
+    modalPreviewFrame.src = '';
+    if(currentPdfUrl){ URL.revokeObjectURL(currentPdfUrl); currentPdfUrl = null; }
+  }
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
+
+  document.getElementById('modalSaveBtn').addEventListener('click', () => {
+    if(!currentPdfBlob) return;
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(lastPdfBlob);
-    a.download = lastPdfFilename;
+    a.href = currentPdfUrl;
+    a.download = currentPdfFilename;
+    document.body.appendChild(a);
     a.click();
+    a.remove();
   });
 
   document.getElementById('modalShareBtn').addEventListener('click', async () => {
-    const status = document.getElementById('modalStatus');
-    if(!lastPdfBlob) return;
-    const file = new File([lastPdfBlob], lastPdfFilename, { type: 'application/pdf' });
+    if(!currentPdfBlob) return;
+    const file = new File([currentPdfBlob], currentPdfFilename, { type: 'application/pdf' });
     if(navigator.canShare && navigator.canShare({ files: [file] })){
       try{
-        await navigator.share({ files: [file], title: lastPdfFilename, text: 'Invoice from Histree Studios' });
-      } catch(err){ /* user cancelled */ }
+        await navigator.share({
+          files: [file],
+          title: 'Invoice — Histree Studios',
+          text: 'Please find the invoice attached.'
+        });
+      }catch(err){ /* user cancelled share sheet — no-op */ }
     } else {
-      status.style.display = 'block';
-      status.textContent = 'Sharing files isn\'t supported in this browser — use Download instead.';
+      modalNote.textContent = 'Sharing files isn\'t supported in this browser. Use "Save PDF" and share it manually instead.';
     }
   });
 
-  document.getElementById('modalEmailBtn').addEventListener('click', async () => {
-    const status = document.getElementById('modalStatus');
-    const clientEmail = document.getElementById('cEmail').value.trim();
-    if(!clientEmail){
-      status.style.display = 'block';
-      status.textContent = 'Add a client email in the form first.';
+  document.getElementById('modalSendBtn').addEventListener('click', async () => {
+    const email = modalClientEmail.value.trim();
+    if(!email){
+      modalNote.textContent = 'Add the client\'s email above first.';
+      modalClientEmail.focus();
       return;
     }
-    if(!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !window.emailjs){
-      status.style.display = 'block';
-      status.textContent = 'Email sending isn\'t configured yet. Add your EmailJS keys near the top of the script (works on GitHub Pages / any static host, no backend required) to enable one-click sending.';
+    const num = modalInvNum.textContent.replace('#','');
+    const clientName = document.getElementById('cName').value || 'there';
+
+    if(EMAILJS_CONFIG.PUBLIC_KEY && window.emailjs){
+      // Real automated send via EmailJS, if configured above.
+      try{
+        await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
+          to_email: email,
+          client_name: clientName,
+          invoice_number: num
+        }, EMAILJS_CONFIG.PUBLIC_KEY);
+        modalNote.textContent = 'Email sent to ' + email + '.';
+      }catch(err){
+        modalNote.textContent = 'Email send failed — falling back to your mail app.';
+        openMailFallback(email, clientName, num);
+      }
       return;
     }
-    const btn = document.getElementById('modalEmailBtn');
-    const original = btn.textContent;
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
-    try{
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_email: clientEmail,
-        to_name: document.getElementById('cName').value || 'Client',
-        invoice_number: document.getElementById('invNumber').value,
-        total: document.getElementById('pTotal').textContent,
-        message: document.getElementById('notes').value
-      });
-      status.style.display = 'block';
-      status.textContent = 'Email sent to ' + clientEmail + '. (Note: attach the downloaded PDF manually unless your EmailJS plan supports attachments.)';
-    } catch(err){
-      status.style.display = 'block';
-      status.textContent = 'Could not send — check your EmailJS setup.';
-    }
-    btn.textContent = original;
-    btn.disabled = false;
+
+    // Fallback: no backend attached, so we can't auto-attach a PDF to an email.
+    // Save the file locally first, then open the user's own mail app pre-filled.
+    document.getElementById('modalSaveBtn').click();
+    openMailFallback(email, clientName, num);
+    modalNote.textContent = 'PDF saved + your email app is opening — attach the downloaded file before sending.';
   });
+
+  function openMailFallback(email, clientName, num){
+    const subject = encodeURIComponent('Invoice #' + num + ' — Histree Studios');
+    const body = encodeURIComponent(
+      'Hi ' + clientName + ',\n\nPlease find attached invoice #' + num + ' from Histree Studios.\n\n' +
+      '(The PDF was just saved to your downloads — please attach it to this email.)\n\nThanks!'
+    );
+    window.location.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + subject + '&body=' + body;
+  }
+
+  function buildInvoiceRecord(num){
+    const stamp = document.getElementById('stamp');
+    let subtotal = 0, discountTotal = 0;
+    const itemLines = items.filter(it => it.desc.trim() !== '' && it.price > 0 && it.qty > 0).map(item => {
+      const { gross, discAmt, net } = computeLine(item);
+      subtotal += gross; discountTotal += discAmt;
+      return item.desc + ' (x' + item.qty + ' @ ' + fmt(item.price) + (item.discount ? ', -' + item.discount + '%' : '') + ')';
+    });
+    const total = subtotal - discountTotal;
+    const paid = parseFloat(document.getElementById('amountPaid').value) || 0;
+    let paymentMethodLabel = 'None';
+    const pm = paymentMethodSel.value;
+    if(pm === 'wallet') paymentMethodLabel = 'Wallet — ' + walletProviderSel.value;
+    else if(pm === 'ach') paymentMethodLabel = 'ACH — ' + (achProviderSel.value === 'ach_elevate' ? 'Elevate Pay' : 'nsave');
+    else if(pm === 'wire_gbp') paymentMethodLabel = 'Wire (GBP) — nsave';
+
+    return {
+      invNumber: num,
+      invDate: document.getElementById('invDate').value,
+      dueDate: document.getElementById('invDueDate').value,
+      clientName: document.getElementById('cName').value,
+      clientEmail: document.getElementById('cEmail').value,
+      clientPhone: document.getElementById('cPhone').value,
+      clientAddress: document.getElementById('cAddress').value.replace(/\n/g, ', '),
+      itemsSummary: itemLines.join(' | '),
+      subtotal: Number(subtotal.toFixed(2)),
+      discount: Number(discountTotal.toFixed(2)),
+      total: Number(total.toFixed(2)),
+      paid: Number(paid.toFixed(2)),
+      balance: Number((total - paid).toFixed(2)),
+      paymentMethod: paymentMethodLabel,
+      status: stamp ? stamp.textContent : '',
+      generatedAt: new Date().toISOString()
+    };
+  }
 
   document.getElementById('downloadBtn').addEventListener('click', () => {
     const errEl = document.getElementById('itemsError');
@@ -1163,7 +1432,6 @@ www.histreestudios.com</div>
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'pt', 'a4');
     const num = document.getElementById('invNumber').value || 'invoice';
-    const filename = 'Histree-' + num + '.pdf';
 
     pdf.html(invoiceEl, {
       margin: 0,
@@ -1172,10 +1440,18 @@ www.histreestudios.com</div>
       windowWidth: invoiceEl.scrollWidth,
       callback: function(doc){
         const blob = doc.output('blob');
+        openModal(blob, 'Histree-' + num + '.pdf', num);
+
+        // Log this invoice's full data into the Excel sheet (auto-saved if connected).
+        recordInvoiceToLog(buildInvoiceRecord(num));
+
+        // Roll the invoice number forward so the next invoice doesn't reuse this one.
+        // Still fully editable in the sidebar if you want to set it manually.
+        document.getElementById('invNumber').value = generateInvoiceNumber();
+        renderPreview();
+
         btn.textContent = original;
         btn.disabled = false;
-        openShareModal(blob, filename);
-        bumpInvoiceNumber();
       }
     });
   });
