@@ -1,8 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- THESE ARE THE NEW APP TAGS - COPY THIS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Invoice Maker">
+<meta name="mobile-web-app-capable" content="yes">
+<!-- END OF NEW APP TAGS -->
+
 <title>Invoice Maker | Histree Studios</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,9 +37,28 @@
     --ink:#1c1c22;
     --ink-soft:#6b6b78;
     --ink-line:#e7e6ec;
+  /* NEW - MAKE IT FEEL LIKE AN APP ON IPHONE */
+  ::-webkit-scrollbar {
+    display: none;
   }
-  *{box-sizing:border-box;}
-  html,body{height:100%;}
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  
+  .panel {
+    height: 100vh;
+    height: 100dvh; /* For iPhone dynamic viewport */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* END OF NEW APP STYLES */
   body{
     margin:0;
     background:var(--bg);
@@ -1460,6 +1485,30 @@ www.histreestudios.com</div>
   recalcDueDate();
   renderPreview();
 })();
+// NEW - PREVENT NAVIGATION AWAY FROM THE APP
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('a');
+  if (link && link.href) {
+    // Only allow internal links that start with #
+    if (!link.href.startsWith('#')) {
+      e.preventDefault();
+      alert('This app stays within the invoice tool.');
+    }
+  }
+});
+
+// Prevent pull-to-refresh on iPhone
+document.addEventListener('touchmove', function(e) {
+  if (e.target === document.documentElement) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// Disable long-press context menu
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+// END OF NEW APP CODE
 </script>
 </body>
 </html>
