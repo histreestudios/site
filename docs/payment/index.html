@@ -1,15 +1,63 @@
+
+<script>
+// ========================================
+// PASSWORD PROTECTION - CHANGE THIS PASSWORD
+// ========================================
+const CORRECT_PASSWORD = "hs2026";
+
+// Check if user already entered correct password
+if (sessionStorage.getItem("invoiceAccess") !== "granted") {
+    // Ask for password
+    const userPassword = prompt("🔒 Enter password to access Invoice Generator:");
+    
+    if (userPassword !== CORRECT_PASSWORD) {
+        // Wrong password - show error and hide everything
+        document.write(`
+            <div style="
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh; 
+                font-family: Arial, sans-serif; 
+                background: #f5f5f5;
+                flex-direction: column;
+            ">
+                <div style="
+                    background: white; 
+                    padding: 40px; 
+                    border-radius: 10px; 
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                    text-align: center;
+                    max-width: 400px;
+                ">
+                    <div style="font-size: 48px; margin-bottom: 20px;">🔒</div>
+                    <h2 style="color: #e74c3c;">Access Denied</h2>
+                    <p style="color: #666;">Incorrect password. Please contact the administrator.</p>
+                    <button onclick="location.reload()" style="
+                        margin-top: 20px;
+                        background: #3498db;
+                        color: white;
+                        border: none;
+                        padding: 10px 30px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-size: 16px;
+                    ">Try Again</button>
+                </div>
+            </div>
+        `);
+        throw new Error("Access Denied");
+    }
+    
+    // Correct password - store in session so user doesn't have to retype
+    sessionStorage.setItem("invoiceAccess", "granted");
+}
+</script>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-
-<!-- THESE ARE THE NEW APP TAGS - COPY THIS -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Invoice Maker">
-<meta name="mobile-web-app-capable" content="yes">
-<!-- END OF NEW APP TAGS -->
-
-<title>Invoice Maker | Histree Studios</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice | Histree Studios</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,64 +78,94 @@
     --purple:#7c3aed;
     --green:#1f9d67;
     --amber:#c98a12;
-    --mono:'IBM Plex Mono', monospace;
-    --display:'Syne', sans-serif;
-    --body:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Syne', sans-serif;
+    --body:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --paper:#ffffff;
     --ink:#1c1c22;
     --ink-soft:#6b6b78;
     --ink-line:#e7e6ec;
-  /* NEW - MAKE IT FEEL LIKE AN APP ON IPHONE */
-  ::-webkit-scrollbar {
-    display: none;
   }
-  
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    overscroll-behavior: none;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-  }
-  
-  .panel {
-    height: 100vh;
-    height: 100dvh; /* For iPhone dynamic viewport */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  /* END OF NEW APP STYLES */
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
   body{
     margin:0;
-    background:var(--bg);
+    background:
+      radial-gradient(circle at 20% 15%, #2a2350 0%, transparent 45%),
+      radial-gradient(circle at 80% 85%, #1c2a4a 0%, transparent 50%),
+      linear-gradient(160deg, #1b1b2b, #0c0c14);
     color:var(--text);
     font-family:var(--body);
     -webkit-font-smoothing:antialiased;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+
+  /* ---------- macOS-style window chrome ---------- */
+  .mac-window{
+    width:100%;
+    max-width:1440px;
+    height:92vh;
+    background:var(--bg);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 40px 100px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.06);
+    display:flex;
+    flex-direction:column;
+  }
+  .mac-titlebar{
+    height:40px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    padding:0 14px;
+    background:rgba(255,255,255,0.045);
+    border-bottom:1px solid var(--card-line);
+    position:relative;
+    -webkit-app-region:drag;
+  }
+  .mac-dots{display:flex; gap:8px; z-index:1;}
+  .mac-dot{width:12px;height:12px;border-radius:50%; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,.15);}
+  .mac-dot.red{background:#ff5f57;}
+  .mac-dot.yellow{background:#febc2e;}
+  .mac-dot.green{background:#28c840;}
+  .mac-title{
+    position:absolute; left:0; right:0; text-align:center;
+    font-size:12.5px; font-weight:600; color:var(--muted);
+    letter-spacing:0.01em;
+    pointer-events:none;
   }
   .app{
+    flex:1;
+    min-height:0;
     display:grid;
     grid-template-columns: 380px 1fr;
-    height:100vh;
   }
   @media (max-width: 900px){
-    .app{grid-template-columns:1fr; height:auto; min-height:100vh;}
+    .mac-window{height:100vh; border-radius:0;}
+    body{padding:0;}
+    .app{grid-template-columns:1fr; height:auto; min-height:0;}
   }
 
   /* ---------- Form panel ---------- */
   .panel{
-    background:var(--panel);
+    background:rgba(10,10,16,0.86);
+    -webkit-backdrop-filter:blur(24px) saturate(150%);
+    backdrop-filter:blur(24px) saturate(150%);
     border-right:1px solid var(--card-line);
     padding:20px 18px 24px;
     overflow-y:auto;
-    height:100vh;
+    height:100%;
   }
   @media (max-width: 900px){
     .panel{height:auto; max-height:60vh; border-right:none; border-bottom:1px solid var(--card-line);}
   }
-  .panel::-webkit-scrollbar{width:6px;}
-  .panel::-webkit-scrollbar-thumb{background:var(--accent2); border-radius:4px;}
+  .panel::-webkit-scrollbar{width:7px;}
+  .panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.18); border-radius:10px;}
+  .panel::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.3);}
+  .panel::-webkit-scrollbar-track{background:transparent;}
 
   .brand{
     display:flex;
@@ -111,7 +189,7 @@
     color:var(--text);
     line-height:1.2;
   }
-  .brand-sub{font-family:arial; font-size:10px; letter-spacing:0.1em; color:var(--muted2); text-transform:uppercase;}
+  .brand-sub{font-family:arial; font-size:10px; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;}
 
   h2.section-title{
     font-family:var(--mono);
@@ -145,16 +223,19 @@
     width:100%;
     padding:8px 9px;
     border:1px solid var(--card-line);
-    border-radius:7px;
+    border-radius:8px;
     background:var(--card);
     font-family:var(--body);
     font-size:12.5px;
     color:var(--text);
     outline:none;
-    transition:border-color .15s;
+    transition:border-color .15s, box-shadow .15s;
   }
   input::placeholder, textarea::placeholder{color:var(--muted2);}
-  input:focus, textarea:focus{border-color:var(--accent2);}
+  input:focus, textarea:focus, select:focus{
+    border-color:var(--accent2);
+    box-shadow:0 0 0 3px rgba(224,21,53,0.22);
+  }
   input:disabled{opacity:0.6;}
   textarea{resize:vertical;min-height:44px;}
 
@@ -195,7 +276,7 @@
     width:100%;
     padding:9px;
     border:1px dashed var(--accent2);
-    border-radius:7px;
+    border-radius:8px;
     background:var(--accent-soft);
     color:#ff5c78;
     font-family:var(--body);
@@ -208,23 +289,38 @@
 
   .paid-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 
+  .action-row{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:22px;}
   .download-btn{
     width:100%;
-    margin-top:22px;
     padding:13px;
     border:none;
-    border-radius:9px;
+    border-radius:10px;
     background:linear-gradient(135deg, var(--accent2), var(--purple));
     color:#fff;
     font-family:var(--display);
     font-weight:700;
-    font-size:13.5px;
+    font-size:13px;
     cursor:pointer;
     letter-spacing:0.01em;
+    box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 6px 16px rgba(200,16,46,.25);
   }
   .download-btn:hover{filter:brightness(1.08);}
   .download-btn:active{transform:translateY(1px);}
   .download-btn:disabled{opacity:0.6; cursor:default;}
+  .print-btn{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--card-line);
+    border-radius:10px;
+    background:var(--card);
+    color:var(--text);
+    font-family:var(--display);
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    letter-spacing:0.01em;
+  }
+  .print-btn:hover{border-color:var(--accent2); color:var(--accent2);}
   .excel-status{
     font-size:10.5px;
     color:var(--muted2);
@@ -258,8 +354,11 @@
     justify-content:center;
     align-items:flex-start;
     overflow-y:auto;
-    height:100vh;
+    height:100%;
   }
+  .preview-wrap::-webkit-scrollbar{width:7px;}
+  .preview-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.18); border-radius:10px;}
+  .preview-wrap::-webkit-scrollbar-track{background:transparent;}
   @media (max-width: 900px){
     .preview-wrap{height:auto; padding:20px 12px;}
   }
@@ -296,6 +395,7 @@
     min-height:0;
   }
   .inv-head{
+      
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
@@ -313,7 +413,7 @@
     font-family:var(--display);
     font-weight:700;
     font-size:15px;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.05m;
     color:var(--ink);
   }
   .inv-from-detail{font-size:9px;color:var(--ink-soft);line-height:1.5;margin-top:2px;white-space:pre-line;}
@@ -327,15 +427,15 @@
     font-weight:800;
     text-transform:uppercase;
   }
-  .inv-number{font-family:arial;font-size:12px;color:#8a8aD6;margin-top:6px;letter-spacing:0.10em;}
+  .inv-number{font-family:arial;font-size:12px;color:var(--ink-soft);margin-top:6px;letter-spacing:0.10em;}
 
   .inv-meta-box{
     display:flex;
     justify-content:space-between;
     gap:18px;
     background:#f5f5f8;
-    border-radius:8px;
-    padding:14px 16px;
+    border-radius:7px;
+    padding:8px 10px;
     margin-bottom:16px;
   }
   .meta-cols{
@@ -375,7 +475,7 @@
   table.items{
     width:100%;
     border-collapse:collapse;
-    margin-bottom:14px;
+    margin-bottom:10px;
     table-layout:fixed;
   }
   table.items thead th{
@@ -397,6 +497,7 @@
     border-bottom:1px solid var(--ink-line);
     vertical-align:top;
     word-break:break-word;
+    color:var(--ink);
   }
   table.items tbody td:first-child{padding-left:6px;}
   table.items tbody td:last-child{padding-right:6px;}
@@ -429,12 +530,12 @@
   }
   .stamp{
     position:absolute;
-    top:30%;
+    top:25%;
     right:6%;
     border:3px solid var(--green);
     color:var(--green);
     font-family:var(--display);
-    font-weight:800;
+    font-weight:700;
     font-size:20px;
     letter-spacing:0.06em;
     padding:7px 15px;
@@ -446,12 +547,12 @@
   .stamp.overdue{border-color:var(--accent2);color:var(--accent2);}
   .payment-details{
     margin-top:6px;
-    padding-top:12px;
+    padding-top:5px;
     border-top:1px solid var(--ink-line);
   }
   .pd-title{
     font-family:var(--display);
-    font-weight:800;
+    font-weight:700;
     font-size:13px;
     color:var(--ink);
     margin-bottom:10px;
@@ -486,6 +587,8 @@
     white-space:pre-line;
   }
   .notes-bottom:empty{display:none; border-top:none; padding-top:0; margin-top:0;}
+  /* .foot always sits at the true bottom of the A4 page: #invoice / .inv-body are
+     flex columns and margin-top:auto pushes this element down to fill remaining space. */
   .foot{
     margin-top:auto;
     padding-top:10px;
@@ -496,341 +599,234 @@
     color:var(--accent2);
     letter-spacing:0.1em;
     border-top:2px solid var(--accent2);
+    flex-shrink:0;
   }
 
   @media print{
-    body{background:#fff;}
+    body{background:#fff; padding:0; display:block;}
+    .mac-window{height:auto; border-radius:0; box-shadow:none; overflow:visible;}
+    .mac-titlebar{display:none;}
     .panel{display:none;}
     .preview-wrap{background:#fff;padding:0;height:auto;}
     #invoice{box-shadow:none;width:100%;aspect-ratio:auto;}
   }
-
-  /* ---------- Share / preview modal ---------- */
-  .modal-overlay{
-    position:fixed; inset:0;
-    background:rgba(5,5,7,0.72);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:1000;
-    padding:24px;
-  }
-  .modal-overlay.open{display:flex;}
-  .modal-box{
-    background:var(--panel);
-    border:1px solid var(--card-line);
-    border-radius:14px;
-    width:100%;
-    max-width:760px;
-    max-height:92vh;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-  }
-  .modal-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:16px 18px;
-    border-bottom:1px solid var(--card-line);
-  }
-  .modal-title{font-family:var(--display); font-weight:800; font-size:5px; color:var(--text);}
-  .modal-sub{font-family:var(--mono); font-size:10px; color:var(--muted2); margin-top:2px;}
-  .modal-close{
-    background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer;
-    padding:4px 8px; border-radius:6px; line-height:1;
-  }
-  .modal-close:hover{background:var(--accent-soft); color:var(--accent2);}
-  .modal-preview-wrap{
-    flex:1;
-    min-height:0;
-    background:#2a2a32;
-    padding:16px;
-    display:flex;
-    justify-content:center;
-    overflow:auto;
-  }
-  .modal-preview-wrap iframe{
-    width:100%;
-    max-width:520px;
-    aspect-ratio:210/297;
-    border:none;
-    background:#fff;
-    box-shadow:0 10px 30px rgba(0,0,0,.4);
-  }
-  .modal-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:10px;
-    padding:16px 18px;
-    border-top:1px solid var(--card-line);
-  }
-  .modal-btn{
-    padding:11px 8px;
-    border-radius:9px;
-    border:1px solid var(--card-line);
-    background:var(--card);
-    color:var(--text);
-    font-family:var(--body);
-    font-weight:600;
-    font-size:12px;
-    cursor:pointer;
-    text-align:center;
-  }
-  .modal-btn:hover{border-color:var(--accent2);}
-  .modal-btn.primary{
-    background:linear-gradient(135deg, var(--accent2), var(--purple));
-    border:none;
-    color:#fff;
-  }
-  .modal-btn.primary:hover{filter:brightness(1.08);}
-  .modal-btn:disabled{opacity:0.55; cursor:default;}
-  .modal-email-row{
-    padding:0 18px 16px;
-    display:flex;
-    gap:8px;
-    align-items:center;
-  }
-  .modal-email-row input{flex:1;}
-  .modal-note{
-    padding:0 18px 16px;
-    font-size:10.5px;
-    color:var(--muted2);
-    line-height:1.5;
-  }
-  @media (max-width:560px){
-    .modal-actions{grid-template-columns:1fr;}
-  }
 </style>
 </head>
 <body>
-<div class="app">
-
-  <!-- ============ FORM PANEL ============ -->
-  <div class="panel">
-    <div class="brand">
-      <div class="brand-mark" id="brandMarkPanel">
-        <img src="data:image/png;base64,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" alt="Histree Studios">
-      </div>
-      <div>
-        <div class="brand-name">HISTREE STUDIOS</div>
-        <div class="brand-sub">Invoice</div>
-      </div>
+<div class="mac-window">
+  <div class="mac-titlebar">
+    <div class="mac-dots">
+      <div class="mac-dot red"></div>
+      <div class="mac-dot yellow"></div>
+      <div class="mac-dot green"></div>
     </div>
-
-    <h2 class="section-title">Client <span class="opt">(optional)</span></h2>
-    <div class="field">
-      <label>Client name</label>
-      <input type="text" id="cName" placeholder="e.g. Amanda Thickk">
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="cEmail" placeholder="client@email.com">
-      </div>
-      <div class="field">
-        <label>Phone</label>
-        <input type="tel" id="cPhone" placeholder="+1 555 000 0000">
-      </div>
-    </div>
-    <div class="field">
-      <label>Address <span style="text-transform:none; color:var(--muted2); font-weight:400;">(press Enter for a new line)</span></label>
-      <textarea id="cAddress" rows="2" placeholder="Street&#10;City, ZIP"></textarea>
-    </div>
-    <div class="field">
-      <label>Country</label>
-      <input type="text" id="cCountry" placeholder="e.g. United States">
-    </div>
-
-    <h2 class="section-title">Products / services <span class="req">(required)</span></h2>
-    <div class="items-box" id="itemsBox"></div>
-    <button class="add-item-btn" id="addItemBtn" type="button">+ Add product line</button>
-    <div class="error-msg" id="itemsError">Add at least one product with a description, price, and quantity.</div>
-
-    <h2 class="section-title">Invoice details</h2>
-    <div class="field-row">
-      <div class="field">
-        <label>Invoice #</label>
-        <input type="text" id="invNumber" value="">
-      </div>
-      <div class="field">
-        <label>Issued on</label>
-        <input type="date" id="invDate">
-      </div>
-    </div>
-    <div class="field">
-      <label>Due in (days)</label>
-      <input type="number" id="dueDays" value="14" min="0" step="1">
-    </div>
-    <div class="field">
-      <label>Payment due <span style="text-transform:none; color:var(--muted2); font-weight:400;">(auto-calculated)</span></label>
-      <input type="date" id="invDueDate">
-    </div>
-
-    <h2 class="section-title">Payment</h2>
-    <div class="paid-row">
-      <div class="field">
-        <label>Amount paid</label>
-        <input type="number" id="amountPaid" value="0" min="0" step="0.01">
-      </div>
-      <div class="field">
-        <label>Currency symbol</label>
-        <input type="text" id="currency" value="$" maxlength="4">
-      </div>
-    </div>
-
-    <h2 class="section-title">One Liner Notes <span class="opt">(optional)</span></h2>
-    <div class="field">
-      <textarea id="notes">Thank you for your business. Please pay by the due date.</textarea>
-    </div>
-
-    <h2 class="section-title">Payment details <span class="opt">(Only for new clients)</span></h2>
-    <div class="field">
-      <label>Include on invoice</label>
-      <select id="paymentMethod">
-        <option value="none">None</option>
-        <option value="wallet">Mobile Wallet — bKash / Nagad</option>
-        <option value="ach">Bank Transfer (ACH, USD)</option>
-        <option value="wire_gbp">Wire Transfer (GBP) — nsave</option>
-      </select>
-    </div>
-    <div class="field" id="walletProviderField" style="display:none;">
-      <label>Wallet provider</label>
-      <select id="walletProvider">
-        <option value="bKash">bKash</option>
-        <option value="Nagad">Nagad</option>
-      </select>
-    </div>
-    <div class="field" id="achProviderField" style="display:none;">
-      <label>ACH provider</label>
-      <select id="achProvider">
-        <option value="ach_elevate">Elevate Pay</option>
-        <option value="ach_nsave">nsave</option>
-      </select>
-    </div>
-
-    <button class="download-btn" id="downloadBtn" type="button">Send as PDF</button>
-    <div class="hint">Data stays in your browser tab only — nothing is uploaded anywhere. Refreshing clears the form, so download before closing.</div>
-
-    <h2 class="section-title">Excel invoice log <span class="opt">(auto-saved)</span></h2>
-    <div class="excel-status" id="excelStatus">Not connected — invoices are logged in this browser only.</div>
-    <button class="excel-btn" id="connectExcelBtn" type="button">📎 Connect Excel file (auto-save)</button>
-    <button class="excel-btn secondary" id="exportExcelBtn" type="button">⬇ Export log as .xlsx</button>
-    <div class="hint">"Connect" lets Chrome/Edge write every invoice straight into one Excel file on your computer, updated automatically on each download. Not supported in Safari/Firefox — use "Export" there instead. Your log also stays saved in this browser indefinitely (not just 30 days) — export it any time. Want it in Google Sheets too, viewable from any device? See the GOOGLE_SHEETS_CONFIG comment near the bottom of the code for a 5-minute free setup.</div>
+    <div class="mac-title">Invoice — Histree Studios</div>
   </div>
 
-  <!-- ============ PREVIEW PANEL ============ -->
-  <div class="preview-wrap">
-    <div class="page-scale">
-      <div id="invoice">
-        <div class="inv-topbar"></div>
-        <div class="inv-body">
-        <div class="stamp" id="stamp">DUE</div>
-        <div class="inv-head">
-          <div class="inv-brand">
-            <div class="inv-brand-mark" id="brandMarkInvoice">
-              <img src="data:image/png;base64,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" alt="Histree Studios">
-            </div>
-            <div>
-              <div class="inv-from-name">HISTREE STUDIOS</div>
-              <div class="inv-from-detail" id="pBizDetail">collab@histreestudios.com
+  <div class="app">
+
+    <!-- ============ FORM PANEL ============ -->
+    <div class="panel">
+      <div class="brand">
+        <div class="brand-mark" id="brandMarkPanel">
+          <img src="histree-logo.png" alt="Histree Studios">
+        </div>
+        <div>
+          <div class="brand-name">HISTREE STUDIOS</div>
+          <div class="brand-sub">Invoice</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Client <span class="opt">(optional)</span></h2>
+      <div class="field">
+        <label>Client name</label>
+        <input type="text" id="cName" placeholder="e.g. Amanda Thickk">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="cEmail" placeholder="client@email.com">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" id="cPhone" placeholder="+1 555 000 0000">
+        </div>
+      </div>
+      <div class="field">
+        <label>Address <span style="text-transform:none; color:var(--muted2); font-weight:400;">(press Enter for a new line)</span></label>
+        <textarea id="cAddress" rows="2" placeholder="Street&#10;City, ZIP"></textarea>
+      </div>
+      <div class="field">
+        <label>Country</label>
+        <input type="text" id="cCountry" placeholder="e.g. United States">
+      </div>
+
+      <h2 class="section-title">Products / services <span class="req">(required)</span></h2>
+      <div class="items-box" id="itemsBox"></div>
+      <button class="add-item-btn" id="addItemBtn" type="button">+ Add product line</button>
+      <div class="error-msg" id="itemsError">Add at least one product with a description, price, and quantity.</div>
+
+      <h2 class="section-title">Invoice details</h2>
+      <div class="field-row">
+        <div class="field">
+          <label>Invoice #</label>
+          <input type="text" id="invNumber" value="">
+        </div>
+        <div class="field">
+          <label>Issued on</label>
+          <input type="date" id="invDate">
+        </div>
+      </div>
+      <div class="field">
+        <label>Due in (days)</label>
+        <input type="number" id="dueDays" value="14" min="0" step="1">
+      </div>
+      <div class="field">
+        <label>Payment due <span style="text-transform:none; color:var(--muted2); font-weight:400;">(auto-calculated)</span></label>
+        <input type="date" id="invDueDate">
+      </div>
+
+      <h2 class="section-title">Payment</h2>
+      <div class="paid-row">
+        <div class="field">
+          <label>Amount paid</label>
+          <input type="number" id="amountPaid" value="0" min="0" step="0.01">
+        </div>
+        <div class="field">
+          <label>Currency symbol</label>
+          <input type="text" id="currency" value="$" maxlength="4">
+        </div>
+      </div>
+
+      <h2 class="section-title">One Liner Notes <span class="opt">(optional)</span></h2>
+      <div class="field">
+        <textarea id="notes">**Thank you for your business. Please pay by the due date.</textarea>
+      </div>
+
+      <h2 class="section-title">Payment details <span class="opt">(Only for new clients)</span></h2>
+      <div class="field">
+        <label>Include on invoice</label>
+        <select id="paymentMethod">
+          <option value="none">None</option>
+          <option value="wallet">Mobile Wallet — bKash / Nagad</option>
+          <option value="ach">Bank Transfer (ACH, USD)</option>
+          <option value="wire_gbp">Wire Transfer (GBP) — nsave</option>
+        </select>
+      </div>
+      <div class="field" id="walletProviderField" style="display:none;">
+        <label>Wallet provider</label>
+        <select id="walletProvider">
+          <option value="bKash">bKash</option>
+          <option value="Nagad">Nagad</option>
+        </select>
+      </div>
+      <div class="field" id="achProviderField" style="display:none;">
+        <label>ACH provider</label>
+        <select id="achProvider">
+          <option value="ach_elevate">Elevate Pay</option>
+          <option value="ach_nsave">nsave</option>
+        </select>
+      </div>
+
+      <div class="action-row">
+        <button class="download-btn" id="downloadBtn" type="button">Save PDF</button>
+        <button class="print-btn" id="printBtn" type="button">Print</button>
+      </div>
+      <div class="hint">Data stays in your browser tab only — nothing is uploaded anywhere. Refreshing clears the form, so save before closing. "Save PDF" downloads an A4 PDF directly (no preview popup); "Print" opens your browser's print dialog.</div>
+
+      <h2 class="section-title">Excel invoice log <span class="opt">(auto-saved)</span></h2>
+      <div class="excel-status" id="excelStatus">Not connected — invoices are logged in this browser only.</div>
+      <button class="excel-btn" id="connectExcelBtn" type="button">📎 Connect Excel file (auto-save)</button>
+      <button class="excel-btn secondary" id="exportExcelBtn" type="button">⬇ Export log as .xlsx</button>
+      <div class="hint">"Connect" lets Chrome/Edge write every invoice straight into one Excel file on your computer, updated automatically on each download. Not supported in Safari/Firefox — use "Export" there instead. Your log also stays saved in this browser indefinitely (not just 30 days) — export it any time. Want it in Google Sheets too, viewable from any device? See the GOOGLE_SHEETS_CONFIG comment near the bottom of the code for a 5-minute free setup.</div>
+    </div>
+
+    <!-- ============ PREVIEW PANEL ============ -->
+    <div class="preview-wrap">
+      <div class="page-scale">
+        <div id="invoice">
+          <div class="inv-topbar"></div>
+          <div class="inv-body">
+          <div class="stamp" id="stamp">DUE</div>
+          <div class="inv-head">
+            <div class="inv-brand">
+              <div class="inv-brand-mark" id="brandMarkInvoice">
+                <img src="histree-logo.png" alt="Histree Studios">
+              </div>
+              <div>
+                <div class="inv-from-name">HISTREE STUDIOS</div>
+                <div class="inv-from-detail" id="pBizDetail">collab@histreestudios.com
 Uttara, Dhaka 1230, Bangladesh
 www.histreestudios.com</div>
+              </div>
+            </div>
+            <div class="inv-title">
+              <h1>Invoice</h1>
+              <div class="inv-number" id="pInvNumber">#INV-0001</div>
             </div>
           </div>
-          <div class="inv-title">
-            <h1>Invoice</h1>
-            <div class="inv-number" id="pInvNumber">#INV-0001</div>
-          </div>
-        </div>
 
-        <div class="inv-meta-box">
-          <div class="meta-cols">
-            <div class="meta-block">
-              <div class="meta-label">Issued on</div>
-              <div class="meta-value" id="pDate">—</div>
+          <div class="inv-meta-box">
+            <div class="meta-cols">
+              <div class="meta-block">
+                <div class="meta-label">Issued on</div>
+                <div class="meta-value" id="pDate">—</div>
+              </div>
+              <div class="meta-block">
+                <div class="meta-label">Payment due</div>
+                <div class="meta-value" id="pDueDate">—</div>
+              </div>
             </div>
-            <div class="meta-block">
-              <div class="meta-label">Payment due</div>
-              <div class="meta-value" id="pDueDate">—</div>
-            </div>
-          </div>
-          <div class="meta-billed">
-            <div class="meta-label">Billed to</div>
-            <div class="meta-value" id="pClient">
-              <strong>Client Name</strong>
+            <div class="meta-billed">
+              <div class="meta-label">Billed to</div>
+              <div class="meta-value" id="pClient">
+                <strong>Client Name</strong>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="section-bar">Service</div>
-        <table class="items">
-          <thead>
-            <tr>
-              <th style="width:34%;">Service</th>
-              <th style="width:16%;">Reference</th>
-              <th class="num" style="width:15%;">Rate</th>
-              <th class="num" style="width:10%;">Qty</th>
-              <th class="num" style="width:10%;">Discount</th>
-              <th class="num" style="width:15%;">Amount</th>
-            </tr>
-          </thead>
-          <tbody id="pItems"></tbody>
-        </table>
+          <div class="section-bar">Service</div>
+          <table class="items">
+            <thead>
+              <tr>
+                <th style="width:34%;">Service</th>
+                <th style="width:16%;">Code</th>
+                <th class="num" style="width:15%;">Rate</th>
+                <th class="num" style="width:10%;">Qty</th>
+                <th class="num" style="width:10%;">Discount</th>
+                <th class="num" style="width:15%;">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="pItems"></tbody>
+          </table>
 
-        <div class="totals">
-          <div class="totals-row"><span>Subtotal</span><span id="pSubtotal">$0.00</span></div>
-          <div class="totals-row"><span>Discount applied</span><span id="pDiscount">-$0.00</span></div>
-          <div class="totals-row grand"><span>Amount due</span><span id="pTotal">$0.00</span></div>
-          <div class="totals-row"><span>Payment received</span><span id="pPaid">$0.00</span></div>
-          <div class="totals-row balance"><span>Outstanding balance</span><span id="pBalance">$0.00</span></div>
-        </div>
+          <div class="totals">
+            <div class="totals-row"><span>Subtotal</span><span id="pSubtotal">$0.00</span></div>
+            <div class="totals-row"><span>Discount applied</span><span id="pDiscount">-$0.00</span></div>
+            <div class="totals-row grand"><span>Amount due</span><span id="pTotal">$0.00</span></div>
+            <div class="totals-row"><span>Payment received</span><span id="pPaid">$0.00</span></div>
+            <div class="totals-row balance"><span>Outstanding balance</span><span id="pBalance">$0.00</span></div>
+          </div>
 
-        <div class="payment-details" id="pPaymentDetails" style="display:none;">
-          <div class="pd-title">Payment details</div>
-          <div class="pd-grid" id="pPaymentGrid"></div>
-        </div>
+          <div class="payment-details" id="pPaymentDetails" style="display:none;">
+            <div class="pd-title">Payment details</div>
+            <div class="pd-grid" id="pPaymentGrid"></div>
+          </div>
 
-        <div class="notes-bottom" id="pNotes"></div>
+          <div class="notes-bottom" id="pNotes"></div>
 
-        <div class="foot">© 2026 Histree Studios. All rights reserved. This invoice was generated securely through our internal billing system.</div>
+          <div class="foot">© 2026 Histree Studios. All rights reserved. This invoice was generated securely through our internal billing system.</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-</div>
-
-<!-- ============ SHARE / PREVIEW MODAL ============ -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div>
-        <div class="modal-title">Invoice ready</div>
-        <div class="modal-sub" id="modalInvNum">#HS-0000-0000</div>
-      </div>
-      <button class="modal-close" id="modalClose" type="button">✕</button>
-    </div>
-    <div class="modal-preview-wrap">
-      <iframe id="modalPreviewFrame" title="Invoice preview"></iframe>
-    </div>
-    <div class="modal-email-row">
-      <input type="email" id="modalClientEmail" placeholder="client@email.com">
-    </div>
-    <div class="modal-actions">
-      <button class="modal-btn primary" id="modalSaveBtn" type="button">Save PDF</button>
-      <button class="modal-btn" id="modalShareBtn" type="button">Share…</button>
-      <button class="modal-btn" id="modalSendBtn" type="button">Send to client</button>
-    </div>
-    <div class="modal-note" id="modalNote">Tip: fill the client's email above, then hit "Send to client" — your email app will open with the invoice ready to attach.</div>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<!-- Optional: only used if EMAILJS_CONFIG below is filled in with your own keys -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 (function(){
   let items = [
@@ -1256,8 +1252,8 @@ www.histreestudios.com</div>
   //   4. Copy the Web app URL it gives you and paste it below as WEBAPP_URL.
   // Leave WEBAPP_URL blank to skip cloud sync (log still stays in this browser / Excel file).
   const GOOGLE_SHEETS_CONFIG = {
-  WEBAPP_URL: 'https://script.google.com/macros/s/AKfycbwrIDH6zFgMI-o3ipwo_GmAL9Fdkf2V7_kEH28PgCWQtx3CB-SbXFcpKhlgh3xLkrfDUg/exec'
-};
+    WEBAPP_URL: ''
+  };
 
   function syncToGoogleSheet(record){
     if(!GOOGLE_SHEETS_CONFIG.WEBAPP_URL) return;
@@ -1288,120 +1284,8 @@ www.histreestudios.com</div>
 
   tryReconnectHandle();
 
-  // ---- Optional: real one-click email sending ----
-  // GitHub Pages / static hosting can't send email on its own — there's no server here.
-  // To make "Send to client" actually deliver the email automatically (no mail app popup),
-  // sign up at https://www.emailjs.com (free tier), create a service + template, and fill
-  // these three values in. Leave PUBLIC_KEY blank to keep using the mailto: fallback.
-  const EMAILJS_CONFIG = {
-    PUBLIC_KEY: '',
-    SERVICE_ID: '',
-    TEMPLATE_ID: ''
-  };
-  if(EMAILJS_CONFIG.PUBLIC_KEY && window.emailjs){
-    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
-  }
-
   function generateInvoiceNumber(){
     return 'HS-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000);
-  }
-
-  let currentPdfBlob = null;
-  let currentPdfFilename = 'invoice.pdf';
-  let currentPdfUrl = null;
-
-  const modalOverlay = document.getElementById('modalOverlay');
-  const modalPreviewFrame = document.getElementById('modalPreviewFrame');
-  const modalInvNum = document.getElementById('modalInvNum');
-  const modalClientEmail = document.getElementById('modalClientEmail');
-  const modalNote = document.getElementById('modalNote');
-
-  function openModal(blob, filename, invNum){
-    currentPdfBlob = blob;
-    currentPdfFilename = filename;
-    if(currentPdfUrl) URL.revokeObjectURL(currentPdfUrl);
-    currentPdfUrl = URL.createObjectURL(blob);
-    modalPreviewFrame.src = currentPdfUrl;
-    modalInvNum.textContent = '#' + invNum;
-    modalClientEmail.value = document.getElementById('cEmail').value || '';
-    modalOverlay.classList.add('open');
-  }
-
-  function closeModal(){
-    modalOverlay.classList.remove('open');
-    modalPreviewFrame.src = '';
-    if(currentPdfUrl){ URL.revokeObjectURL(currentPdfUrl); currentPdfUrl = null; }
-  }
-
-  document.getElementById('modalClose').addEventListener('click', closeModal);
-  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) closeModal(); });
-
-  document.getElementById('modalSaveBtn').addEventListener('click', () => {
-    if(!currentPdfBlob) return;
-    const a = document.createElement('a');
-    a.href = currentPdfUrl;
-    a.download = currentPdfFilename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  });
-
-  document.getElementById('modalShareBtn').addEventListener('click', async () => {
-    if(!currentPdfBlob) return;
-    const file = new File([currentPdfBlob], currentPdfFilename, { type: 'application/pdf' });
-    if(navigator.canShare && navigator.canShare({ files: [file] })){
-      try{
-        await navigator.share({
-          files: [file],
-          title: 'Invoice — Histree Studios',
-          text: 'Please find the invoice attached.'
-        });
-      }catch(err){ /* user cancelled share sheet — no-op */ }
-    } else {
-      modalNote.textContent = 'Sharing files isn\'t supported in this browser. Use "Save PDF" and share it manually instead.';
-    }
-  });
-
-  document.getElementById('modalSendBtn').addEventListener('click', async () => {
-    const email = modalClientEmail.value.trim();
-    if(!email){
-      modalNote.textContent = 'Add the client\'s email above first.';
-      modalClientEmail.focus();
-      return;
-    }
-    const num = modalInvNum.textContent.replace('#','');
-    const clientName = document.getElementById('cName').value || 'there';
-
-    if(EMAILJS_CONFIG.PUBLIC_KEY && window.emailjs){
-      // Real automated send via EmailJS, if configured above.
-      try{
-        await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
-          to_email: email,
-          client_name: clientName,
-          invoice_number: num
-        }, EMAILJS_CONFIG.PUBLIC_KEY);
-        modalNote.textContent = 'Email sent to ' + email + '.';
-      }catch(err){
-        modalNote.textContent = 'Email send failed — falling back to your mail app.';
-        openMailFallback(email, clientName, num);
-      }
-      return;
-    }
-
-    // Fallback: no backend attached, so we can't auto-attach a PDF to an email.
-    // Save the file locally first, then open the user's own mail app pre-filled.
-    document.getElementById('modalSaveBtn').click();
-    openMailFallback(email, clientName, num);
-    modalNote.textContent = 'PDF saved + your email app is opening — attach the downloaded file before sending.';
-  });
-
-  function openMailFallback(email, clientName, num){
-    const subject = encodeURIComponent('Invoice #' + num + ' — Histree Studios');
-    const body = encodeURIComponent(
-      'Hi ' + clientName + ',\n\nPlease find attached invoice #' + num + ' from Histree Studios.\n\n' +
-      '(The PDF was just saved to your downloads — please attach it to this email.)\n\nThanks!'
-    );
-    window.location.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + subject + '&body=' + body;
   }
 
   function buildInvoiceRecord(num){
@@ -1440,6 +1324,75 @@ www.histreestudios.com</div>
     };
   }
 
+  // ---- PDF generation: strict A4, identical on desktop and mobile, footer always at page bottom ----
+  // A hidden, fixed-width clone (794px = 210mm @ 96dpi) is rendered off-screen with
+  // html2canvas — completely independent of the visible on-screen width, which is
+  // what made mobile and desktop PDFs look different before. If the invoice content
+  // is short, the clone is stretched to the full A4 height so the footer (which uses
+  // margin-top:auto) lands exactly at the bottom edge. If the content is too long for
+  // one page, it's scaled down uniformly to fit — so the footer still ends up exactly
+  // at the bottom of the page instead of being pushed off it.
+  const A4_WIDTH_PX = 794;   // 210mm at 96dpi
+  const A4_HEIGHT_PX = 1123; // 297mm at 96dpi
+
+  function generateInvoicePdf(){
+    const invoiceEl = document.getElementById('invoice');
+
+    const clone = invoiceEl.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.style.boxShadow = 'none';
+    clone.style.maxWidth = 'none';
+    clone.style.aspectRatio = 'auto';
+    clone.style.width = A4_WIDTH_PX + 'px';
+    clone.style.height = 'auto';
+
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = '0';
+    wrapper.style.left = '-99999px';
+    wrapper.style.width = A4_WIDTH_PX + 'px';
+    wrapper.style.background = '#ffffff';
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    const naturalHeight = clone.scrollHeight;
+    let scale = 1;
+    if(naturalHeight > A4_HEIGHT_PX){
+      scale = A4_HEIGHT_PX / naturalHeight;
+      clone.style.transformOrigin = 'top left';
+      clone.style.transform = 'scale(' + scale + ')';
+      clone.style.width = (A4_WIDTH_PX / scale) + 'px';
+    } else {
+      clone.style.height = A4_HEIGHT_PX + 'px';
+    }
+
+    wrapper.style.width = A4_WIDTH_PX + 'px';
+    wrapper.style.height = A4_HEIGHT_PX + 'px';
+    wrapper.style.overflow = 'hidden';
+
+    return html2canvas(wrapper, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      width: A4_WIDTH_PX,
+      height: A4_HEIGHT_PX,
+      windowWidth: A4_WIDTH_PX,
+      windowHeight: A4_HEIGHT_PX
+    }).then(canvas => {
+      document.body.removeChild(wrapper);
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'pt', 'a4'); // strict A4: 595.28 x 841.89 pt
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
+      return pdf;
+    }).catch(err => {
+      if(wrapper.parentNode) document.body.removeChild(wrapper);
+      throw err;
+    });
+  }
+
   document.getElementById('downloadBtn').addEventListener('click', () => {
     const errEl = document.getElementById('itemsError');
     if(validItems().length === 0){
@@ -1453,62 +1406,42 @@ www.histreestudios.com</div>
     btn.textContent = 'Preparing PDF…';
     btn.disabled = true;
 
-    const invoiceEl = document.getElementById('invoice');
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'pt', 'a4');
     const num = document.getElementById('invNumber').value || 'invoice';
 
-    pdf.html(invoiceEl, {
-      margin: 0,
-      autoPaging: 'text',
-      width: 595,
-      windowWidth: invoiceEl.scrollWidth,
-      callback: function(doc){
-        const blob = doc.output('blob');
-        openModal(blob, 'Histree-' + num + '.pdf', num);
+    generateInvoicePdf().then(pdf => {
+      // Straight to the browser's own save/download flow — no in-app popup.
+      pdf.save('Histree-' + num + '.pdf');
 
-        // Log this invoice's full data into the Excel sheet (auto-saved if connected).
-        recordInvoiceToLog(buildInvoiceRecord(num));
+      // Log this invoice's full data into the Excel sheet (auto-saved if connected).
+      recordInvoiceToLog(buildInvoiceRecord(num));
 
-        // Roll the invoice number forward so the next invoice doesn't reuse this one.
-        // Still fully editable in the sidebar if you want to set it manually.
-        document.getElementById('invNumber').value = generateInvoiceNumber();
-        renderPreview();
+      // Roll the invoice number forward so the next invoice doesn't reuse this one.
+      document.getElementById('invNumber').value = generateInvoiceNumber();
+      renderPreview();
 
-        btn.textContent = original;
-        btn.disabled = false;
-      }
+      btn.textContent = original;
+      btn.disabled = false;
+    }).catch(() => {
+      btn.textContent = original;
+      btn.disabled = false;
+      alert('Something went wrong generating the PDF. Please try again.');
     });
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => {
+    const errEl = document.getElementById('itemsError');
+    if(validItems().length === 0){
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+    window.print();
   });
 
   renderItemRows();
   recalcDueDate();
   renderPreview();
 })();
-// NEW - PREVENT NAVIGATION AWAY FROM THE APP
-document.addEventListener('click', function(e) {
-  const link = e.target.closest('a');
-  if (link && link.href) {
-    // Only allow internal links that start with #
-    if (!link.href.startsWith('#')) {
-      e.preventDefault();
-      alert('This app stays within the invoice tool.');
-    }
-  }
-});
-
-// Prevent pull-to-refresh on iPhone
-document.addEventListener('touchmove', function(e) {
-  if (e.target === document.documentElement) {
-    e.preventDefault();
-  }
-}, { passive: false });
-
-// Disable long-press context menu
-document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-});
-// END OF NEW APP CODE
 </script>
 </body>
 </html>
