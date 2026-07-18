@@ -362,6 +362,10 @@ tr:hover td{background:rgba(255,255,255,0.015)}
         <option value="Local ecommerce brands">Local ecommerce brands</option>
         <option value="Financial Advisor">Financial Advisor</option>
         <option value="Authors & speakers">Authors &amp; speakers</option>
+        <option value="Marketing Agency">Marketing Agency</option>
+        <option value="Media Agency">Media Agency</option>
+        <option value="SMMA">SMMA (Social Media Marketing Agency)</option>
+        <option value="Video Production">Video Production Company</option>
       </select>
       <div class="row-2">
         <div><label>Target City</label><input id="targetCity" type="text" placeholder="e.g. NY, London, Toronto"></div>
@@ -629,14 +633,14 @@ tr:hover td{background:rgba(255,255,255,0.015)}
     <span class="sep">·</span>
     <a href="https://instagram.com/joe.sh0w/" target="_blank">Instagram</a>
   </div>
-  <p class="footer-copy">V 1.0</p>
+  <p class="footer-copy">V 1.2</p>
   <p class="footer-legal">© 2026 Histree Studios · Joe | All rights reserved.</p>
 </footer>
 
 <script>
     /* ===================== State & constants ===================== */
     const STORAGE_KEYS = { icp: "histreeLeadFinder_icp_v1", leads: "histreeLeadFinder_leads_v1" };
-    const APP_VERSION = "v1.0";
+    const APP_VERSION = "v1.2";
     let leads = [];
     let currentView = "table";
     let editingLeadId = null;
@@ -777,7 +781,11 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Hotels": "Bookings start with a feed. Room tours and experience reels do the convincing before a guest checks rates.",
       "Local ecommerce brands": "Product video outperforms static photos every time. Demos and ad creatives are what move units.",
       "Financial Advisor": "A confusing product loses trial sign-ups. Clear explainer videos and founder clips turn free trials into paying customers.",
-      "Authors & speakers": "Stages and books sell on presence. Clipped talks and authority reels are what book the next gig."
+      "Authors & speakers": "Stages and books sell on presence. Clipped talks and authority reels are what book the next gig.",
+      "Marketing Agency": "Agencies are judged by the work they show, not just tell. Case-study reels and results-driven clips are what win new retainers.",
+      "Media Agency": "A media agency's own feed is its portfolio. Sharp, consistent content proves they can do for others what they do for themselves.",
+      "SMMA": "SMMAs live and die on proof of results. Client win breakdowns and before/after growth clips are the fastest way to book more discovery calls.",
+      "Video Production": "A production company's reel sells the next job. Highlight reels, BTS clips, and client testimonials keep the pipeline full between shoots."
     };
     const platformMap = {
       "Real estate agents": "Google Maps first, then Instagram and Facebook.",
@@ -794,7 +802,11 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Hotels": "Google Maps first, then Instagram.",
       "Local ecommerce brands": "Instagram first, then their website.",
       "Financial Advisor": "LinkedIn first, then their website.",
-      "Authors & speakers": "LinkedIn first, then YouTube."
+      "Authors & speakers": "LinkedIn first, then YouTube.",
+      "Marketing Agency": "LinkedIn first, then their website and case studies.",
+      "Media Agency": "Instagram first, then their website and LinkedIn.",
+      "SMMA": "Instagram first, then LinkedIn.",
+      "Video Production": "Their website or Vimeo/YouTube reel first, then Instagram."
     };
     const baseOffers = {
       "Real estate agents": "A done-for-you package of property walkthroughs, listing reels, agent talking-head clips, and neighborhood highlights for Instagram, Facebook, and YouTube Shorts.",
@@ -811,7 +823,11 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Hotels": "Room tour reels, guest experience clips, and seasonal offer videos built to drive direct bookings.",
       "Local ecommerce brands": "Product reels, ad creatives, and testimonial videos built for Meta ads and organic social.",
       "Financial Advisor": "A clear explainer or demo video plus a short clip set that turns trial sign-ups into paying customers.",
-      "Authors & speakers": "Clipped talks, authority reels, and highlight videos built to book your next stage or podcast slot."
+      "Authors & speakers": "Clipped talks, authority reels, and highlight videos built to book your next stage or podcast slot.",
+      "Marketing Agency": "White-label editing capacity and case-study reels that let you scale client delivery and pitch better proposals without hiring in-house.",
+      "Media Agency": "Overflow editing support plus a self-promo reel package so your own feed sells your capability as hard as your client work does.",
+      "SMMA": "Client result breakdowns, before/after growth clips, and proof-of-concept reels built to fill your discovery-call calendar.",
+      "Video Production": "A polished demo reel, BTS content, and client testimonial edits that keep your pipeline full between paid shoots."
     };
     const packageNameMap = {
       "Real estate agents": "Property Video Pack",
@@ -828,7 +844,11 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Hotels": "Guest Experience Pack",
       "Local ecommerce brands": "Product Video Ads Pack",
       "Financial Advisor": "Founder & Demo Pack",
-      "Authors & speakers": "Authority Clips Package"
+      "Authors & speakers": "Authority Clips Package",
+      "Marketing Agency": "White-Label Delivery Pack",
+      "Media Agency": "Overflow & Self-Promo Pack",
+      "SMMA": "Proof-of-Results Pack",
+      "Video Production": "Reel & Referral Pack"
     };
     const deliverablesMap = {
       "Real estate agents": "8 property or neighborhood reels, 2 agent talking-head clips, 2 listing edits, captions, hooks, and vertical formatting.",
@@ -845,7 +865,11 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       "Hotels": "8 to 10 room tour and experience reels, captions, seasonal offer edits, vertical exports.",
       "Local ecommerce brands": "6 to 10 product videos, 3 ad creative variations, captions, hooks, square plus vertical exports.",
       "Financial Advisor": "1 explainer or demo video, 6 to 8 founder/feature clips, captions, vertical and landing-page cuts.",
-      "Authors & speakers": "8 to 10 authority clips from talks or interviews, captions, hook titles, vertical exports."
+      "Authors & speakers": "8 to 10 authority clips from talks or interviews, captions, hook titles, vertical exports.",
+      "Marketing Agency": "10 to 15 white-label edited deliverables a month for their clients, plus 2 case-study reels for their own pitching, fast turnaround SLAs.",
+      "Media Agency": "8 to 12 overflow edits a month, plus 2 to 3 self-promo reels showcasing their own capability, captions, hooks, vertical exports.",
+      "SMMA": "6 to 8 client result/case-study reels a month, before/after growth graphics, captions, hooks, vertical exports.",
+      "Video Production": "1 polished demo reel a quarter, 6 to 8 BTS/social clips per shoot, 2 to 3 client testimonial edits, vertical and widescreen exports."
     };
 
     /* ===================== ICP ===================== */
@@ -1197,6 +1221,10 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       if (value.includes("ecommerce") || value.includes("e-commerce") || value.includes("product")) return "Local ecommerce brands";
       if (value.includes("finance") || value.includes("startup") || value.includes("founder")) return "Financial Advisor";
       if (value.includes("author") || value.includes("speaker")) return "Authors & speakers";
+      if (value.includes("smma") || value.includes("social media marketing")) return "SMMA";
+      if (value.includes("media agency")) return "Media Agency";
+      if (value.includes("marketing agency") || value.includes("marketing firm")) return "Marketing Agency";
+      if (value.includes("video production") || value.includes("production company") || value.includes("production house")) return "Video Production";
       return category || "Default";
     }
     function generateOfferData(lead) {
@@ -1844,7 +1872,7 @@ Suggested package: ${lead.suggestedPackage}`;
     exportJsonBackupBtn.addEventListener("click", exportJsonBackup);
     importJsonBackupInput.addEventListener("change", importJsonBackup);
     clearAllAppDataBtn.addEventListener("click", clearAllAppData);
-    emailLeadsBtn.addEventListener("click", emailLeads);
+    if (emailLeadsBtn) emailLeadsBtn.addEventListener("click", emailLeads);
     downloadForAttachBtn.addEventListener("click", exportCsv);
 
     closeOfferModalBtn.addEventListener("click", closeOfferModal);
