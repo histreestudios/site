@@ -982,16 +982,18 @@
     box-sizing:border-box;
 }
 .hero-intro-video {
-    position:relative;
-    width:100%;
-    aspect-ratio:16/9;
-    border-radius:18px;
-    overflow:hidden;
-    cursor:pointer;
-    background:#000;
-    border:1px solid rgba(255,255,255,0.12);
-    box-shadow:0 16px 50px rgba(0,0,0,0.55), 0 0 0 1px rgba(91,110,248,0.08);
-    transition:border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    width: 60%;
+    aspect-ratio: 16/9;
+    margin: 0 auto;      /* Centers the video */
+    display: block;      /* Ensures auto margin works */
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 16px 50px rgba(0,0,0,0.55), 0 0 0 1px rgba(91,110,248,0.08);
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 .hero-intro-video:hover {
     border-color:rgba(200,16,46,0.35);
