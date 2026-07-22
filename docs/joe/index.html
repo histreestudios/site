@@ -3,6 +3,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Joe Ahammed | Founder and CEO of Histree Studios |  Video Editor & Content Strategist</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,7 +26,7 @@
     --accent:#C8102E;
     --accent-dim:#7a0a1c;
     --blue:#3b4fd8;
-    --purple:#7c3aed;
+    --purple:#C8102E;
     --radius:14px;
     --sidebar-width:250px;
     --topbar-height:72px;
@@ -55,9 +58,9 @@
   }
   .sidebar .avatar{width:84px;height:84px;border-radius:50%;border:2px solid var(--accent);object-fit:cover;margin-bottom:14px;}
   .sidebar .brand{font-family:"Ramidots",sans-serif;font-size:26px;letter-spacing:.02em;color:var(--text);margin:0 0 30px;line-height:1;}
-  .sidebar nav{width:100%;flex:1;}
-  .sidebar nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:20px;}
-  .sidebar nav a{text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;transition:color .15s ease;position:relative;}
+  .sidebar nav{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:28px;}
+  .sidebar nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;}
+  .sidebar nav a{text-decoration:none;color:var(--muted);font-weight:600;font-size:16px;transition:color .15s ease;position:relative;}
   .sidebar nav a:hover,.sidebar nav li.active a{color:var(--text);}
   .sidebar nav li.active a::after{content:"";display:block;width:22px;height:2px;background:var(--accent);margin:6px auto 0;}
   .sidebar .socials{display:flex;gap:10px;margin:6px 0 16px;}
@@ -66,7 +69,7 @@
   .sidebar .copyright{font-size:11px;color:var(--muted);}
 
   /* Offsets page content past the fixed sidebar on desktop */
-  .page-content{margin-left:var(--sidebar-width);}
+  .page-content, footer{margin-left:var(--sidebar-width);}
 
   /* NAV — mobile / tablet top bar */
   .topbar{
@@ -93,7 +96,7 @@
 
   @media (max-width:1024px){
     .sidebar{display:none;}
-    .page-content{margin-left:0;}
+    .page-content, footer{margin-left:0;}
     .topbar{display:flex;}
   }
   @media (min-width:1025px){
@@ -101,8 +104,8 @@
   }
 
   /* HERO */
-  .hero{padding:100px 0 70px;position:relative;overflow:hidden;}
-  .hero::before{content:"";position:absolute;top:-200px;right:-200px;width:520px;height:520px;background:radial-gradient(circle,rgba(255,192,52,.16),transparent 70%);pointer-events:none;}
+  .hero{padding:48px 0 60px;position:relative;overflow:hidden;}
+  .hero::before{content:"";position:absolute;top:-150px;right:-150px;width:520px;height:520px;background:radial-gradient(circle,rgba(124,58,237,.22),transparent 66%);pointer-events:none;}
   .hero-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -186,7 +189,21 @@
   .svc-card h3{font-size:20px;text-transform:none;font-family:'Inter';font-weight:800;margin-bottom:10px;}
   .svc-card p{color:var(--muted);font-size:14.5px;margin:0;}
 
-  /* PORTFOLIO / RESULTS */
+  /* MY WORKS — YouTube embeds */
+  .works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px;}
+  .work-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .2s ease,border-color .2s ease;}
+  .work-card:hover{transform:translateY(-4px);border-color:var(--accent);}
+  .work-embed{position:relative;width:100%;padding-top:56.25%;background:#000;}
+  .work-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+  .work-embed.yt-thumb{background-size:cover;background-position:center;cursor:pointer;}
+  .work-embed.yt-thumb .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(200,16,46,0.9);color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease;}
+  .work-embed.yt-thumb:hover .play-btn{transform:translate(-50%,-50%) scale(1.08);background:#C8102E;}
+  .work-info{padding:16px 18px 20px;}
+  .work-info .tag{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.02em;}
+  .work-info h4{margin:6px 0 0;font-size:16px;line-height:1.35;color:var(--text);}
+  @media (max-width:900px){.works-grid{grid-template-columns:1fr;}}
+
+  /* PORTFOLIO */
   .pf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px;}
   .pf-card{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--panel);padding:26px;}
   .pf-card .pf-tag{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;}
@@ -216,7 +233,7 @@
   textarea{resize:vertical;min-height:120px;}
   .contact-cards{display:grid;gap:14px;align-content:start;}
   .c-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start;}
-  .c-icon{width:40px;height:40px;border-radius:10px;background:rgba(255,192,52,.12);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:17px;flex:none;}
+  .c-icon{width:40px;height:40px;border-radius:10px;background:rgba(124,58,237,.14);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:17px;flex:none;}
   .c-card h4{margin:0.1px;font-family:'arial';font-weight:700;font-size:16px;text-transform:none;}
   .c-card p{margin:0;color:var(--muted);font-size:14px;}
 
@@ -251,7 +268,8 @@
 }
 
   @media(max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
+    .hero{padding:20px 0 44px;}
+    .hero-grid{grid-template-columns:1fr;gap:8px;}
     .hero-photo{
     order:-1;
     max-width:none;
@@ -294,8 +312,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       <li class="active"><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
-      <li><a href="#portfolio">Results</a></li>
-      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -321,12 +338,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <li class="active"><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#portfolio">Results</a></li>
-    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="cta-row">
-    <a class="btn" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank">Book A Call ↗</a>
+    <a class="btn" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank">Hire Me</a>
   </div>
   <div class="socials">
     <a href="https://instagram.com/thejoestrategy/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -346,8 +362,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         <h1>Joe<span class="rot">Ahammed</span></h1>
         <p class="lead">Joe Ahammed is a video editor, content strategist, and creative director specializing in podcast production, YouTube content, short-form video editing, and content systems. He helps creators, founders, educators, and businesses transform long-form content into strategic assets that grow audience, authority, and brand presence.</p>
         <div class="hero-cta">
-          <a class="btn" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank">Book A Call ↗</a>
-          <a class="btn ghost" href="https://www.upwork.com/freelancers/joeahammed" target="_blank">Upwork Profile</a>
+          <a class="btn" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank">Book Meeting</a>
+          <a class="btn ghost" href="mailto:joe@histreestudios.com" target="_blank">Hire Me</a>
         </div>
       </div>
       <div class="hero-photo">
@@ -366,18 +382,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
   </div>
 </section>
 
-<div class="trust-strip">
-  <p class="mono">Trusted by creators &amp; businesses worldwide</p>
-  <div class="trust-row">
-    <span>BBC News</span>
-    <span>Expressive Wealth™</span>
-    <span>VAM Partners</span>
-    <span>itshumanimal_coaching</span>
-    <span>SER Summits</span>
-    <span>Daily Star</span>
-  </div>
-</div>
-
 <!-- ABOUT -->
 <section id="about">
   <div class="wrap">
@@ -388,11 +392,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
             <img src="JA.png" alt="Joe Ahammed">
         </div>
 
-        <h2>
-            I'm Joe Ahammed —
-            <br>
-            <em>founder, editor, strategist.</em>
-        </h2>
     </div>
 
     <div class="about-right">
@@ -415,7 +414,6 @@ Joe founded Histree Studios with the vision of helping experts and businesses cr
         </div>
         <div class="info-cards">
           <div class="info-card"><div class="k">Email</div><div class="v">joe@histreestudios.com</div></div>
-          <div class="info-card"><div class="k">Studio Email</div><div class="v">collab@histreestudios.com</div></div>
           <div class="info-card"><div class="k">BD Office</div><div class="v">Uttara, Dhaka 1230</div></div>
         </div>
       </div>
@@ -459,44 +457,32 @@ Joe founded Histree Studios with the vision of helping experts and businesses cr
   </div>
 </section>
 
-<!-- RESULTS -->
+<!-- MY WORKS -->
 <section id="portfolio">
   <div class="wrap">
-    <span class="eyebrow">Track Record</span>
+    <span class="eyebrow">My Works</span>
     <h2>Work That<br><em>Speaks for Itself</em></h2>
-    <div class="pf-grid">
-      <div class="pf-card">
-        <span class="pf-tag">Long-Term Retainer</span>
-        <h4>David K. — Canada · $12K+ spent</h4>
-        <p>"Delivered 24 YouTube videos, all outperforming our previous agency by 3x. The strategy alone was worth the contract price."</p>
+    <div class="works-grid">
+      <div class="work-card">
+        <div class="work-embed yt-thumb" data-video="F1g327P-L54" style="background-image:url('https://img.youtube.com/vi/F1g327P-L54/maxresdefault.jpg')">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="work-info">
+          <span class="tag">Video Editing & Strategy</span>
+          <h4>I Worked With 99+ Business Owners and Learned This</h4>
+        </div>
       </div>
-      <div class="pf-card">
-        <span class="pf-tag">SaaS Video Series</span>
-        <h4>Priya R. — Singapore · $8K+ spent</h4>
-        <p>"Motion graphics felt like a $50K production. Our sign-up rate jumped 180% in 6 weeks."</p>
+      <div class="work-card">
+        <div class="work-embed yt-thumb" data-video="QM7lnplc0X0" style="background-image:url('https://img.youtube.com/vi/QM7lnplc0X0/maxresdefault.jpg')">
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="work-info">
+          <span class="tag">Video Editing</span>
+          <h4>Why Your Podcast Has 150 Views (And How to Fix It)</h4>
+        </div>
       </div>
-      <div class="pf-card">
-        <span class="pf-tag">YouTube Growth</span>
-        <h4>Omar T. — UAE · $5K+ spent</h4>
-        <p>"Our channel went from 800 to 12K subscribers in 2 months. 10/10 no hesitation."</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- CLIENTS -->
-<section>
-  <div class="wrap">
-    <span class="eyebrow">Industries Served</span>
-    <h2>Podcasts, Coaches<br><em>&amp; Businesses</em></h2>
-    <div class="clients-grid">
-      <div class="client-logo">300+<br>Videos Edited</div>
-      <div class="client-logo">200+<br>Short-Form Clips</div>
-      <div class="client-logo">99+<br>Creators &amp; Businesses</div>
-      <div class="client-logo">YouTube<br>Long-Form</div>
-      <div class="client-logo">Shorts<br>&amp; Reels</div>
-    </div>
-  </div>
 </section>
 
 <!-- TESTIMONIALS -->
@@ -529,6 +515,21 @@ Joe founded Histree Studios with the vision of helping experts and businesses cr
           <div><b>amanda_thickk</b><span>🇺🇸 United States · Short-Form</span></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Industries Served</span>
+    <h2>Podcasts, Coaches<br><em>&amp; Businesses</em></h2>
+    <div class="clients-grid">
+      <div class="client-logo">300+<br>Videos Edited</div>
+      <div class="client-logo">200+<br>Short-Form Clips</div>
+      <div class="client-logo">99+<br>Creators &amp; Businesses</div>
+      <div class="client-logo">YouTube<br>Long-Form</div>
+      <div class="client-logo">Shorts<br>&amp; Reels</div>
     </div>
   </div>
 </section>
@@ -597,6 +598,17 @@ Joe founded Histree Studios with the vision of helping experts and businesses cr
 </footer>
 
 <script>
+  // YouTube click-to-play thumbnails (My Works section)
+  document.querySelectorAll('.yt-thumb').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.video;
+      el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" title="YouTube video player" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>`;
+      el.classList.remove('yt-thumb');
+      el.style.backgroundImage = 'none';
+      el.style.cursor = 'default';
+    });
+  });
+
   // Hamburger open/close for mobile dropdown
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const mobileMenu = document.getElementById('mobileMenu');
