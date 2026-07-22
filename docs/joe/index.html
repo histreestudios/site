@@ -25,6 +25,8 @@
     --blue:#3b4fd8;
     --purple:#7c3aed;
     --radius:14px;
+    --sidebar-width:250px;
+    --topbar-height:72px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -39,27 +41,64 @@
   section{padding:88px 0;border-bottom:1px solid var(--line);}
   section:last-of-type{border-bottom:none;}
 
-  /* NAV */
-  header{position:sticky;top:0;z-index:50;background:rgba(11,13,16,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1180px;margin:0 auto;}
-  .brand{
-    font-family:"Ramidots", sans-serif;
-    font-size:40px;
-    letter-spacing:0.02em;
-    color:#fff;
-    display:flex;
-    align-items:center;
-}
-  .brand img{width:36px;height:36px;border-radius:8px;object-fit:cover;}
-  .navlinks{display:flex;gap:28px;font-size:14px;font-weight:600;}
-  .navlinks a{color:var(--muted);transition:color .2s;position:relative;}
-  .navlinks a:hover,.navlinks a.active{color:var(--text);}
-  .navlinks a.active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--accent);}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px;background:var(--accent);color:#0B0D10;border:1px solid var(--accent);transition:transform .15s ease,background .2s;white-space:nowrap;}
-  .btn:hover{transform:translateY(-2px);background:#ffd35c;}
+  /* NAV — desktop fixed sidebar */
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px;background:var(--accent);color:#fff;border:1px solid var(--accent);transition:transform .15s ease,background .2s;white-space:nowrap;}
+  .btn:hover{transform:translateY(-2px);background:#e21b30;}
   .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);}
   .btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
-  .menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;}
+
+  .sidebar{
+    position:fixed;top:0;left:0;height:100vh;width:var(--sidebar-width);
+    background:var(--panel);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;align-items:center;
+    padding:36px 18px;text-align:center;z-index:100;
+  }
+  .sidebar .avatar{width:84px;height:84px;border-radius:50%;border:2px solid var(--accent);object-fit:cover;margin-bottom:14px;}
+  .sidebar .brand{font-family:"Ramidots",sans-serif;font-size:26px;letter-spacing:.02em;color:var(--text);margin:0 0 30px;line-height:1;}
+  .sidebar nav{width:100%;flex:1;}
+  .sidebar nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:20px;}
+  .sidebar nav a{text-decoration:none;color:var(--muted);font-weight:600;font-size:14px;transition:color .15s ease;position:relative;}
+  .sidebar nav a:hover,.sidebar nav li.active a{color:var(--text);}
+  .sidebar nav li.active a::after{content:"";display:block;width:22px;height:2px;background:var(--accent);margin:6px auto 0;}
+  .sidebar .socials{display:flex;gap:10px;margin:6px 0 16px;}
+  .sidebar .socials a{width:32px;height:32px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--text);text-decoration:none;font-size:13px;transition:.2s;}
+  .sidebar .socials a:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .sidebar .copyright{font-size:11px;color:var(--muted);}
+
+  /* Offsets page content past the fixed sidebar on desktop */
+  .page-content{margin-left:var(--sidebar-width);}
+
+  /* NAV — mobile / tablet top bar */
+  .topbar{
+    display:none;position:sticky;top:0;left:0;width:100%;height:var(--topbar-height);
+    background:rgba(11,13,16,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+    align-items:center;justify-content:space-between;padding:0 22px;z-index:200;
+  }
+  .topbar .logo{font-family:"Ramidots",sans-serif;font-size:24px;letter-spacing:.02em;color:var(--text);text-decoration:none;}
+  .hamburger{width:40px;height:40px;border:none;background:transparent;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;padding:0;}
+  .hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s ease,opacity .2s ease;}
+  .hamburger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.is-open span:nth-child(2){opacity:0;}
+  .hamburger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{display:none;position:sticky;top:var(--topbar-height);left:0;width:100%;background:var(--panel);border-bottom:1px solid var(--line);z-index:199;}
+  .mobile-menu.is-open{display:block;}
+  .mobile-menu ul{list-style:none;margin:0;padding:14px 22px 22px;}
+  .mobile-menu li+li{margin-top:16px;}
+  .mobile-menu a{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;}
+  .mobile-menu a:hover,.mobile-menu li.active a{color:var(--text);}
+  .mobile-menu .cta-row{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;}
+  .mobile-menu .socials{display:flex;gap:10px;margin-top:20px;}
+  .mobile-menu .socials a{width:32px;height:32px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:13px;text-decoration:none;}
+
+  @media (max-width:1024px){
+    .sidebar{display:none;}
+    .page-content{margin-left:0;}
+    .topbar{display:flex;}
+  }
+  @media (min-width:1025px){
+    .mobile-menu{display:none !important;}
+  }
 
   /* HERO */
   .hero{padding:100px 0 70px;position:relative;overflow:hidden;}
@@ -234,51 +273,69 @@
     .test-grid{grid-template-columns:1fr;}
     .contact-grid{grid-template-columns:1fr;}
     .row2{grid-template-columns:1fr;}
-    .navlinks{display:none;}
-    .menu-toggle{display:block;}
   }
   @media(max-width:520px){
     section{padding:60px 0;}
     .info-cards{grid-template-columns:1fr;}
     .clients-grid{grid-template-columns:repeat(2,1fr);}
   }
-
-  .mnav{display:none;position:fixed;inset:0;z-index:60;background:rgba(11,13,16,.98);flex-direction:column;align-items:center;justify-content:center;gap:26px;}
-  .mnav.open{display:flex;}
-  .mnav a{font-family:'DM Sans',sans-serif;font-size:26px;text-transform:uppercase;color:var(--text);}
-  .mnav .close{position:absolute;top:22px;right:24px;font-size:26px;background:none;border:none;color:var(--text);cursor:pointer;}
 </style>
 </head>
 <body>
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<header>
-  <div class="nav">
-    <a href="#home" class="brand">
-    Joe Ahammed
-</a>
-    <nav class="navlinks">
-      <a href="#home" class="active">Home</a>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#portfolio">Results</a>
-      <a href="#testimonials">Reviews</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="btn" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank">Book A Call ↗</a>
-    <button class="menu-toggle" id="menuToggle">☰</button>
+
+<!-- ============ DESKTOP SIDEBAR ============ -->
+<aside class="sidebar">
+  <img class="avatar" src="joe.png" alt="Joe Ahammed">
+  <p class="brand">Joe Ahammed</p>
+  <nav aria-label="Primary">
+    <ul>
+      <li class="active"><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Results</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <a class="btn" style="margin:8px 0 20px;" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank">Book A Call ↗</a>
+  <div class="socials">
+    <a href="https://instagram.com/thejoestrategy/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://youtube.com/@TheJoeStrategy" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="mailto:joe@histreestudios.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
   </div>
+  <p class="copyright mono">© 2026 Joe Ahammed</p>
+</aside>
+
+<!-- ============ MOBILE / TABLET TOP BAR ============ -->
+<header class="topbar">
+  <a class="logo" href="#home">Joe Ahammed</a>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<div class="mnav" id="mnav">
-  <button class="close" id="mnavClose">✕</button>
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#portfolio">Results</a>
-  <a href="#testimonials">Reviews</a>
-  <a href="#contact">Contact</a>
-</div>
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <ul>
+    <li class="active"><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Results</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="cta-row">
+    <a class="btn" href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank">Book A Call ↗</a>
+  </div>
+  <div class="socials">
+    <a href="https://instagram.com/thejoestrategy/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://youtube.com/@TheJoeStrategy" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="mailto:joe@histreestudios.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+  </div>
+</nav>
+
+<main class="page-content">
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -509,6 +566,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
   </div>
 </section>
 
+
+</main>
+
 <footer>
   <div class="wrap foot-row">
     <span class="mono" style="color:var(--muted);font-size:13px;">© 2026 Joe Ahammed · All rights reserved.</span>
@@ -533,20 +593,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </footer>
 
 <script>
-  const toggle = document.getElementById('menuToggle');
-  const mnav = document.getElementById('mnav');
-  const close = document.getElementById('mnavClose');
-  toggle.addEventListener('click', () => mnav.classList.add('open'));
-  close.addEventListener('click', () => mnav.classList.remove('open'));
-  mnav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mnav.classList.remove('open')));
+  // Hamburger open/close for mobile dropdown
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
 
-  const links = document.querySelectorAll('.navlinks a');
-  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('is-open');
+    hamburgerBtn.classList.toggle('is-open', isOpen);
+    hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('is-open');
+      hamburgerBtn.classList.remove('is-open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Scroll-spy: highlights the current section in both the desktop
+  // sidebar and the mobile dropdown menu
+  const sidebarItems = document.querySelectorAll('.sidebar nav li');
+  const mobileItems = document.querySelectorAll('.mobile-menu li');
+  const sectionEls = [...sidebarItems].map(li => document.querySelector(li.querySelector('a').getAttribute('href')));
+
   window.addEventListener('scroll', () => {
     let idx = 0;
-    sections.forEach((s,i) => { if (s && window.scrollY + 200 >= s.offsetTop) idx = i; });
-    links.forEach(l => l.classList.remove('active'));
-    links[idx].classList.add('active');
+    sectionEls.forEach((s, i) => { if (s && window.scrollY + 200 >= s.offsetTop) idx = i; });
+    sidebarItems.forEach(li => li.classList.remove('active'));
+    mobileItems.forEach(li => li.classList.remove('active'));
+    if (sidebarItems[idx]) sidebarItems[idx].classList.add('active');
+    if (mobileItems[idx]) mobileItems[idx].classList.add('active');
   });
 </script>
 
