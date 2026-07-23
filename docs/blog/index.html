@@ -96,23 +96,6 @@ nav { display:flex; gap:2rem; align-items:center; }
 nav a { color:var(--muted); font-size:0.88rem; font-weight:500; transition:color 0.2s; letter-spacing:0.3px; white-space:nowrap; }
 nav a:hover, nav a.active { color:var(--text); }
 .nav-right { display:flex; align-items:center; gap:10px; }
-
-/* Nav dropdowns */
-.nav-item { position:relative; }
-.nav-dropdown-trigger { display:flex; align-items:center; gap:5px; cursor:pointer; color:var(--muted); font-size:0.88rem; font-weight:500; letter-spacing:0.3px; white-space:nowrap; transition:color 0.2s; background:none; border:none; font-family:inherit; padding:0; }
-.nav-item:hover .nav-dropdown-trigger, .nav-item.open .nav-dropdown-trigger { color:var(--text); }
-.nav-caret { font-size:0.6rem; line-height:1; transition:transform 0.25s; display:inline-block; transform:translateY(1px); }
-.nav-item.open .nav-caret { transform:rotate(180deg) translateY(-1px); }
-.nav-dropdown {
-    position:absolute; top:calc(100% + 16px); left:50%; transform:translateX(-50%) translateY(-8px);
-    min-width:200px; background:rgba(8,8,12,0.98); border:1px solid var(--glass-border);
-    border-radius:14px; padding:8px; opacity:0; pointer-events:none;
-    transition:opacity 0.2s ease, transform 0.2s ease; box-shadow:0 24px 48px rgba(0,0,0,0.5);
-    backdrop-filter:blur(24px); z-index:500;
-}
-.nav-item.open .nav-dropdown { opacity:1; pointer-events:all; transform:translateX(-50%) translateY(0); }
-.nav-dropdown a { display:block; padding:10px 14px; border-radius:10px; color:var(--muted); font-size:0.85rem; font-weight:500; white-space:nowrap; transition:all 0.15s; }
-.nav-dropdown a:hover { background:rgba(255,255,255,0.06); color:var(--text); }
 .dots-btn {
     width:40px; height:40px; border-radius:50%;
     background:rgba(255,255,255,0.06);
@@ -200,8 +183,7 @@ section { position:relative; z-index:1; }
 .breadcrumb { display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.82rem; color:var(--muted2); margin-bottom:22px; }
 .breadcrumb a { color:var(--muted); transition:color 0.2s; }
 .breadcrumb a:hover { color:var(--text); }
-.page-header-eyebrow { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:50px; background:rgba(200,16,46,0.12); border:1px solid rgba(200,16,46,0.3); font-size:0.75rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#ff4d6d; margin-bottom:20px; }
-.page-header-eyebrow::before { content:'●'; font-size:0.5rem; animation:blink 1.5s infinite; }
+
 .page-header h1 { font-size:clamp(2.2rem,4.5vw,3.6rem); font-weight:700; letter-spacing:-1.5px; margin-bottom:16px; }
 .page-header h1 em { font-style:normal; background:linear-gradient(135deg,#e01535 40%,#888 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .page-header p { color:var(--muted); font-size:1.05rem; max-width:600px; margin:0 auto; line-height:1.7; }
@@ -225,33 +207,6 @@ section { position:relative; z-index:1; }
 .search-bar input:focus { border-color:rgba(91,110,248,0.55); box-shadow:0 0 0 3px rgba(91,110,248,0.12); }
 .search-bar input::placeholder { color:var(--muted2); }
 .search-bar i { position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--muted2); font-size:0.85rem; }
-
-/* ============================================================
-   COMING SOON BANNER (blog.html)
-============================================================ */
-.coming-soon-banner {
-    position:relative; z-index:1; max-width:900px; margin:44px auto 0; padding:34px 40px;
-    border-radius:var(--radius-lg); text-align:center; overflow:hidden;
-    background:linear-gradient(135deg,rgba(200,16,46,0.14),rgba(124,58,237,0.1));
-    border:1px solid rgba(200,16,46,0.3);
-}
-.coming-soon-banner::before {
-    content:''; position:absolute; inset:0; z-index:-1;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.06),transparent);
-    background-size:200% 100%; animation:sheen 3.5s linear infinite;
-}
-@keyframes sheen { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
-.coming-soon-banner .cs-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#ff8fa3; margin-bottom:10px; }
-.coming-soon-banner .cs-eyebrow::before { content:'●'; font-size:0.5rem; animation:blink 1.5s infinite; }
-.coming-soon-banner h2 {
-    font-size:clamp(2rem,3.4vw,2.4rem); font-weight:700; letter-spacing:-1px; color:#fff;
-}
-.coming-soon-banner h2 em {
-    font-style:normal; background:linear-gradient(135deg,#e01535 30%,#a78bfa 100%);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-}
-.coming-soon-banner p { margin-top:10px; color:var(--muted); font-size:0.95rem; }
-@media (max-width:600px){ .coming-soon-banner{ padding:26px 22px; } }
 
 /* ============================================================
    SHARE BUTTON (blog cards)
@@ -463,33 +418,15 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
         <img src="apple-touch-icon.png" alt="Histree Studios" class="logo-img">
         HISTREE STUDIOS
     </div>
-    <nav id="main-nav">
-        <div class="nav-item">
-            <button class="nav-dropdown-trigger">Services <span class="nav-caret">▾</span></button>
-            <div class="nav-dropdown">
-                <a href="/#process">Process</a>
-                <a href="/#work">Work</a>
-                <a href="/#process">How We Work</a>
-                <a href="/#testimonials">Reviews</a>
-            </div>
-        </div>
-        <div class="nav-item">
-            <button class="nav-dropdown-trigger">Resources <span class="nav-caret">▾</span></button>
-            <div class="nav-dropdown">
-                <a href="/blog/" class="active">Blog</a>
-                <a href="/resources/">Free Resources</a>
-            </div>
-        </div>
-        <a href="/#pricing">Pricing</a>
-                <a href="/#contact">Contact</a>
-
-        <div class="nav-item">
-            <button class="nav-dropdown-trigger">About <span class="nav-caret">▾</span></button>
-            <div class="nav-dropdown">
-                <a href="/joe">Meet Joe</a>
-                <a href="/#faq">FAQ</a>
-            </div>
-        </div>
+    <nav>
+    <a href="/#about">About</a>
+    <a href="/#work">Work</a>
+    <a href="/#testimonials">Testimonials</a>
+    <a href="/resources/">Resources</a>
+    <a href="/#process">Process</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="/#contact">Find Us</a>
+    <a href="/#faq">FAQ</a>
     </nav>
     <div class="nav-right">
         <button class="dots-btn" id="dots-btn" title="More" aria-label="Open menu"><span></span><span></span><span></span></button>
@@ -508,7 +445,6 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
   <!-- ========== PAGE HEADER (edit per page) ========== -->
   <div class="page-header reveal active">
       <div class="breadcrumb"><a href="/">Home</a> <span>/</span> <span>Blog</span></div>
-      <div class="page-header-eyebrow"><span>◈</span> The Histree Journal</div>
       <h1>Insights on <em>Content That Converts.</em></h1>
       <p>Strategy breakdowns, editing tips, and behind-the-scenes lessons from producing content for 99+ creators and brands.</p>
 
@@ -524,15 +460,6 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
           <div class="ftab" data-filter="strategy"><span>Strategy</span></div>
           <div class="ftab" data-filter="editing"><span>Editing</span></div>
           <div class="ftab" data-filter="growth"><span>Growth</span></div>
-      </div>
-  </div>
-
-  <!-- ========== COMING SOON BANNER ========== -->
-  <div class="coming-soon-banner reveal active">
-      <div class="cs-eyebrow"><span>◈</span> Under Construction</div>
-      <h2>Blog Posts <em>Coming Soon...</em></h2>
-      <p>We're writing up our best strategy breakdowns and behind-the-scenes lessons — check back soon, or preview what's on the way below.</p>
-  </div>
 
   <!-- ========== 1) BLOG CARD GRID ========== -->
   <section id="blog-grid">
@@ -637,7 +564,6 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
   <section class="cta-section">
       <div class="section-inner">
           <div class="cta-card reveal active">
-              <h2>Ready to Build Your<br>Content System?</h2>
               <p>Book a free 30-minute strategy call — no pressure, just a clear plan for your next 90 days.</p>
               <div class="cta-buttons">
                   <a href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" class="btn-primary">🎯 Book Free Strategy Call ↗</a>
@@ -702,25 +628,6 @@ dotsBtn.addEventListener('click',()=>megaMenu.classList.contains('open')?closeMe
 megaClose.addEventListener('click',closeMega);
 megaOver.addEventListener('click',closeMega);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMega();});
-
-/* Desktop nav dropdowns (Services / Resources / About) */
-(function(){
-    const navItems=document.querySelectorAll('#main-nav .nav-item');
-    navItems.forEach(item=>{
-        const trigger=item.querySelector('.nav-dropdown-trigger');
-        if(!trigger)return;
-        trigger.addEventListener('click',e=>{
-            e.stopPropagation();
-            const isOpen=item.classList.contains('open');
-            navItems.forEach(i=>i.classList.remove('open'));
-            if(!isOpen)item.classList.add('open');
-        });
-    });
-    document.addEventListener('click',()=>navItems.forEach(i=>i.classList.remove('open')));
-    document.querySelectorAll('#main-nav .nav-dropdown a').forEach(a=>{
-        a.addEventListener('click',()=>navItems.forEach(i=>i.classList.remove('open')));
-    });
-})();
 
 /* ══════════════════════════════════════════
    SHARE BUTTON (blog cards)
