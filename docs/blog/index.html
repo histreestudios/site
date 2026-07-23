@@ -96,6 +96,23 @@ nav { display:flex; gap:2rem; align-items:center; }
 nav a { color:var(--muted); font-size:0.88rem; font-weight:500; transition:color 0.2s; letter-spacing:0.3px; white-space:nowrap; }
 nav a:hover, nav a.active { color:var(--text); }
 .nav-right { display:flex; align-items:center; gap:10px; }
+
+/* Nav dropdowns */
+.nav-item { position:relative; }
+.nav-dropdown-trigger { display:flex; align-items:center; gap:5px; cursor:pointer; color:var(--muted); font-size:0.88rem; font-weight:500; letter-spacing:0.3px; white-space:nowrap; transition:color 0.2s; background:none; border:none; font-family:inherit; padding:0; }
+.nav-item:hover .nav-dropdown-trigger, .nav-item.open .nav-dropdown-trigger { color:var(--text); }
+.nav-caret { font-size:0.6rem; line-height:1; transition:transform 0.25s; display:inline-block; transform:translateY(1px); }
+.nav-item.open .nav-caret { transform:rotate(180deg) translateY(-1px); }
+.nav-dropdown {
+    position:absolute; top:calc(100% + 16px); left:50%; transform:translateX(-50%) translateY(-8px);
+    min-width:200px; background:rgba(8,8,12,0.98); border:1px solid var(--glass-border);
+    border-radius:14px; padding:8px; opacity:0; pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease; box-shadow:0 24px 48px rgba(0,0,0,0.5);
+    backdrop-filter:blur(24px); z-index:500;
+}
+.nav-item.open .nav-dropdown { opacity:1; pointer-events:all; transform:translateX(-50%) translateY(0); }
+.nav-dropdown a { display:block; padding:10px 14px; border-radius:10px; color:var(--muted); font-size:0.85rem; font-weight:500; white-space:nowrap; transition:all 0.15s; }
+.nav-dropdown a:hover { background:rgba(255,255,255,0.06); color:var(--text); }
 .dots-btn {
     width:40px; height:40px; border-radius:50%;
     background:rgba(255,255,255,0.06);
@@ -183,7 +200,6 @@ section { position:relative; z-index:1; }
 .breadcrumb { display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.82rem; color:var(--muted2); margin-bottom:22px; }
 .breadcrumb a { color:var(--muted); transition:color 0.2s; }
 .breadcrumb a:hover { color:var(--text); }
-
 .page-header h1 { font-size:clamp(2.2rem,4.5vw,3.6rem); font-weight:700; letter-spacing:-1.5px; margin-bottom:16px; }
 .page-header h1 em { font-style:normal; background:linear-gradient(135deg,#e01535 40%,#888 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .page-header p { color:var(--muted); font-size:1.05rem; max-width:600px; margin:0 auto; line-height:1.7; }
@@ -418,15 +434,32 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
         <img src="apple-touch-icon.png" alt="Histree Studios" class="logo-img">
         HISTREE STUDIOS
     </div>
-    <nav>
-    <a href="/#about">About</a>
-    <a href="/#work">Work</a>
-    <a href="/#testimonials">Testimonials</a>
-    <a href="/resources/">Resources</a>
-    <a href="/#process">Process</a>
-    <a href="/#pricing">Pricing</a>
-    <a href="/#contact">Find Us</a>
-    <a href="/#faq">FAQ</a>
+    <nav id="main-nav">
+        <div class="nav-item">
+            <button class="nav-dropdown-trigger">Services <span class="nav-caret">▾</span></button>
+            <div class="nav-dropdown">
+                <a href="/#process">Process</a>
+                <a href="/#work">Work</a>
+                <a href="/#process">How We Work</a>
+                <a href="/#testimonials">Reviews</a>
+            </div>
+        </div>
+        <div class="nav-item">
+            <button class="nav-dropdown-trigger">Resources <span class="nav-caret">▾</span></button>
+            <div class="nav-dropdown">
+                <a href="/blog/" class="active">Blog</a>
+                <a href="/resources/">Free Resources</a>
+            </div>
+        </div>
+        <a href="/#pricing">Pricing</a>
+        <div class="nav-item">
+            <button class="nav-dropdown-trigger">About <span class="nav-caret">▾</span></button>
+            <div class="nav-dropdown">
+                <a href="/joe">Joe (Meet Our Founder)</a>
+                <a href="/#contact">Find Us</a>
+                <a href="/#faq">FAQ</a>
+            </div>
+        </div>
     </nav>
     <div class="nav-right">
         <button class="dots-btn" id="dots-btn" title="More" aria-label="Open menu"><span></span><span></span><span></span></button>
@@ -460,6 +493,7 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
           <div class="ftab" data-filter="strategy"><span>Strategy</span></div>
           <div class="ftab" data-filter="editing"><span>Editing</span></div>
           <div class="ftab" data-filter="growth"><span>Growth</span></div>
+      </div>
 
   <!-- ========== 1) BLOG CARD GRID ========== -->
   <section id="blog-grid">
@@ -564,6 +598,7 @@ footer { position:relative; z-index:1; border-top:1px solid var(--glass-border);
   <section class="cta-section">
       <div class="section-inner">
           <div class="cta-card reveal active">
+              <h2>Ready to Build Your<br>Content System?</h2>
               <p>Book a free 30-minute strategy call — no pressure, just a clear plan for your next 90 days.</p>
               <div class="cta-buttons">
                   <a href="https://calendar.app.google/x9iiZ9u2x3ze4MxDA" target="_blank" class="btn-primary">🎯 Book Free Strategy Call ↗</a>
@@ -628,6 +663,25 @@ dotsBtn.addEventListener('click',()=>megaMenu.classList.contains('open')?closeMe
 megaClose.addEventListener('click',closeMega);
 megaOver.addEventListener('click',closeMega);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMega();});
+
+/* Desktop nav dropdowns (Services / Resources / About) */
+(function(){
+    const navItems=document.querySelectorAll('#main-nav .nav-item');
+    navItems.forEach(item=>{
+        const trigger=item.querySelector('.nav-dropdown-trigger');
+        if(!trigger)return;
+        trigger.addEventListener('click',e=>{
+            e.stopPropagation();
+            const isOpen=item.classList.contains('open');
+            navItems.forEach(i=>i.classList.remove('open'));
+            if(!isOpen)item.classList.add('open');
+        });
+    });
+    document.addEventListener('click',()=>navItems.forEach(i=>i.classList.remove('open')));
+    document.querySelectorAll('#main-nav .nav-dropdown a').forEach(a=>{
+        a.addEventListener('click',()=>navItems.forEach(i=>i.classList.remove('open')));
+    });
+})();
 
 /* ══════════════════════════════════════════
    SHARE BUTTON (blog cards)
