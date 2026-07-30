@@ -1,0 +1,558 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rate Card Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050507;
+    --panel:#0a0a10;
+    --card:#101018;
+    --card-line:rgba(255,255,255,0.08);
+    --text:#f2f2f6;
+    --muted:#8a8a9a;
+    --muted2:#5a5a6a;
+    --accent:#C8102E;
+    --accent2:#e01535;
+    --accent-soft:rgba(200,16,46,0.12);
+    --purple:#7c3aed;
+    --green:#1f9d67;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Syne', sans-serif;
+    --body:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --paper:#ffffff;
+    --ink:#1c1c22;
+    --ink-soft:#6b6b78;
+    --ink-line:#e7e6ec;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 20% 15%, #2a2350 0%, transparent 45%),
+      radial-gradient(circle at 80% 85%, #1c2a4a 0%, transparent 50%),
+      linear-gradient(160deg, #1b1b2b, #0c0c14);
+    color:var(--text);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .mac-window{
+    width:100%;
+    max-width:1440px;
+    height:92vh;
+    background:var(--bg);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 40px 100px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.06);
+    display:flex;
+    flex-direction:column;
+  }
+  .mac-titlebar{
+    height:40px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    padding:0 14px;
+    background:rgba(255,255,255,0.045);
+    border-bottom:1px solid var(--card-line);
+    position:relative;
+  }
+  .mac-dots{display:flex; gap:8px; z-index:1;}
+  .mac-dot{width:12px;height:12px;border-radius:50%;}
+  .mac-dot.red{background:#ff5f57;}
+  .mac-dot.yellow{background:#febc2e;}
+  .mac-dot.green{background:#28c840;}
+  .mac-title{
+    position:absolute; left:0; right:0; text-align:center;
+    font-size:12.5px; font-weight:600; color:var(--muted);
+    letter-spacing:0.01em;
+    pointer-events:none;
+  }
+  .app{
+    flex:1;
+    min-height:0;
+    display:grid;
+    grid-template-columns: 380px 1fr;
+  }
+  @media (max-width: 900px){
+    .mac-window{height:100vh; border-radius:0;}
+    body{padding:0;}
+    .app{grid-template-columns:1fr; height:auto; min-height:0;}
+  }
+  .panel{
+    background:rgba(10,10,16,0.86);
+    -webkit-backdrop-filter:blur(24px) saturate(150%);
+    backdrop-filter:blur(24px) saturate(150%);
+    border-right:1px solid var(--card-line);
+    padding:20px 18px 24px;
+    overflow-y:auto;
+    height:100%;
+  }
+  @media (max-width: 900px){
+    .panel{height:auto; max-height:60vh; border-right:none; border-bottom:1px solid var(--card-line);}
+  }
+  .panel::-webkit-scrollbar{width:7px;}
+  .panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.18); border-radius:10px;}
+  .panel::-webkit-scrollbar-track{background:transparent;}
+  .brand{display:flex; align-items:center; gap:10px; margin-bottom:20px;}
+  .brand-mark{width:32px;height:32px; display:flex;align-items:center;justify-content:center; color:var(--accent2);font-family:var(--display);font-weight:800;font-size:14px; flex-shrink:0; overflow:hidden;}
+  .brand-mark img{width:100%;height:100%;object-fit:contain;}
+  .brand-name{font-family:var(--display); font-weight:700; font-size:15.5px; letter-spacing:0.01em; color:var(--text); line-height:1.2;}
+  .brand-sub{font-size:10px; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;}
+  h2.section-title{
+    font-family:var(--mono); text-transform:uppercase; font-size:10px; letter-spacing:0.1em; color:var(--muted);
+    margin:18px 0 10px; padding-top:16px; border-top:1px solid var(--card-line);
+    display:flex; align-items:center; gap:6px;
+  }
+  h2.section-title:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+  h2.section-title .opt{color:var(--muted2); font-size:9px; font-style:italic; text-transform:none; letter-spacing:0;}
+  .field{margin-bottom:8px;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+  label{display:block; font-size:10px; font-weight:600; color:var(--muted); margin-bottom:4px; text-transform:uppercase; letter-spacing:0.03em;}
+  input[type=text], input[type=file], textarea{
+    width:100%; padding:8px 9px; border:1px solid var(--card-line); border-radius:8px; background:var(--card);
+    font-family:var(--body); font-size:12.5px; color:var(--text); outline:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input::placeholder, textarea::placeholder{color:var(--muted2);}
+  input:focus, textarea:focus{border-color:var(--accent2); box-shadow:0 0 0 3px rgba(224,21,53,0.22);}
+  input[readonly]{opacity:0.6; cursor:not-allowed;}
+  input[readonly]:focus{border-color:var(--card-line); box-shadow:none;}
+  .locked-hint{font-size:9.5px; color:var(--muted2); margin:-4px 0 8px; font-style:italic;}
+  textarea{resize:vertical;min-height:44px;}
+  .item-card{
+    border:1px solid var(--card-line); border-radius:8px; padding:9px; margin-bottom:8px;
+    background:rgba(255,255,255,0.015); position:relative;
+  }
+  .item-card:last-child{margin-bottom:0;}
+  .item-row{display:grid; grid-template-columns:1fr 90px; gap:6px;}
+  .item-card label{font-size:9px;margin-bottom:3px;}
+  .item-card input{padding:6px 8px;font-size:12px;}
+  .remove-btn{
+    position:absolute; top:6px; right:6px; background:none; border:none; color:var(--muted2);
+    cursor:pointer; font-size:13px; line-height:1; padding:2px 4px; border-radius:5px;
+  }
+  .remove-btn:hover{background:var(--accent-soft); color:var(--accent2);}
+  .add-item-btn{
+    width:100%; padding:9px; border:1px dashed var(--accent2); border-radius:8px; background:var(--accent-soft);
+    color:#ff5c78; font-family:var(--body); font-weight:600; font-size:12px; cursor:pointer; margin-top:2px;
+  }
+  .add-item-btn:hover{background:rgba(200,16,46,0.2);}
+  .action-row{margin-top:22px;}
+  .download-btn{
+    width:100%; padding:13px; border:none; border-radius:10px;
+    background:linear-gradient(135deg, var(--accent2), var(--purple)); color:#fff;
+    font-family:var(--display); font-weight:700; font-size:13px; cursor:pointer; letter-spacing:0.01em;
+    box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 6px 16px rgba(200,16,46,.25); margin-bottom:8px;
+  }
+  .download-btn:hover{filter:brightness(1.08);}
+  .download-btn:disabled{opacity:0.6; cursor:default;}
+  .hint{font-size:10.5px;color:var(--muted2);margin-top:8px;line-height:1.5;}
+
+  .preview-wrap{
+    background:#1a1a20; padding:28px; display:flex; justify-content:center; align-items:flex-start;
+    overflow-y:auto; height:100%;
+  }
+  .preview-wrap::-webkit-scrollbar{width:7px;}
+  .preview-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.18); border-radius:10px;}
+  @media (max-width: 900px){ .preview-wrap{height:auto; padding:20px 12px;} }
+  #card{
+    width:100%; max-width:720px; aspect-ratio: 210 / 297; background:var(--paper);
+    box-shadow:0 1px 3px rgba(0,0,0,.3), 0 20px 50px rgba(0,0,0,.4);
+    position:relative; color:var(--ink); overflow:hidden; display:flex; flex-direction:column;
+  }
+  .card-topbar{height:10px; background:var(--accent2); flex-shrink:0;}
+  .card-body{padding:6% 6.5%; display:flex; flex-direction:column; flex:1; min-height:0;}
+  .card-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:26px;}
+  .card-brand{display:flex; align-items:center; gap:10px;}
+  .card-brand-mark{width:42px;height:42px; display:flex;align-items:center;justify-content:center; flex-shrink:0; overflow:hidden;}
+  .card-brand-mark img{width:100%;height:100%;object-fit:contain;}
+  .card-from-name{font-family:var(--display); font-weight:700; font-size:16px; color:var(--ink);}
+  .card-from-detail{font-size:9.5px;color:var(--ink-soft);line-height:1.5;margin-top:2px;white-space:pre-line;}
+  .card-title{text-align:right;}
+  .card-title h1{font-family:var(--display); font-size:22px; margin:0; letter-spacing:0.03em; color:var(--accent2); font-weight:800; text-transform:uppercase;}
+  .card-title .sub{font-size:10px;color:var(--ink-soft);margin-top:6px;letter-spacing:0.08em; text-transform:uppercase;}
+
+  .card-intro{font-size:11px; color:var(--ink-soft); line-height:1.6; margin-bottom:22px; white-space:pre-line;}
+
+  table.rates{width:100%; border-collapse:collapse; margin-bottom:20px;}
+  table.rates thead th{
+    text-align:left; font-family:var(--mono); font-size:9px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--ink-soft); padding:9px 6px; border-bottom:1.5px solid var(--ink-line);
+  }
+  table.rates thead th.num{text-align:right;}
+  .stats-bar{display:flex; justify-content:space-between; gap:10px; margin-bottom:22px; padding:12px 4px; border-top:1px solid var(--ink-line); border-bottom:1px solid var(--ink-line);}
+  .stat-block{flex:1; text-align:center;}
+  .stat-num{font-family:var(--display); font-weight:800; font-size:18px; color:var(--accent2);}
+  .stat-label{font-size:8.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); margin-top:2px;}
+  tr.svc-highlight{position:relative; box-shadow: inset 3px 0 0 var(--accent2);}
+  .badge-popular{
+    display:inline-block; font-family:var(--display); font-weight:700; font-size:7.5px; letter-spacing:0.05em;
+    text-transform:uppercase; color:#fff; background:linear-gradient(135deg, var(--accent2), var(--purple));
+    padding:2px 6px; border-radius:5px; margin-left:6px; vertical-align:middle;
+  }
+  table.rates tbody tr:nth-child(odd){background:#ffffff;}
+  table.rates tbody tr:nth-child(even){background:#f5f5f8;}
+  table.rates tbody td{padding:13px 6px; font-size:12.5px; border-bottom:1px solid var(--ink-line); vertical-align:top; color:var(--ink);}
+  table.rates tbody td:first-child{padding-left:8px;}
+  table.rates tbody td:last-child{padding-right:8px;}
+  table.rates tbody .svc-name{font-family:var(--display); font-weight:700; font-size:12.5px;}
+  table.rates tbody .svc-desc{font-size:10px; color:var(--ink-soft); margin-top:3px;}
+  table.rates tbody td.num{text-align:right;font-family:var(--mono); font-weight:600; font-size:13px; white-space:nowrap;}
+
+  .card-footer{margin-top:auto; padding-top:16px; border-top:1px solid var(--ink-line); display:flex; justify-content:space-between; align-items:flex-end; gap:16px;}
+  .footer-note{font-size:9.5px; color:var(--ink-soft); line-height:1.6; max-width:65%; white-space:pre-line;}
+  .footer-contact{text-align:right; font-size:9.5px; color:var(--ink-soft); line-height:1.6;}
+  .footer-contact strong{color:var(--ink); font-weight:700;}
+</style>
+</head>
+<body>
+<div class="mac-window">
+  <div class="mac-titlebar">
+    <div class="mac-dots"><div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div></div>
+    <div class="mac-title">Rate Card Generator</div>
+  </div>
+  <div class="app">
+    <div class="panel">
+      <div class="brand">
+        <div class="brand-mark" id="logoPreviewSmall">📄</div>
+        <div>
+          <div class="brand-name">Rate Card Builder</div>
+          <div class="brand-sub">Prospect / Referral Template</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Your Brand</h2>
+      <div class="field">
+        <label>Studio / Agency Name</label>
+        <input type="text" id="brandName" value="Histree Studios" placeholder="Your Studio Name" readonly>
+        <div class="locked-hint">🔒 Locked — edit the HTML source (id="brandName") to change permanently.</div>
+      </div>
+      <div class="field">
+        <label>Tagline <span class="opt">(optional)</span></label>
+        <input type="text" id="brandTagline" value="Podcast & Short-Form Content" placeholder="e.g. Podcast & Short-Form Content">
+      </div>
+      <div class="field">
+        <label>Logo <span class="opt">(optional)</span></label>
+        <input type="file" id="logoInput" accept="image/*">
+      </div>
+
+      <h2 class="section-title">Card Header</h2>
+      <div class="field">
+        <label>Document Title</label>
+        <input type="text" id="cardTitle" value="Rate Card" placeholder="Rate Card">
+      </div>
+      <div class="field">
+        <label>Subtitle</label>
+        <input type="text" id="cardSubtitle" value="Standard Pricing — 2026" placeholder="e.g. Standard Pricing">
+      </div>
+      <div class="field">
+        <label>Intro Line <span class="opt">(optional)</span></label>
+        <textarea id="cardIntro" placeholder="e.g. Simple, transparent pricing for podcast editing and short-form content.">Simple, transparent pricing for podcast editing and short-form clip production. Custom bundles available on request.</textarea>
+      </div>
+
+      <h2 class="section-title">Trust Bar <span class="opt">3 quick stats — social proof</span></h2>
+      <div class="field-row">
+        <div class="field"><label>Stat 1 Number</label><input type="text" id="stat1Num" value="150+"></div>
+        <div class="field"><label>Stat 1 Label</label><input type="text" id="stat1Label" value="Episodes Edited"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Stat 2 Number</label><input type="text" id="stat2Num" value="3-5 Day"></div>
+        <div class="field"><label>Stat 2 Label</label><input type="text" id="stat2Label" value="Turnaround"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Stat 3 Number</label><input type="text" id="stat3Num" value="100%"></div>
+        <div class="field"><label>Stat 3 Label</label><input type="text" id="stat3Label" value="Satisfaction"></div>
+      </div>
+
+      <h2 class="section-title">Services <span class="opt">add / edit / remove rows — check "Popular" to highlight</span></h2>
+      <div id="itemsBox"></div>
+      <button class="add-item-btn" id="addItemBtn" type="button">+ Add Service</button>
+
+      <h2 class="section-title">Footer</h2>
+      <div class="locked-hint" style="margin-top:-4px;">🔒 Name, email & phone/site below are locked to your details — edit the HTML source to change permanently.</div>
+      <div class="field">
+        <label>Note <span class="opt">(e.g. validity, turnaround)</span></label>
+        <textarea id="footerNote">Rates valid for 30 days. Turnaround: 3-5 business days per deliverable. Ask about monthly retainer discounts.</textarea>
+      </div>
+      <div class="field">
+        <label>Contact Name</label>
+        <input type="text" id="contactName" value="Joe Ahammed" placeholder="Your Name" readonly>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Email</label>
+          <input type="text" id="contactEmail" value="joe@histreestudios.com" placeholder="you@studio.com" readonly>
+        </div>
+        <div class="field">
+          <label>Phone / Site</label>
+          <input type="text" id="contactPhone" value="www.histreestudios.com" placeholder="Phone or website" readonly>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="download-btn" id="downloadBtn" type="button">Download PDF</button>
+      </div>
+      <div class="hint">Fill in the fields, watch the preview update on the right, then download a print-ready one-page PDF to send to prospects alongside your Loom walkthrough.</div>
+    </div>
+
+    <div class="preview-wrap">
+      <div id="card">
+        <div class="card-topbar"></div>
+        <div class="card-body">
+          <div class="card-head">
+            <div class="card-brand">
+              <div class="card-brand-mark" id="logoPreviewBig">📄</div>
+              <div>
+                <div class="card-from-name" id="pv-brandName">Histree Studios</div>
+                <div class="card-from-detail" id="pv-brandTagline">Podcast & Short-Form Content</div>
+              </div>
+            </div>
+            <div class="card-title">
+              <h1 id="pv-cardTitle">Rate Card</h1>
+              <div class="sub" id="pv-cardSubtitle">Standard Pricing — 2026</div>
+            </div>
+          </div>
+
+          <div class="card-intro" id="pv-cardIntro"></div>
+
+          <div class="stats-bar">
+            <div class="stat-block"><div class="stat-num" id="pv-stat1Num">150+</div><div class="stat-label" id="pv-stat1Label">Episodes Edited</div></div>
+            <div class="stat-block"><div class="stat-num" id="pv-stat2Num">3-5 Day</div><div class="stat-label" id="pv-stat2Label">Turnaround</div></div>
+            <div class="stat-block"><div class="stat-num" id="pv-stat3Num">100%</div><div class="stat-label" id="pv-stat3Label">Satisfaction</div></div>
+          </div>
+
+          <table class="rates">
+            <thead>
+              <tr>
+                <th style="width:70%">Service</th>
+                <th class="num">Rate</th>
+              </tr>
+            </thead>
+            <tbody id="pv-itemsBody"></tbody>
+          </table>
+
+          <div class="card-footer">
+            <div class="footer-note" id="pv-footerNote"></div>
+            <div class="footer-contact">
+              <strong id="pv-contactName">Your Name</strong><br>
+              <span id="pv-contactEmail">you@studio.com</span><br>
+              <span id="pv-contactPhone">www.yourstudio.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(function(){
+  let items = [
+    { name: 'Podcast Episode Edit', desc: 'Up to 60 min — audio cleanup, editing, chapters', price: '$150', popular: false },
+    { name: 'Basic Short Clips', desc: 'Simple cut-down clips for social, captions included', price: '$40 / clip', popular: false },
+    { name: 'Premium Short-Form Clips', desc: 'Motion graphics, b-roll, animated captions', price: '$85 / clip', popular: true },
+    { name: 'Thumbnail Design', desc: 'Custom thumbnail for YouTube / episode art', price: '$25 / design', popular: false }
+  ];
+  let logoDataUrl = null;
+
+  const itemsBox = document.getElementById('itemsBox');
+  const pvItemsBody = document.getElementById('pv-itemsBody');
+
+  function renderItemRows(){
+    itemsBox.innerHTML = '';
+    items.forEach((item, idx) => {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.innerHTML = `
+        <button class="remove-btn" type="button" data-idx="${idx}">✕</button>
+        <div class="field">
+          <label>Service Name</label>
+          <input type="text" class="svc-name-input" data-idx="${idx}" value="${escapeAttr(item.name)}" placeholder="e.g. Podcast Episode Edit">
+        </div>
+        <div class="field">
+          <label>Description <span class="opt">(optional)</span></label>
+          <input type="text" class="svc-desc-input" data-idx="${idx}" value="${escapeAttr(item.desc)}" placeholder="e.g. Up to 60 min">
+        </div>
+        <div class="field">
+          <label>Price</label>
+          <input type="text" class="svc-price-input" data-idx="${idx}" value="${escapeAttr(item.price)}" placeholder="e.g. $150">
+        </div>
+        <label style="display:flex; align-items:center; gap:6px; text-transform:none; font-size:10.5px; color:var(--muted); cursor:pointer;">
+          <input type="checkbox" class="svc-popular-input" data-idx="${idx}" ${item.popular ? 'checked' : ''} style="width:auto;">
+          Mark as "Popular"
+        </label>
+      `;
+      itemsBox.appendChild(card);
+    });
+
+    itemsBox.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        items.splice(Number(btn.dataset.idx), 1);
+        renderItemRows();
+        renderPreview();
+      });
+    });
+    itemsBox.querySelectorAll('.svc-name-input').forEach(inp => {
+      inp.addEventListener('input', () => { items[Number(inp.dataset.idx)].name = inp.value; renderPreview(); });
+    });
+    itemsBox.querySelectorAll('.svc-desc-input').forEach(inp => {
+      inp.addEventListener('input', () => { items[Number(inp.dataset.idx)].desc = inp.value; renderPreview(); });
+    });
+    itemsBox.querySelectorAll('.svc-price-input').forEach(inp => {
+      inp.addEventListener('input', () => { items[Number(inp.dataset.idx)].price = inp.value; renderPreview(); });
+    });
+    itemsBox.querySelectorAll('.svc-popular-input').forEach(inp => {
+      inp.addEventListener('change', () => { items[Number(inp.dataset.idx)].popular = inp.checked; renderPreview(); });
+    });
+  }
+
+  function escapeAttr(s){ return (s || '').replace(/"/g, '&quot;'); }
+  function escapeHtml(s){ return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  document.getElementById('addItemBtn').addEventListener('click', () => {
+    items.push({ name: '', desc: '', price: '' });
+    renderItemRows();
+    renderPreview();
+  });
+
+  function renderPreview(){
+    document.getElementById('pv-brandName').textContent = document.getElementById('brandName').value || 'Your Studio';
+    document.getElementById('pv-brandTagline').textContent = document.getElementById('brandTagline').value;
+    document.getElementById('pv-cardTitle').textContent = document.getElementById('cardTitle').value || 'Rate Card';
+    document.getElementById('pv-cardSubtitle').textContent = document.getElementById('cardSubtitle').value;
+    document.getElementById('pv-cardIntro').textContent = document.getElementById('cardIntro').value;
+    document.getElementById('pv-footerNote').textContent = document.getElementById('footerNote').value;
+    document.getElementById('pv-contactName').textContent = document.getElementById('contactName').value || 'Your Name';
+    document.getElementById('pv-contactEmail').textContent = document.getElementById('contactEmail').value;
+    document.getElementById('pv-contactPhone').textContent = document.getElementById('contactPhone').value;
+
+    document.getElementById('pv-stat1Num').textContent = document.getElementById('stat1Num').value;
+    document.getElementById('pv-stat1Label').textContent = document.getElementById('stat1Label').value;
+    document.getElementById('pv-stat2Num').textContent = document.getElementById('stat2Num').value;
+    document.getElementById('pv-stat2Label').textContent = document.getElementById('stat2Label').value;
+    document.getElementById('pv-stat3Num').textContent = document.getElementById('stat3Num').value;
+    document.getElementById('pv-stat3Label').textContent = document.getElementById('stat3Label').value;
+
+    pvItemsBody.innerHTML = items.filter(it => it.name.trim() !== '').map(it => `
+      <tr class="${it.popular ? 'svc-highlight' : ''}">
+        <td>
+          <div class="svc-name">${escapeHtml(it.name)}${it.popular ? '<span class="badge-popular">Popular</span>' : ''}</div>
+          ${it.desc ? `<div class="svc-desc">${escapeHtml(it.desc)}</div>` : ''}
+        </td>
+        <td class="num">${escapeHtml(it.price)}</td>
+      </tr>
+    `).join('');
+  }
+
+  ['brandName','brandTagline','cardTitle','cardSubtitle','cardIntro','footerNote','contactName','contactEmail','contactPhone',
+   'stat1Num','stat1Label','stat2Num','stat2Label','stat3Num','stat3Label']
+    .forEach(id => document.getElementById(id).addEventListener('input', renderPreview));
+
+  document.getElementById('logoInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      logoDataUrl = ev.target.result;
+      document.getElementById('logoPreviewSmall').innerHTML = `<img src="${logoDataUrl}">`;
+      document.getElementById('logoPreviewBig').innerHTML = `<img src="${logoDataUrl}">`;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // ---- PDF generation: strict A4, fixed-width off-screen clone ----
+  const A4_WIDTH_PX = 794;
+  const A4_HEIGHT_PX = 1123;
+
+  function generateCardPdf(){
+    const cardEl = document.getElementById('card');
+    const clone = cardEl.cloneNode(true);
+    clone.removeAttribute('id');
+    clone.style.boxShadow = 'none';
+    clone.style.maxWidth = 'none';
+    clone.style.aspectRatio = 'auto';
+    clone.style.width = A4_WIDTH_PX + 'px';
+    clone.style.height = 'auto';
+
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = '0';
+    wrapper.style.left = '-99999px';
+    wrapper.style.width = A4_WIDTH_PX + 'px';
+    wrapper.style.background = '#ffffff';
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    const naturalHeight = clone.scrollHeight;
+    let scale = 1;
+    if(naturalHeight > A4_HEIGHT_PX){
+      scale = A4_HEIGHT_PX / naturalHeight;
+      clone.style.transformOrigin = 'top left';
+      clone.style.transform = 'scale(' + scale + ')';
+      clone.style.width = (A4_WIDTH_PX / scale) + 'px';
+    } else {
+      clone.style.height = A4_HEIGHT_PX + 'px';
+    }
+
+    wrapper.style.width = A4_WIDTH_PX + 'px';
+    wrapper.style.height = A4_HEIGHT_PX + 'px';
+    wrapper.style.overflow = 'hidden';
+
+    return html2canvas(wrapper, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      width: A4_WIDTH_PX,
+      height: A4_HEIGHT_PX,
+      windowWidth: A4_WIDTH_PX,
+      windowHeight: A4_HEIGHT_PX
+    }).then(canvas => {
+      document.body.removeChild(wrapper);
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'pt', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
+      return pdf;
+    }).catch(err => {
+      if(wrapper.parentNode) document.body.removeChild(wrapper);
+      throw err;
+    });
+  }
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    const btn = document.getElementById('downloadBtn');
+    const original = btn.textContent;
+    btn.textContent = 'Preparing PDF…';
+    btn.disabled = true;
+
+    const brand = (document.getElementById('brandName').value || 'RateCard').replace(/[^a-z0-9]+/gi, '-');
+
+    generateCardPdf().then(pdf => {
+      pdf.save(brand + '-Rate-Card.pdf');
+      btn.textContent = original;
+      btn.disabled = false;
+    }).catch(() => {
+      btn.textContent = original;
+      btn.disabled = false;
+      alert('Something went wrong generating the PDF. Please try again.');
+    });
+  });
+
+  renderItemRows();
+  renderPreview();
+})();
+</script>
+</body>
+</html>
