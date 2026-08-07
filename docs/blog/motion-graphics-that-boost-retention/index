@@ -609,7 +609,8 @@ hr.post-divider { border:none; border-top:1px solid var(--glass-border); margin:
       <p>Small edits, big impact, the exact overlays and on-screen elements we build into every video to keep viewers watching past the 60% mark.</p>
 
       <div class="post-author-row">
-          <div class="post-author-avatar">JA</div>
+          <div class="post-author-avatar">
+              <img src="joeicon.png" alt="Joe Ahammed"></div>
           <div style="text-align:left;">
               <div class="post-author-name">Joe Ahammed</div>
               <div class="post-author-role">Founder, Histree Studios</div>
