@@ -516,7 +516,6 @@ input,textarea,select{font-family:inherit;font-size:14px;}
     </div>
 
     <div class="sidebar-foot">
-      
       <button class="ghost-btn" id="exportBtn">↓ Export backup (.json)</button>
       <button class="ghost-btn" id="importBtn">↑ Import backup</button>
       <input type="file" id="importFile" accept=".json" style="display:none">
@@ -576,13 +575,17 @@ function loadDB(){
       data.folders = (data.folders && data.folders.length) ? data.folders : DEFAULT_FOLDERS.slice();
       data.clients = (data.clients||[]).map(normalizeClient);
       data.projects = (data.projects||[]).map(p=> Object.assign({todos:[],messages:[],files:[]}, p));
+      // One-time cleanup: strip out the old built-in demo entries (Podcafe / Dasha Shunina) if present.
+      const demoEmails = ['alex@podcafe.fm','dasha@creator.co'];
+      const demoClientIds = data.clients.filter(c=> demoEmails.includes((c.email||'').toLowerCase()) || c.name==='Podcafe' || c.name==='Dasha Shunina').map(c=>c.id);
+      if(demoClientIds.length){
+        data.clients = data.clients.filter(c=> !demoClientIds.includes(c.id));
+        data.projects = data.projects.filter(p=> !demoClientIds.includes(p.clientId));
+      }
       return data;
     }catch(e){}
   }
-  const seeded = seedData();
-  seeded.folders = DEFAULT_FOLDERS.slice();
-  seeded.clients = seeded.clients.map(normalizeClient);
-  return seeded;
+  return { folders: DEFAULT_FOLDERS.slice(), clients: [], projects: [] };
 }
 function saveDB(){ localStorage.setItem(DB_KEY, JSON.stringify(DB)); }
 function uid(){ return Math.random().toString(36).slice(2,10); }
@@ -596,36 +599,6 @@ function fmtDateShort(iso){
   if(!iso) return '—';
   const d = new Date(iso+'T00:00:00');
   return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-}
-
-function seedData(){
-  const clientA = uid(), clientB = uid();
-  const projA = uid(), projB = uid();
-  return {
-    clients:[
-      {id:clientA, name:'Podcafe', contact:'Alex Rowen', email:'alex@podcafe.fm', platform:'Upwork', status:'active', value:1800, notes:'White-label editing retainer, 8 episodes/mo.', createdAt: todayISO(), folderId:'studios'},
-      {id:clientB, name:'Dasha Shunina', contact:'Dasha Shunina', email:'dasha@creator.co', platform:'Instagram DM', status:'lead', value:1200, notes:'Sent sample clip 08/02. Waiting on reply.', createdAt: todayISO(), folderId:'leads'}
-    ],
-    projects:[
-      {id:projA, clientId:clientA, name:'Podcafe — Weekly Episode Edit', status:'active', dueDate: todayISO(), budget:1800,
-        todos:[
-          {id:uid(), text:'Rough cut Ep. 42', done:true, due:null},
-          {id:uid(), text:'Color grade + captions', done:false, due: todayISO()},
-          {id:uid(), text:'Export vertical clips (x5)', done:false, due:null}
-        ],
-        messages:[
-          {id:uid(), title:'Kickoff notes', body:'Client wants faster turnaround (48hr) starting this month. Match Alex\'s tone — casual, upbeat.', date: todayISO()}
-        ],
-        files:[]
-      },
-      {id:projB, clientId:clientB, name:'Dasha — Sample Clip Package', status:'lead', dueDate:null, budget:0,
-        todos:[
-          {id:uid(), text:'Cut 60s free sample from latest ep', done:false, due:null}
-        ],
-        messages:[], files:[]
-      }
-    ]
-  };
 }
 
 let DB = loadDB();
@@ -1467,7 +1440,7 @@ function openClientModal(id=null, presetFolderId=null){
   const editing = id ? DB.clients.find(c=>c.id===id) : null;
   modalBody.innerHTML = `
     <h2>${editing? 'Edit Client' : 'New Client'}</h2>
-    <div class="field"><label>Name / Company</label><input id="f_name" value="${editing?escapeAttr(editing.name):''}" placeholder="e.g. Podcafe"></div>
+    <div class="field"><label>Name / Company</label><input id="f_name" value="${editing?escapeAttr(editing.name):''}" placeholder="e.g. Skyline Studios"></div>
     <div class="field-row">
       <div class="field"><label>Contact person</label><input id="f_contact" value="${editing?escapeAttr(editing.contact||''):''}"></div>
       <div class="field"><label>Email</label><input id="f_email" value="${editing?escapeAttr(editing.email||''):''}"></div>
@@ -1559,7 +1532,7 @@ function openProjectModal(id=null, presetClientId=null){
   const clientOptions = DB.clients.map(c=>`<option value="${c.id}" ${(editing&&editing.clientId===c.id)||presetClientId===c.id?'selected':''}>${escapeHtml(c.name)}</option>`).join('');
   modalBody.innerHTML = `
     <h2>${editing?'Edit Project':'New Project'}</h2>
-    <div class="field"><label>Project name</label><input id="f_pname" value="${editing?escapeAttr(editing.name):''}" placeholder="e.g. Podcafe — Weekly Episode Edit"></div>
+    <div class="field"><label>Project name</label><input id="f_pname" value="${editing?escapeAttr(editing.name):''}" placeholder="e.g. Skyline Studios — Weekly Episode Edit"></div>
     <div class="field"><label>Client</label><select id="f_pclient"><option value="">— None —</option>${clientOptions}</select></div>
     <div class="field-row">
       <div class="field"><label>Status</label>
