@@ -516,6 +516,9 @@ input,textarea,select{font-family:inherit;font-size:14px;}
     </div>
 
     <div class="sidebar-foot">
+      <button class="ghost-btn" id="syncSettingsBtn">☁ Team Sync (GitHub)</button>
+      <button class="ghost-btn" id="pushBtn" style="display:none">⬆ Push latest to team</button>
+      <button class="ghost-btn" id="pullBtn" style="display:none">⬇ Pull team's latest</button>
       <button class="ghost-btn" id="exportBtn">↓ Export backup (.json)</button>
       <button class="ghost-btn" id="importBtn">↑ Import backup</button>
       <input type="file" id="importFile" accept=".json" style="display:none">
@@ -1624,6 +1627,152 @@ document.getElementById('importFile').addEventListener('change', e=>{
   reader.readAsText(file);
   e.target.value = '';
 });
+
+/* ============ Team Sync (GitHub) ============ */
+/* This is a static page with no server — "syncing" means pushing/pulling a JSON
+   file to/from a GitHub repo using the GitHub REST API directly from the browser.
+   Each teammate configures this once per browser; the token is stored only in
+   that browser's localStorage and is sent straight to api.github.com. */
+const GH_KEY = 'histree_gh_config_v1';
+
+function getGhConfig(){
+  try{ return JSON.parse(localStorage.getItem(GH_KEY) || 'null'); }catch(e){ return null; }
+}
+function setGhConfig(cfg){ localStorage.setItem(GH_KEY, JSON.stringify(cfg)); }
+
+function refreshSyncUI(){
+  const cfg = getGhConfig();
+  const note = document.getElementById('syncStatusNote');
+  const pushBtn = document.getElementById('pushBtn');
+  const pullBtn = document.getElementById('pullBtn');
+  if(cfg && cfg.owner && cfg.repo && cfg.token){
+    pushBtn.style.display = '';
+    pullBtn.style.display = '';
+    const last = cfg.lastSync ? new Date(cfg.lastSync).toLocaleString() : 'never';
+    note.innerHTML = `<b>Team Sync on:</b> ${escapeHtml(cfg.owner)}/${escapeHtml(cfg.repo)} — <span id="lastSyncLabel">last synced ${escapeHtml(last)}</span>`;
+  } else {
+    pushBtn.style.display = 'none';
+    pullBtn.style.display = 'none';
+    note.innerHTML = `<b>Storage:</b> data lives in this browser only. Set up <b>Team Sync</b> below to share it with your team through your GitHub repo.`;
+  }
+}
+refreshSyncUI();
+
+function openSyncSettingsModal(){
+  const cfg = getGhConfig() || {};
+  modalBody.innerHTML = `
+    <h2>Team Sync via GitHub</h2>
+    <div class="import-hint" style="margin-bottom:14px">
+      This pushes/pulls one JSON file (all clients &amp; projects) to a GitHub repo using a Personal Access Token, so everyone on the team can share the same data by opening the same page and pulling. There's no separate server — it's your repo acting as shared storage.
+      <br><br>
+      <b>Use a fine-grained token</b> scoped only to this one repo with <b>Contents: Read and write</b> permission — created at
+      <span style="color:var(--blue)">github.com/settings/tokens?type=beta</span>. The token is stored only in this browser's local storage; anyone using this browser (or reading its localStorage) could see it, so don't reuse a broad/all-repo token here.
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Repo owner</label><input id="gh_owner" placeholder="e.g. yourname" value="${escapeAttr(cfg.owner||'')}"></div>
+      <div class="field"><label>Repo name</label><input id="gh_repo" placeholder="e.g. histree-hq" value="${escapeAttr(cfg.repo||'')}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Branch</label><input id="gh_branch" placeholder="main" value="${escapeAttr(cfg.branch||'main')}"></div>
+      <div class="field"><label>Data file path</label><input id="gh_path" placeholder="histree-data.json" value="${escapeAttr(cfg.path||'histree-data.json')}"></div>
+    </div>
+    <div class="field">
+      <label>Personal access token</label>
+      <input id="gh_token" type="password" placeholder="github_pat_…" value="${escapeAttr(cfg.token||'')}">
+    </div>
+    <div class="modal-actions">
+      <button class="btn subtle" onclick="closeModal()">Cancel</button>
+      <button class="btn primary" onclick="saveGhConfig()">Save</button>
+    </div>
+  `;
+  overlay.classList.add('open');
+}
+document.getElementById('syncSettingsBtn').addEventListener('click', openSyncSettingsModal);
+
+function saveGhConfig(){
+  const owner = document.getElementById('gh_owner').value.trim();
+  const repo = document.getElementById('gh_repo').value.trim();
+  const branch = document.getElementById('gh_branch').value.trim() || 'main';
+  const path = document.getElementById('gh_path').value.trim() || 'histree-data.json';
+  const token = document.getElementById('gh_token').value.trim();
+  if(!owner || !repo || !token){ showToast('Owner, repo, and token are required'); return; }
+  const existing = getGhConfig() || {};
+  setGhConfig({ owner, repo, branch, path, token, lastSync: existing.lastSync || null });
+  refreshSyncUI();
+  closeModal();
+  showToast('Team Sync configured — Push or Pull from the sidebar');
+}
+window.saveGhConfig = saveGhConfig;
+
+function b64EncodeUnicode(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64DecodeUnicode(str){
+  return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));
+}
+
+async function ghGetFile(cfg){
+  const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}?ref=${encodeURIComponent(cfg.branch)}`;
+  const res = await fetch(url, { headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github+json' } });
+  if(res.status === 404) return null;
+  if(!res.ok){ const e = await res.json().catch(()=>({})); throw new Error(e.message || `GitHub error (${res.status})`); }
+  return res.json();
+}
+
+async function pushToGithub(){
+  const cfg = getGhConfig();
+  if(!cfg){ openSyncSettingsModal(); return; }
+  showToast('Pushing to GitHub…');
+  try{
+    const existing = await ghGetFile(cfg);
+    const body = {
+      message: `Histree HQ data sync — ${new Date().toISOString()}`,
+      content: b64EncodeUnicode(JSON.stringify(DB, null, 2)),
+      branch: cfg.branch,
+    };
+    if(existing) body.sha = existing.sha;
+    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path)}`;
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if(!res.ok){ const e = await res.json().catch(()=>({})); throw new Error(e.message || `Push failed (${res.status})`); }
+    cfg.lastSync = new Date().toISOString();
+    setGhConfig(cfg);
+    refreshSyncUI();
+    showToast('Pushed — your team can now pull this data');
+  }catch(err){
+    console.error(err);
+    showToast('Push failed: ' + err.message);
+  }
+}
+document.getElementById('pushBtn').addEventListener('click', pushToGithub);
+
+async function pullFromGithub(){
+  const cfg = getGhConfig();
+  if(!cfg){ openSyncSettingsModal(); return; }
+  if(!confirm("This will replace your current data with your team's latest from GitHub. Continue?")) return;
+  showToast('Pulling from GitHub…');
+  try{
+    const existing = await ghGetFile(cfg);
+    if(!existing) throw new Error('No data file found yet at that path — ask a teammate to push first.');
+    const json = b64DecodeUnicode(existing.content);
+    const data = JSON.parse(json);
+    if(!data.clients || !data.projects) throw new Error('That file doesn\'t look like Histree HQ data');
+    if(!data.folders || !data.folders.length) data.folders = DEFAULT_FOLDERS.slice();
+    DB = data; saveDB();
+    cfg.lastSync = new Date().toISOString();
+    setGhConfig(cfg);
+    refreshSyncUI();
+    setView('dashboard');
+    showToast("Pulled your team's latest data");
+  }catch(err){
+    console.error(err);
+    showToast('Pull failed: ' + err.message);
+  }
+}
+document.getElementById('pullBtn').addEventListener('click', pullFromGithub);
 
 /* ============ Init ============ */
 render();
