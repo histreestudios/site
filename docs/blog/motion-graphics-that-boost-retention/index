@@ -627,7 +627,7 @@ hr.post-divider { border:none; border-top:1px solid var(--glass-border); margin:
   <!-- ========== HERO IMAGE ========== -->
   <div class="post-hero-media reveal active" style="margin-top:44px;">
       <div class="hero-img-frame">
-          <img src="" alt="Motion graphics overlays on a video editing timeline" onerror="this.style.display='none'">
+          <img src="motion-tips.png" alt="Motion graphics overlays on a video editing timeline" onerror="this.style.display='none'">
       </div>
   </div>
 
