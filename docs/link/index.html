@@ -3,354 +3,402 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Short Links — Histree Studios</title>
+<title>My Stream</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
 <style>
-:root {
-    --bg: #030303;
-    --glass: rgba(255,255,255,0.03);
-    --glass-border: rgba(255,255,255,0.08);
-    --glass-border-bright: rgba(255,255,255,0.15);
-    --text: #ffffff;
-    --muted: #8a8a9a;
-    --muted2: #5a5a6a;
-    --accent: #C8102E;
-    --accent2: #e01535;
-    --blue: #3b4fd8;
-    --blue2: #5b6ef8;
-    --purple: #7c3aed;
-    --radius: 20px;
-    --radius-lg: 28px;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-    background:var(--bg);color:var(--text);
-    font-family:'DM Sans',sans-serif;line-height:1.6;
-    min-height:100vh;
-    padding:80px 20px;
-    position:relative;
-    overflow-x:hidden;
-}
-h1,h2,h3{font-family:'Syne',sans-serif;line-height:1.15}
-a{color:inherit;text-decoration:none}
+  :root{ --accent:#FF4B2B; --ink:#0E0E10; --paper:#F4F2ED; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',system-ui,sans-serif; min-height:100vh; }
+  ::-webkit-scrollbar{height:8px;width:8px;}
+  ::-webkit-scrollbar-thumb{background:#333;border-radius:4px;}
+  input:focus,button:focus-visible,select:focus{outline:2px solid var(--accent);outline-offset:2px;}
 
-body::before{
-    content:'';position:fixed;inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events:none;z-index:9999;opacity:0.4;
-}
-.glow{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
-.glow-red{width:600px;height:600px;top:-200px;left:10%;background:radial-gradient(circle,rgba(200,16,46,0.14) 0%,transparent 70%)}
-.glow-blue{width:800px;height:700px;top:30%;right:-15%;background:radial-gradient(circle,rgba(59,79,216,0.12) 0%,transparent 70%)}
-.glow-purple{width:500px;height:500px;bottom:5%;left:-10%;background:radial-gradient(circle,rgba(124,58,237,0.1) 0%,transparent 70%)}
+  header{
+    position:sticky;top:0;z-index:20;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:16px clamp(16px,4vw,56px);
+    background:linear-gradient(to bottom, rgba(14,14,16,.95), rgba(14,14,16,.6));
+    backdrop-filter:blur(6px);
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-icon{
+    width:34px;height:34px;border-radius:8px;background:var(--accent);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .brand-title{ font-family:'Fraunces',serif;font-weight:700;font-size:20px;letter-spacing:-.02em; }
+  .header-right{display:flex;align-items:center;gap:12px;flex:1 1 auto;justify-content:flex-end;}
+  .search-wrap{position:relative;max-width:240px;width:100%;}
+  .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.6;}
+  #searchInput{
+    width:100%;padding:9px 12px 9px 34px;border-radius:20px;border:1px solid #333;
+    background:#1a1a1d;color:var(--paper);font-size:14px;
+  }
+  .add-btn{
+    display:flex;align-items:center;gap:6px;padding:9px 16px;border-radius:20px;border:none;
+    background:var(--accent);color:var(--ink);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;
+  }
 
-.wrap{max-width:640px;margin:0 auto;position:relative;z-index:1}
+  main{padding:24px clamp(16px,4vw,56px) 80px;}
+  .empty-state{ max-width:480px;margin:10vh auto;text-align:center; }
+  .empty-state h2{font-family:'Fraunces',serif;font-size:26px;font-weight:700;margin:0 0 10px;}
+  .empty-state p{opacity:.65;font-size:14px;line-height:1.6;margin:0 0 22px;}
+  .empty-state .add-btn{margin:0 auto;padding:12px 24px;font-size:15px;}
 
-.brand{text-align:center;margin-bottom:44px}
-.eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    font-size:0.78rem;color:var(--muted);
-    background:var(--glass);border:1px solid var(--glass-border);
-    padding:6px 16px;border-radius:999px;margin-bottom:20px;
-}
-.eyebrow i{color:var(--accent2);font-size:0.7rem}
-.brand h1{
-    font-size:2.6rem;font-weight:800;letter-spacing:-0.5px;
-    color:#f2f2f6;
-}
-.brand h1 span{
-    background:linear-gradient(90deg,var(--accent2),var(--blue2));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.brand p{margin-top:14px;color:var(--muted);font-size:0.98rem;max-width:440px;margin-left:auto;margin-right:auto}
+  .toolbar{ display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:22px; }
+  .toolbar h1{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin:0;}
+  .category-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+  .tab{
+    padding:7px 14px;border-radius:16px;border:1px solid #2e2e32;background:#17171a;color:var(--paper);
+    font-size:13px;cursor:pointer;opacity:.7;
+  }
+  .tab.active{background:var(--accent);color:var(--ink);border-color:var(--accent);opacity:1;font-weight:700;}
 
-.card{
-    background:var(--glass);
-    border:1px solid var(--glass-border);
-    border-radius:var(--radius-lg);
-    padding:38px 34px;
-    backdrop-filter:blur(20px);
-}
+  .grid{ display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px; }
+  .card{
+    text-align:left;background:#17171a;border:1px solid #232326;border-radius:12px;overflow:hidden;
+    cursor:pointer;padding:0;color:var(--paper);transition:transform .2s ease, box-shadow .2s ease;position:relative;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.4);}
+  .thumb-wrap{position:relative;background:#000;}
+  .thumb-wrap img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;}
+  .play-badge{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0);opacity:0;transition:opacity .2s, background .2s;
+  }
+  .card:hover .play-badge{opacity:1;background:rgba(0,0,0,.25);}
+  .card-body{padding:12px 14px;}
+  .card-title{
+    font-size:13.5px;font-weight:600;margin:0;line-height:1.4;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .card-channel{font-size:12px;opacity:.55;margin:6px 0 0;}
+  .remove-btn{
+    position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;
+    background:rgba(0,0,0,.6);border:none;color:#fff;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;opacity:0;transition:opacity .15s;
+  }
+  .card:hover .remove-btn{opacity:1;}
 
-.field-group{margin-bottom:18px}
-label{
-    display:block;font-size:0.78rem;color:var(--muted);
-    margin-bottom:8px;letter-spacing:0.02em;
-}
-.input-shell{
-    display:flex;align-items:center;
-    background:rgba(255,255,255,0.02);
-    border:1px solid var(--glass-border);
-    border-radius:12px;
-    transition:border-color .15s ease;
-}
-.input-shell:focus-within{border-color:var(--glass-border-bright)}
-.input-shell input{
-    flex:1;background:transparent;border:none;outline:none;
-    color:var(--text);padding:14px 16px;font-size:0.95rem;font-family:'DM Sans',sans-serif;
-}
-.input-shell input::placeholder{color:var(--muted2)}
-.prefix{
-    padding:14px 4px 14px 16px;color:var(--muted);font-size:0.9rem;white-space:nowrap;
-}
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:60;
+    display:flex;align-items:center;justify-content:center;padding:5vh 4vw;
+  }
+  .add-modal{ width:100%;max-width:460px;background:#17171a;border:1px solid #2a2a2e;border-radius:16px;padding:26px; }
+  .add-modal h3{font-family:'Fraunces',serif;font-size:20px;margin:0 0 6px;font-weight:700;}
+  .add-modal p.hint{opacity:.6;font-size:13px;margin:0 0 18px;line-height:1.5;}
+  .add-modal input{
+    width:100%;padding:11px 12px;border-radius:8px;border:1px solid #333;background:var(--ink);
+    color:var(--paper);font-size:14px;margin-bottom:12px;
+  }
+  .add-modal .row-btns{display:flex;gap:10px;}
+  .add-modal .row-btns button{ flex:1;padding:11px;border-radius:8px;border:none;font-weight:700;font-size:14px;cursor:pointer; }
+  .btn-primary{background:var(--accent);color:var(--ink);}
+  .btn-primary:disabled{background:#3a3a3e;color:#888;cursor:not-allowed;}
+  .btn-secondary{background:#232327;color:var(--paper);}
+  .add-error{color:#ff8a80;font-size:13px;margin:-4px 0 12px;}
+  .add-loading{opacity:.6;font-size:13px;margin:-4px 0 12px;}
 
-.slug-row{display:flex;gap:14px}
-.slug-row .field-group{flex:1;margin-bottom:0}
+  .player-modal .modal-inner{width:100%;max-width:960px;}
+  .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .modal-head h3{color:var(--paper);font-size:15px;font-weight:600;margin:0;padding-right:16px;}
+  .close-x{background:none;border:none;color:var(--paper);cursor:pointer;flex-shrink:0;}
+  .player-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000;}
+  .player-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
 
-.btn-shorten{
-    width:100%;margin-top:6px;
-    background:linear-gradient(90deg,var(--accent),var(--accent2));
-    color:#fff;border:none;border-radius:12px;
-    padding:15px;font-size:0.95rem;font-weight:600;
-    font-family:'DM Sans',sans-serif;cursor:pointer;
-    transition:transform .15s ease,box-shadow .15s ease;
-}
-.btn-shorten:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(200,16,46,0.25)}
-.btn-shorten:disabled{opacity:0.5;cursor:default;transform:none;box-shadow:none}
-
-.error-msg{
-    color:#f87171;font-size:0.82rem;margin-top:10px;display:none;
-}
-.error-msg.show{display:block}
-
-.result{
-    margin-top:24px;display:none;
-    background:rgba(91,110,248,0.08);
-    border:1px solid rgba(91,110,248,0.25);
-    border-radius:14px;padding:18px 20px;
-}
-.result.show{display:block}
-.result .row{display:flex;align-items:center;gap:10px}
-.result a{
-    flex:1;color:#b8c2ff;font-weight:600;font-size:0.95rem;word-break:break-all;
-}
-.result a:hover{text-decoration:underline}
-.result button{
-    border:1px solid var(--glass-border-bright);background:rgba(255,255,255,0.05);
-    border-radius:8px;padding:9px 16px;font-size:0.8rem;font-weight:600;
-    color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;
-    white-space:nowrap;
-}
-.result button:hover{background:rgba(255,255,255,0.1)}
-.result .original{margin-top:10px;font-size:0.78rem;color:var(--muted)}
-
-.list{margin-top:38px}
-.list h3{
-    font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;
-    color:var(--muted);margin-bottom:14px;font-weight:700;font-family:'DM Sans',sans-serif;
-}
-.list ul{list-style:none}
-.list li{
-    display:flex;justify-content:space-between;align-items:center;gap:12px;
-    padding:14px 0;border-top:1px solid var(--glass-border);
-    font-size:0.85rem;
-}
-.list li a{color:#b8c2ff;font-weight:600}
-.list li a:hover{text-decoration:underline}
-.list li .dest{
-    color:var(--muted);max-width:44%;text-align:right;
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.list li button{
-    background:none;border:none;color:#f87171;font-size:0.78rem;
-    cursor:pointer;font-family:'DM Sans',sans-serif;
-}
-.list .empty{color:var(--muted2);font-size:0.85rem;padding:14px 0;border-top:1px solid var(--glass-border)}
-
-.footnote{text-align:center;color:var(--muted2);font-size:0.8rem;margin-top:28px;line-height:1.6}
-
-.redirect-screen{display:none;text-align:center;padding:80px 20px;position:relative;z-index:1}
-.redirect-screen.show{display:block}
-.spinner{
-    width:34px;height:34px;border:3px solid rgba(255,255,255,0.1);
-    border-top-color:var(--blue2);border-radius:50%;
-    margin:0 auto 20px;animation:spin .8s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.redirect-screen p{color:var(--muted);font-size:0.95rem}
-
-@media (max-width:520px){
-    .card{padding:28px 22px}
-    .brand h1{font-size:2.1rem}
-    .slug-row{flex-direction:column;gap:18px}
-}
+  .hidden{display:none !important;}
 </style>
 </head>
 <body>
 
-<div class="glow glow-red"></div>
-<div class="glow glow-blue"></div>
-<div class="glow glow-purple"></div>
-
-<div class="wrap" id="generatorView">
-    <div class="brand">
-        <div class="eyebrow"><i class="fa-solid fa-link"></i> Internal tool</div>
-        <h1>Short <span>Links</span></h1>
-        <p>Turn a long Drive, Dropbox, or client link into a clean histreestudios.com link — with your own custom word if you want one.</p>
+<header>
+  <div class="brand">
+    <div class="brand-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E0E10" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
     </div>
-
-    <div class="card">
-        <div class="field-group">
-            <label for="longUrl">Link to shorten</label>
-            <div class="input-shell">
-                <input type="text" id="longUrl" placeholder="Paste the Drive, Dropbox, or any link here">
-            </div>
-        </div>
-
-        <div class="field-group">
-            <label for="customSlug">Custom word (optional)</label>
-            <div class="input-shell">
-                <span class="prefix">histreestudios.com/go/</span>
-                <input type="text" id="customSlug" placeholder="e.g. client-brief">
-            </div>
-        </div>
-
-        <button class="btn-shorten" id="shortenBtn">Shorten link</button>
-        <p class="error-msg" id="errorMsg"></p>
-
-        <div class="result" id="result">
-            <div class="row">
-                <a id="shortLink" href="#" target="_blank" rel="noopener"></a>
-                <button id="copyBtn">Copy</button>
-            </div>
-            <div class="original" id="originalUrl"></div>
-        </div>
-
-        <div class="list">
-            <h3>Your links</h3>
-            <ul id="linkList"></ul>
-        </div>
+    <span class="brand-title">My Stream</span>
+  </div>
+  <div class="header-right">
+    <div class="search-wrap" id="searchWrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="searchInput" placeholder="Search your videos" autocomplete="off">
     </div>
+    <button class="add-btn" id="openAddBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      Add video
+    </button>
+  </div>
+</header>
 
-    <p class="footnote">Links are stored in this browser. Open this page from the same device/browser you use to manage them.</p>
+<main>
+  <div id="emptyState" class="empty-state">
+    <h2>Your library is empty</h2>
+    <p>Paste any YouTube video link and it'll show up here as a card, ready to stream — works with videos from any channel.</p>
+    <button class="add-btn" id="emptyAddBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+      Add your first video
+    </button>
+  </div>
+
+  <div id="library" class="hidden">
+    <div class="toolbar">
+      <h1>Library</h1>
+      <div class="category-tabs" id="categoryTabs"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</main>
+
+<div id="addOverlay" class="modal-overlay hidden">
+  <div class="add-modal">
+    <h3>Add a video</h3>
+    <p class="hint">Paste a YouTube link (any format — youtube.com/watch, youtu.be, or Shorts). The title and thumbnail load automatically.</p>
+    <input id="urlInput" type="text" placeholder="https://www.youtube.com/watch?v=…">
+    <input id="categoryInput" type="text" placeholder="Category (optional, e.g. Music, Tutorials)">
+    <div id="addError" class="add-error hidden"></div>
+    <div id="addLoading" class="add-loading hidden">Fetching video info…</div>
+    <div class="row-btns">
+      <button class="btn-secondary" id="cancelAddBtn">Cancel</button>
+      <button class="btn-primary" id="confirmAddBtn" disabled>Add video</button>
+    </div>
+  </div>
 </div>
 
-<div class="wrap redirect-screen" id="redirectView">
-    <div class="spinner"></div>
-    <p id="redirectMsg">Redirecting…</p>
-</div>
+<div id="playerOverlay" class="modal-overlay player-modal hidden"></div>
 
 <script>
-const STORAGE_KEY = "histree_short_links";
+(function(){
+  const $ = sel => document.querySelector(sel);
 
-function loadLinks(){
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
-    catch(e){ return {}; }
-}
-function saveLinks(links){ localStorage.setItem(STORAGE_KEY, JSON.stringify(links)); }
-function randomCode(){ return Math.random().toString(36).slice(2, 7); }
-function slugify(s){ return s.trim().toLowerCase().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
-function baseUrl(){ return window.location.origin + window.location.pathname; }
+  let videos = [];      // { id, title, channel, thumbnail, category }
+  let query = '';
+  let activeCategory = 'All';
 
-const params = new URLSearchParams(window.location.search);
-const code = params.get("to");
+  const emptyState = $('#emptyState');
+  const library = $('#library');
+  const grid = $('#grid');
+  const categoryTabs = $('#categoryTabs');
+  const searchInput = $('#searchInput');
 
-if (code) {
-    document.getElementById("generatorView").style.display = "none";
-    document.getElementById("redirectView").classList.add("show");
-    const links = loadLinks();
-    const target = links[code];
-    if (target) {
-        window.location.replace(target);
+  const addOverlay = $('#addOverlay');
+  const urlInput = $('#urlInput');
+  const categoryInput = $('#categoryInput');
+  const addError = $('#addError');
+  const addLoading = $('#addLoading');
+  const confirmAddBtn = $('#confirmAddBtn');
+
+  const playerOverlay = $('#playerOverlay');
+
+  function extractVideoId(url){
+    try{
+      const u = new URL(url.trim());
+      if(u.hostname.includes('youtu.be')){
+        return u.pathname.slice(1).split('/')[0] || null;
+      }
+      if(u.hostname.includes('youtube.com')){
+        if(u.pathname === '/watch') return u.searchParams.get('v');
+        const shortsMatch = u.pathname.match(/\/shorts\/([^/?]+)/);
+        if(shortsMatch) return shortsMatch[1];
+        const embedMatch = u.pathname.match(/\/embed\/([^/?]+)/);
+        if(embedMatch) return embedMatch[1];
+        const liveMatch = u.pathname.match(/\/live\/([^/?]+)/);
+        if(liveMatch) return liveMatch[1];
+      }
+      return null;
+    }catch(e){
+      return null;
+    }
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  urlInput.addEventListener('input', validateAddForm);
+  function validateAddForm(){
+    const id = extractVideoId(urlInput.value);
+    confirmAddBtn.disabled = !id;
+    if(urlInput.value.trim() && !id){
+      addError.textContent = "That doesn't look like a valid YouTube link.";
+      addError.classList.remove('hidden');
     } else {
-        document.getElementById("redirectMsg").textContent =
-            "This link isn't recognized on this device. Ask for a fresh one, or check the original source.";
+      addError.classList.add('hidden');
     }
-} else {
-    const longUrlInput = document.getElementById("longUrl");
-    const slugInput = document.getElementById("customSlug");
-    const btn = document.getElementById("shortenBtn");
-    const errorMsg = document.getElementById("errorMsg");
-    const result = document.getElementById("result");
-    const shortLinkEl = document.getElementById("shortLink");
-    const originalUrlEl = document.getElementById("originalUrl");
-    const copyBtn = document.getElementById("copyBtn");
-    const listEl = document.getElementById("linkList");
+  }
 
-    function render(){
-        const links = loadLinks();
-        const entries = Object.entries(links);
-        listEl.innerHTML = "";
-        if (entries.length === 0) {
-            listEl.innerHTML = '<li class="empty">No links yet — shorten one above.</li>';
-            return;
-        }
-        entries.reverse().forEach(([c, url]) => {
-            const li = document.createElement("li");
-            const short = baseUrl() + "?to=" + c;
-            li.innerHTML = `
-                <a href="${short}" target="_blank" rel="noopener">/go/${c}</a>
-                <span class="dest" title="${url}">${url}</span>
-                <button data-code="${c}">Remove</button>
-            `;
-            listEl.appendChild(li);
-        });
-        listEl.querySelectorAll("button[data-code]").forEach(b => {
-            b.addEventListener("click", () => {
-                const links = loadLinks();
-                delete links[b.dataset.code];
-                saveLinks(links);
-                render();
-            });
-        });
+  function openAddModal(){
+    urlInput.value = '';
+    categoryInput.value = '';
+    addError.classList.add('hidden');
+    addLoading.classList.add('hidden');
+    confirmAddBtn.disabled = true;
+    addOverlay.classList.remove('hidden');
+    setTimeout(() => urlInput.focus(), 50);
+  }
+  function closeAddModal(){ addOverlay.classList.add('hidden'); }
+
+  $('#openAddBtn').addEventListener('click', openAddModal);
+  $('#emptyAddBtn').addEventListener('click', openAddModal);
+  $('#cancelAddBtn').addEventListener('click', closeAddModal);
+  addOverlay.addEventListener('click', e => { if(e.target === addOverlay) closeAddModal(); });
+
+  async function addVideo(){
+    const videoId = extractVideoId(urlInput.value);
+    if(!videoId) return;
+
+    if(videos.some(v => v.id === videoId)){
+      addError.textContent = 'That video is already in your library.';
+      addError.classList.remove('hidden');
+      return;
     }
 
-    function shorten(){
-        errorMsg.classList.remove("show");
-        const raw = longUrlInput.value.trim();
-        if (!raw) { errorMsg.textContent = "Paste a link first."; errorMsg.classList.add("show"); return; }
+    addError.classList.add('hidden');
+    addLoading.classList.remove('hidden');
+    confirmAddBtn.disabled = true;
 
-        let normalized = raw;
-        if (!/^https?:\/\//i.test(normalized)) normalized = "https://" + normalized;
+    try{
+      const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent('https://www.youtube.com/watch?v=' + videoId)}&format=json`;
+      const res = await fetch(oembedUrl);
+      if(!res.ok) throw new Error('Could not find that video. It may be private or unavailable.');
+      const data = await res.json();
 
-        const links = loadLinks();
-        let wanted = slugify(slugInput.value);
+      videos.unshift({
+        id: videoId,
+        title: data.title || 'Untitled video',
+        channel: data.author_name || '',
+        thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+        category: categoryInput.value.trim() || 'Uncategorized'
+      });
 
-        let finalCode;
-        if (wanted) {
-            if (links[wanted]) {
-                errorMsg.textContent = "That custom word is already taken — try another.";
-                errorMsg.classList.add("show");
-                return;
-            }
-            finalCode = wanted;
-        } else {
-            finalCode = randomCode();
-            while (links[finalCode]) finalCode = randomCode();
-        }
-
-        links[finalCode] = normalized;
-        saveLinks(links);
-
-        const short = baseUrl() + "?to=" + finalCode;
-        shortLinkEl.href = short;
-        shortLinkEl.textContent = short.replace(/^https?:\/\//, "");
-        originalUrlEl.textContent = "→ " + normalized;
-        result.classList.add("show");
-        longUrlInput.value = "";
-        slugInput.value = "";
-        render();
+      closeAddModal();
+      render();
+    }catch(e){
+      addLoading.classList.add('hidden');
+      addError.textContent = e.message || 'Something went wrong fetching that video.';
+      addError.classList.remove('hidden');
+      confirmAddBtn.disabled = false;
     }
+  }
+  confirmAddBtn.addEventListener('click', addVideo);
+  urlInput.addEventListener('keydown', e => { if(e.key === 'Enter' && !confirmAddBtn.disabled) addVideo(); });
 
-    btn.addEventListener("click", shorten);
-    [longUrlInput, slugInput].forEach(el => {
-        el.addEventListener("keydown", e => { if (e.key === "Enter") shorten(); });
-    });
-
-    copyBtn.addEventListener("click", () => {
-        navigator.clipboard.writeText(shortLinkEl.href).then(() => {
-            const old = copyBtn.textContent;
-            copyBtn.textContent = "Copied";
-            setTimeout(() => copyBtn.textContent = old, 1200);
-        });
-    });
-
+  function removeVideo(id){
+    videos = videos.filter(v => v.id !== id);
     render();
-}
+  }
+
+  searchInput.addEventListener('input', e => { query = e.target.value; renderGrid(); });
+
+  function getCategories(){
+    const set = new Set(videos.map(v => v.category));
+    return ['All', ...Array.from(set)];
+  }
+
+  function getFiltered(){
+    return videos.filter(v => {
+      const matchesCategory = activeCategory === 'All' || v.category === activeCategory;
+      const matchesQuery = !query.trim() || v.title.toLowerCase().includes(query.trim().toLowerCase());
+      return matchesCategory && matchesQuery;
+    });
+  }
+
+  function render(){
+    if(videos.length === 0){
+      emptyState.classList.remove('hidden');
+      library.classList.add('hidden');
+      return;
+    }
+    emptyState.classList.add('hidden');
+    library.classList.remove('hidden');
+    renderTabs();
+    renderGrid();
+  }
+
+  function renderTabs(){
+    const cats = getCategories();
+    if(!cats.includes(activeCategory)) activeCategory = 'All';
+    categoryTabs.innerHTML = '';
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'tab' + (cat === activeCategory ? ' active' : '');
+      btn.textContent = cat;
+      btn.addEventListener('click', () => { activeCategory = cat; renderTabs(); renderGrid(); });
+      categoryTabs.appendChild(btn);
+    });
+  }
+
+  function renderGrid(){
+    const filtered = getFiltered();
+    grid.innerHTML = '';
+    if(filtered.length === 0){
+      const p = document.createElement('p');
+      p.style.opacity = '.6';
+      p.style.fontSize = '14px';
+      p.textContent = 'No videos match your search.';
+      grid.appendChild(p);
+      return;
+    }
+    filtered.forEach(v => grid.appendChild(buildCard(v)));
+  }
+
+  function buildCard(video){
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <button class="remove-btn" aria-label="Remove video">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+      <div class="thumb-wrap">
+        <img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" loading="lazy">
+        <div class="play-badge">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-title">${escapeHtml(video.title)}</p>
+        <p class="card-channel">${escapeHtml(video.channel)}</p>
+      </div>
+    `;
+    card.querySelector('.thumb-wrap').addEventListener('click', () => openPlayer(video));
+    card.querySelector('.card-body').addEventListener('click', () => openPlayer(video));
+    card.querySelector('.remove-btn').addEventListener('click', (e) => { e.stopPropagation(); removeVideo(video.id); });
+    return card;
+  }
+
+  function openPlayer(video){
+    playerOverlay.classList.remove('hidden');
+    playerOverlay.innerHTML = `
+      <div class="modal-inner">
+        <div class="modal-head">
+          <h3>${escapeHtml(video.title)}</h3>
+          <button class="close-x" id="closePlayerBtn" aria-label="Close player">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div class="player-frame">
+          <iframe src="https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0" title="${escapeHtml(video.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    `;
+    $('#closePlayerBtn').addEventListener('click', closePlayer);
+    playerOverlay.addEventListener('click', overlayClickHandler);
+    document.addEventListener('keydown', escHandler);
+  }
+  function overlayClickHandler(e){ if(e.target === playerOverlay) closePlayer(); }
+  function escHandler(e){ if(e.key === 'Escape') closePlayer(); }
+  function closePlayer(){
+    playerOverlay.classList.add('hidden');
+    playerOverlay.innerHTML = '';
+    playerOverlay.removeEventListener('click', overlayClickHandler);
+    document.removeEventListener('keydown', escHandler);
+  }
+
+  render();
+})();
 </script>
+
 </body>
 </html>
