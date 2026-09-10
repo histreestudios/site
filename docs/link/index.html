@@ -74,6 +74,12 @@
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   }
   .card-channel{font-size:12px;opacity:.55;margin:6px 0 0;}
+  .card-tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;}
+  .card-tag{
+    font-size:11px;padding:3px 8px;border-radius:10px;background:#232327;color:var(--paper);
+    opacity:.75;border:none;cursor:pointer;
+  }
+  .card-tag:hover{opacity:1;background:var(--accent);color:var(--ink);}
   .remove-btn{
     position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;
     background:rgba(0,0,0,.6);border:none;color:#fff;display:flex;align-items:center;justify-content:center;
@@ -153,9 +159,10 @@
 <div id="addOverlay" class="modal-overlay hidden">
   <div class="add-modal">
     <h3>Add a video</h3>
-    <p class="hint">Paste a YouTube link (any format — youtube.com/watch, youtu.be, or Shorts). The title and thumbnail load automatically.</p>
+    <p class="hint">Paste a YouTube link — works with public, unlisted, and private videos. Add tags to organize your library; searching or tapping a tag pulls up every video that shares it.</p>
     <input id="urlInput" type="text" placeholder="https://www.youtube.com/watch?v=…">
-    <input id="categoryInput" type="text" placeholder="Category (optional, e.g. Music, Tutorials)">
+    <input id="categoryInput" type="text" placeholder="Tags, comma separated (e.g. music, live, 2024)">
+    <input id="manualTitleInput" type="text" placeholder="Video title" class="hidden">
     <div id="addError" class="add-error hidden"></div>
     <div id="addLoading" class="add-loading hidden">Fetching video info…</div>
     <div class="row-btns">
@@ -171,9 +178,17 @@
 (function(){
   const $ = sel => document.querySelector(sel);
 
-  let videos = [];      // { id, title, channel, thumbnail, category }
+  let videos = [];      // { id, title, channel, thumbnail, tags: [] }
   let query = '';
   let activeCategory = 'All';
+
+  function parseTags(raw){
+    return (raw || '')
+      .split(',')
+      .map(t => t.trim())
+      .filter(Boolean)
+      .map(t => t.toLowerCase());
+  }
 
   const emptyState = $('#emptyState');
   const library = $('#library');
@@ -184,6 +199,7 @@
   const addOverlay = $('#addOverlay');
   const urlInput = $('#urlInput');
   const categoryInput = $('#categoryInput');
+  const manualTitleInput = $('#manualTitleInput');
   const addError = $('#addError');
   const addLoading = $('#addLoading');
   const confirmAddBtn = $('#confirmAddBtn');
@@ -232,6 +248,8 @@
   function openAddModal(){
     urlInput.value = '';
     categoryInput.value = '';
+    manualTitleInput.value = '';
+    manualTitleInput.classList.add('hidden');
     addError.classList.add('hidden');
     addLoading.classList.add('hidden');
     confirmAddBtn.disabled = true;
@@ -256,13 +274,31 @@
     }
 
     addError.classList.add('hidden');
+    const tags = parseTags(categoryInput.value);
+    const manualTitle = manualTitleInput.value.trim();
+
+    // If the manual title field is already showing and filled, skip the fetch
+    // (this is the path for private videos, which have no public metadata).
+    if(!manualTitleInput.classList.contains('hidden') && manualTitle){
+      videos.unshift({
+        id: videoId,
+        title: manualTitle,
+        channel: '',
+        thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+        tags: tags.length ? tags : ['untagged']
+      });
+      closeAddModal();
+      render();
+      return;
+    }
+
     addLoading.classList.remove('hidden');
     confirmAddBtn.disabled = true;
 
     try{
       const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent('https://www.youtube.com/watch?v=' + videoId)}&format=json`;
       const res = await fetch(oembedUrl);
-      if(!res.ok) throw new Error('Could not find that video. It may be private or unavailable.');
+      if(!res.ok) throw new Error('NO_METADATA');
       const data = await res.json();
 
       videos.unshift({
@@ -270,15 +306,17 @@
         title: data.title || 'Untitled video',
         channel: data.author_name || '',
         thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-        category: categoryInput.value.trim() || 'Uncategorized'
+        tags: tags.length ? tags : ['untagged']
       });
 
       closeAddModal();
       render();
     }catch(e){
       addLoading.classList.add('hidden');
-      addError.textContent = e.message || 'Something went wrong fetching that video.';
+      addError.textContent = "Couldn't fetch info automatically — this usually means it's private (unlisted videos still work). Enter a title below and add it manually.";
       addError.classList.remove('hidden');
+      manualTitleInput.classList.remove('hidden');
+      manualTitleInput.focus();
       confirmAddBtn.disabled = false;
     }
   }
@@ -293,14 +331,19 @@
   searchInput.addEventListener('input', e => { query = e.target.value; renderGrid(); });
 
   function getCategories(){
-    const set = new Set(videos.map(v => v.category));
-    return ['All', ...Array.from(set)];
+    const set = new Set();
+    videos.forEach(v => (v.tags || []).forEach(t => set.add(t)));
+    return ['All', ...Array.from(set).sort()];
   }
 
   function getFiltered(){
+    const q = query.trim().toLowerCase();
     return videos.filter(v => {
-      const matchesCategory = activeCategory === 'All' || v.category === activeCategory;
-      const matchesQuery = !query.trim() || v.title.toLowerCase().includes(query.trim().toLowerCase());
+      const tags = v.tags || [];
+      const matchesCategory = activeCategory === 'All' || tags.includes(activeCategory);
+      const matchesQuery = !q ||
+        v.title.toLowerCase().includes(q) ||
+        tags.some(t => t.includes(q));
       return matchesCategory && matchesQuery;
     });
   }
@@ -360,10 +403,24 @@
       <div class="card-body">
         <p class="card-title">${escapeHtml(video.title)}</p>
         <p class="card-channel">${escapeHtml(video.channel)}</p>
+        <div class="card-tags">
+          ${(video.tags || []).map(t => `<button class="card-tag" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join('')}
+        </div>
       </div>
     `;
     card.querySelector('.thumb-wrap').addEventListener('click', () => openPlayer(video));
-    card.querySelector('.card-body').addEventListener('click', () => openPlayer(video));
+    card.querySelector('.card-body').addEventListener('click', (e) => {
+      if(e.target.closest('.card-tag')) return;
+      openPlayer(video);
+    });
+    card.querySelectorAll('.card-tag').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        activeCategory = btn.dataset.tag;
+        renderTabs();
+        renderGrid();
+      });
+    });
     card.querySelector('.remove-btn').addEventListener('click', (e) => { e.stopPropagation(); removeVideo(video.id); });
     return card;
   }
