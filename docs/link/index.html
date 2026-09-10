@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Short URL — Histree Studios</title>
+<style>
+  :root{
+    --blue:#2f7bd6;
+    --blue-dark:#1f5fa8;
+    --ink:#22262b;
+    --muted:#6b7280;
+    --bg:#f4f6f9;
+    --card:#ffffff;
+    --border:#e5e9ef;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Segoe UI',Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    padding:56px 20px 80px;
+  }
+  .wrap{max-width:640px;margin:0 auto}
+
+  .brand{
+    text-align:center;
+    margin-bottom:40px;
+  }
+  .brand h1{
+    font-size:2.4rem;
+    margin:0;
+    font-weight:800;
+    letter-spacing:-0.5px;
+  }
+  .brand h1 .short{color:var(--blue)}
+  .brand h1 .by{
+    font-size:1rem;
+    font-weight:600;
+    color:var(--muted);
+    margin-left:6px;
+  }
+  .brand h1 .studio{color:var(--blue)}
+  .brand p{
+    margin:10px 0 0;
+    color:var(--muted);
+    font-size:0.95rem;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:40px 36px;
+    box-shadow:0 1px 3px rgba(20,20,40,0.04);
+  }
+  .card h2{
+    text-align:center;
+    font-size:1.6rem;
+    margin:0 0 28px;
+    font-weight:700;
+  }
+
+  .field{
+    display:flex;
+    gap:10px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:6px;
+  }
+  .field input{
+    flex:1;
+    border:none;
+    outline:none;
+    padding:12px 14px;
+    font-size:0.95rem;
+    background:transparent;
+    color:var(--ink);
+  }
+  .field input::placeholder{color:#9aa1ab}
+  .field button{
+    background:var(--blue);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:0 22px;
+    font-size:0.95rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .field button:hover{background:var(--blue-dark)}
+  .field button:disabled{background:#a9c3e4;cursor:default}
+
+  .hint{
+    text-align:center;
+    color:var(--muted);
+    font-size:0.85rem;
+    margin:16px 0 0;
+    line-height:1.5;
+  }
+
+  .result{
+    margin-top:22px;
+    display:none;
+    background:#f0f6ff;
+    border:1px solid #d7e6fb;
+    border-radius:10px;
+    padding:16px 18px;
+  }
+  .result.show{display:block}
+  .result .row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .result a{
+    flex:1;
+    color:var(--blue-dark);
+    font-weight:600;
+    text-decoration:none;
+    word-break:break-all;
+    font-size:0.95rem;
+  }
+  .result a:hover{text-decoration:underline}
+  .result button{
+    border:1px solid var(--border);
+    background:#fff;
+    border-radius:7px;
+    padding:8px 14px;
+    font-size:0.82rem;
+    font-weight:600;
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .result button:hover{border-color:var(--blue)}
+  .result .original{
+    margin-top:8px;
+    font-size:0.78rem;
+    color:var(--muted);
+    word-break:break-all;
+  }
+
+  .list{
+    margin-top:36px;
+  }
+  .list h3{
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    color:var(--muted);
+    margin:0 0 12px;
+    font-weight:700;
+  }
+  .list ul{list-style:none;margin:0;padding:0}
+  .list li{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:12px 0;
+    border-top:1px solid var(--border);
+    font-size:0.85rem;
+  }
+  .list li a{color:var(--blue-dark);font-weight:600;text-decoration:none}
+  .list li a:hover{text-decoration:underline}
+  .list li .dest{
+    color:var(--muted);
+    max-width:60%;
+    text-align:right;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .list li button{
+    background:none;
+    border:none;
+    color:#c14040;
+    font-size:0.78rem;
+    cursor:pointer;
+    padding:0;
+  }
+  .list .empty{
+    color:var(--muted);
+    font-size:0.85rem;
+    padding:12px 0;
+    border-top:1px solid var(--border);
+  }
+
+  .footnote{
+    text-align:center;
+    color:var(--muted);
+    font-size:0.8rem;
+    margin-top:28px;
+    line-height:1.6;
+  }
+
+  /* Redirect screen */
+  .redirect-screen{
+    display:none;
+    text-align:center;
+    padding:60px 20px;
+  }
+  .redirect-screen.show{display:block}
+  .spinner{
+    width:34px;height:34px;
+    border:3px solid #dbe4f0;
+    border-top-color:var(--blue);
+    border-radius:50%;
+    margin:0 auto 18px;
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .redirect-screen p{color:var(--muted);font-size:0.95rem}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="generatorView">
+  <div class="brand">
+    <h1><span class="short">Short</span> URL <span class="by">by</span> <span class="studio">Histree Studios</span></h1>
+    <p>Paste a Google Drive or Dropbox link and get a short, shareable link on this domain.</p>
+  </div>
+
+  <div class="card">
+    <h2>Paste the link to be shortened</h2>
+    <div class="field">
+      <input type="text" id="longUrl" placeholder="Paste your Drive or Dropbox link here">
+      <button id="shortenBtn">Shorten URL</button>
+    </div>
+    <p class="hint">Works with any link. Opens instantly for anyone you send it to — no ads, no waiting page, no verification step.</p>
+
+    <div class="result" id="result">
+      <div class="row">
+        <a id="shortLink" href="#" target="_blank" rel="noopener"></a>
+        <button id="copyBtn">Copy</button>
+      </div>
+      <div class="original" id="originalUrl"></div>
+    </div>
+
+    <div class="list">
+      <h3>Your links</h3>
+      <ul id="linkList"></ul>
+    </div>
+  </div>
+
+  <p class="footnote">Links are saved in this browser. Open this same page on the device you'll manage links from.</p>
+</div>
+
+<div class="wrap redirect-screen" id="redirectView">
+  <div class="spinner"></div>
+  <p id="redirectMsg">Redirecting…</p>
+</div>
+
+<script>
+  const STORAGE_KEY = "histree_short_links";
+
+  function loadLinks(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveLinks(links){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
+  }
+  function makeCode(){
+    return Math.random().toString(36).slice(2, 7);
+  }
+  function baseUrl(){
+    return window.location.origin + window.location.pathname;
+  }
+
+  // ---- Redirect mode: if ?to=code is present, redirect immediately ----
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("to");
+
+  if (code) {
+    document.getElementById("generatorView").style.display = "none";
+    const view = document.getElementById("redirectView");
+    view.classList.add("show");
+    const links = loadLinks();
+    const target = links[code];
+    if (target) {
+      window.location.replace(target);
+    } else {
+      document.getElementById("redirectMsg").textContent =
+        "This link isn't recognized on this device/browser. Ask the sender to resend it, or open the original.";
+    }
+  } else {
+    // ---- Generator mode ----
+    const input = document.getElementById("longUrl");
+    const btn = document.getElementById("shortenBtn");
+    const result = document.getElementById("result");
+    const shortLinkEl = document.getElementById("shortLink");
+    const originalUrlEl = document.getElementById("originalUrl");
+    const copyBtn = document.getElementById("copyBtn");
+    const listEl = document.getElementById("linkList");
+
+    function render(){
+      const links = loadLinks();
+      const entries = Object.entries(links);
+      listEl.innerHTML = "";
+      if (entries.length === 0) {
+        listEl.innerHTML = '<li class="empty">No links yet — shorten one above.</li>';
+        return;
+      }
+      entries.reverse().forEach(([c, url]) => {
+        const li = document.createElement("li");
+        const short = baseUrl() + "?to=" + c;
+        li.innerHTML = `
+          <a href="${short}" target="_blank" rel="noopener">${short.replace(/^https?:\/\//,"")}</a>
+          <span class="dest" title="${url}">${url}</span>
+          <button data-code="${c}">Remove</button>
+        `;
+        listEl.appendChild(li);
+      });
+      listEl.querySelectorAll("button[data-code]").forEach(b => {
+        b.addEventListener("click", () => {
+          const links = loadLinks();
+          delete links[b.dataset.code];
+          saveLinks(links);
+          render();
+        });
+      });
+    }
+
+    function shorten(){
+      const url = input.value.trim();
+      if (!url) return;
+      let normalized = url;
+      if (!/^https?:\/\//i.test(normalized)) normalized = "https://" + normalized;
+
+      const links = loadLinks();
+      const newCode = makeCode();
+      links[newCode] = normalized;
+      saveLinks(links);
+
+      const short = baseUrl() + "?to=" + newCode;
+      shortLinkEl.href = short;
+      shortLinkEl.textContent = short;
+      originalUrlEl.textContent = "→ " + normalized;
+      result.classList.add("show");
+      input.value = "";
+      render();
+    }
+
+    btn.addEventListener("click", shorten);
+    input.addEventListener("keydown", e => { if (e.key === "Enter") shorten(); });
+
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(shortLinkEl.href).then(() => {
+        const old = copyBtn.textContent;
+        copyBtn.textContent = "Copied";
+        setTimeout(() => copyBtn.textContent = old, 1200);
+      });
+    });
+
+    render();
+  }
+</script>
+</body>
+</html>
