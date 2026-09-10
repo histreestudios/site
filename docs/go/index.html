@@ -204,7 +204,7 @@ label{
         <div class="field-group">
             <label for="customSlug">Custom word (optional)</label>
             <div class="input-shell">
-                <span class="prefix">histreestudios.com/go/</span>
+                <span class="prefix" id="slugPrefix">histreestudios.com/short-links.html#</span>
                 <input type="text" id="customSlug" placeholder="e.g. client-brief">
             </div>
         </div>
@@ -242,12 +242,17 @@ function loadLinks(){
     catch(e){ return {}; }
 }
 function saveLinks(links){ localStorage.setItem(STORAGE_KEY, JSON.stringify(links)); }
-function randomCode(){ return Math.random().toString(36).slice(2, 7); }
+function randomCode(){
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    const len = Math.random() < 0.5 ? 3 : 4;
+    let out = "";
+    for (let i = 0; i < len; i++) out += chars[Math.floor(Math.random() * chars.length)];
+    return out;
+}
 function slugify(s){ return s.trim().toLowerCase().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
 function baseUrl(){ return window.location.origin + window.location.pathname; }
 
-const params = new URLSearchParams(window.location.search);
-const code = params.get("to");
+const code = window.location.hash.replace("#", "");
 
 if (code) {
     document.getElementById("generatorView").style.display = "none";
@@ -271,6 +276,9 @@ if (code) {
     const copyBtn = document.getElementById("copyBtn");
     const listEl = document.getElementById("linkList");
 
+    document.getElementById("slugPrefix").textContent =
+        baseUrl().replace(/^https?:\/\//, "") + "#";
+
     function render(){
         const links = loadLinks();
         const entries = Object.entries(links);
@@ -281,9 +289,9 @@ if (code) {
         }
         entries.reverse().forEach(([c, url]) => {
             const li = document.createElement("li");
-            const short = baseUrl() + "?to=" + c;
+            const short = baseUrl() + "#" + c;
             li.innerHTML = `
-                <a href="${short}" target="_blank" rel="noopener">/go/${c}</a>
+                <a href="${short}" target="_blank" rel="noopener">${c}</a>
                 <span class="dest" title="${url}">${url}</span>
                 <button data-code="${c}">Remove</button>
             `;
@@ -326,7 +334,7 @@ if (code) {
         links[finalCode] = normalized;
         saveLinks(links);
 
-        const short = baseUrl() + "?to=" + finalCode;
+        const short = baseUrl() + "#" + finalCode;
         shortLinkEl.href = short;
         shortLinkEl.textContent = short.replace(/^https?:\/\//, "");
         originalUrlEl.textContent = "→ " + normalized;
