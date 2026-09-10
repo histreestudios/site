@@ -3,293 +3,268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Short URL — Histree Studios</title>
+<title>Short Links — Histree Studios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-  :root{
-    --blue:#2f7bd6;
-    --blue-dark:#1f5fa8;
-    --ink:#22262b;
-    --muted:#6b7280;
-    --bg:#f4f6f9;
-    --card:#ffffff;
-    --border:#e5e9ef;
-    --radius:14px;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:'Segoe UI',Helvetica,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--ink);
-    padding:56px 20px 80px;
-  }
-  .wrap{max-width:640px;margin:0 auto}
+:root {
+    --bg: #030303;
+    --glass: rgba(255,255,255,0.03);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-border-bright: rgba(255,255,255,0.15);
+    --text: #ffffff;
+    --muted: #8a8a9a;
+    --muted2: #5a5a6a;
+    --accent: #C8102E;
+    --accent2: #e01535;
+    --blue: #3b4fd8;
+    --blue2: #5b6ef8;
+    --purple: #7c3aed;
+    --radius: 20px;
+    --radius-lg: 28px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    background:var(--bg);color:var(--text);
+    font-family:'DM Sans',sans-serif;line-height:1.6;
+    min-height:100vh;
+    padding:80px 20px;
+    position:relative;
+    overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Syne',sans-serif;line-height:1.15}
+a{color:inherit;text-decoration:none}
 
-  .brand{
-    text-align:center;
-    margin-bottom:40px;
-  }
-  .brand h1{
-    font-size:2.4rem;
-    margin:0;
-    font-weight:800;
-    letter-spacing:-0.5px;
-  }
-  .brand h1 .short{color:var(--blue)}
-  .brand h1 .by{
-    font-size:1rem;
-    font-weight:600;
-    color:var(--muted);
-    margin-left:6px;
-  }
-  .brand h1 .studio{color:var(--blue)}
-  .brand p{
-    margin:10px 0 0;
-    color:var(--muted);
-    font-size:0.95rem;
-  }
+body::before{
+    content:'';position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none;z-index:9999;opacity:0.4;
+}
+.glow{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
+.glow-red{width:600px;height:600px;top:-200px;left:10%;background:radial-gradient(circle,rgba(200,16,46,0.14) 0%,transparent 70%)}
+.glow-blue{width:800px;height:700px;top:30%;right:-15%;background:radial-gradient(circle,rgba(59,79,216,0.12) 0%,transparent 70%)}
+.glow-purple{width:500px;height:500px;bottom:5%;left:-10%;background:radial-gradient(circle,rgba(124,58,237,0.1) 0%,transparent 70%)}
 
-  .card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:40px 36px;
-    box-shadow:0 1px 3px rgba(20,20,40,0.04);
-  }
-  .card h2{
-    text-align:center;
-    font-size:1.6rem;
-    margin:0 0 28px;
-    font-weight:700;
-  }
+.wrap{max-width:640px;margin:0 auto;position:relative;z-index:1}
 
-  .field{
-    display:flex;
-    gap:10px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:6px;
-  }
-  .field input{
-    flex:1;
-    border:none;
-    outline:none;
-    padding:12px 14px;
-    font-size:0.95rem;
-    background:transparent;
-    color:var(--ink);
-  }
-  .field input::placeholder{color:#9aa1ab}
-  .field button{
-    background:var(--blue);
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    padding:0 22px;
-    font-size:0.95rem;
-    font-weight:600;
-    cursor:pointer;
-    transition:background .15s ease;
-  }
-  .field button:hover{background:var(--blue-dark)}
-  .field button:disabled{background:#a9c3e4;cursor:default}
+.brand{text-align:center;margin-bottom:44px}
+.eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:0.78rem;color:var(--muted);
+    background:var(--glass);border:1px solid var(--glass-border);
+    padding:6px 16px;border-radius:999px;margin-bottom:20px;
+}
+.eyebrow i{color:var(--accent2);font-size:0.7rem}
+.brand h1{
+    font-size:2.6rem;font-weight:800;letter-spacing:-0.5px;
+    color:#f2f2f6;
+}
+.brand h1 span{
+    background:linear-gradient(90deg,var(--accent2),var(--blue2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand p{margin-top:14px;color:var(--muted);font-size:0.98rem;max-width:440px;margin-left:auto;margin-right:auto}
 
-  .hint{
-    text-align:center;
-    color:var(--muted);
-    font-size:0.85rem;
-    margin:16px 0 0;
-    line-height:1.5;
-  }
+.card{
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-lg);
+    padding:38px 34px;
+    backdrop-filter:blur(20px);
+}
 
-  .result{
-    margin-top:22px;
-    display:none;
-    background:#f0f6ff;
-    border:1px solid #d7e6fb;
-    border-radius:10px;
-    padding:16px 18px;
-  }
-  .result.show{display:block}
-  .result .row{
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .result a{
-    flex:1;
-    color:var(--blue-dark);
-    font-weight:600;
-    text-decoration:none;
-    word-break:break-all;
-    font-size:0.95rem;
-  }
-  .result a:hover{text-decoration:underline}
-  .result button{
-    border:1px solid var(--border);
-    background:#fff;
-    border-radius:7px;
-    padding:8px 14px;
-    font-size:0.82rem;
-    font-weight:600;
-    color:var(--ink);
-    cursor:pointer;
-  }
-  .result button:hover{border-color:var(--blue)}
-  .result .original{
-    margin-top:8px;
-    font-size:0.78rem;
-    color:var(--muted);
-    word-break:break-all;
-  }
+.field-group{margin-bottom:18px}
+label{
+    display:block;font-size:0.78rem;color:var(--muted);
+    margin-bottom:8px;letter-spacing:0.02em;
+}
+.input-shell{
+    display:flex;align-items:center;
+    background:rgba(255,255,255,0.02);
+    border:1px solid var(--glass-border);
+    border-radius:12px;
+    transition:border-color .15s ease;
+}
+.input-shell:focus-within{border-color:var(--glass-border-bright)}
+.input-shell input{
+    flex:1;background:transparent;border:none;outline:none;
+    color:var(--text);padding:14px 16px;font-size:0.95rem;font-family:'DM Sans',sans-serif;
+}
+.input-shell input::placeholder{color:var(--muted2)}
+.prefix{
+    padding:14px 4px 14px 16px;color:var(--muted);font-size:0.9rem;white-space:nowrap;
+}
 
-  .list{
-    margin-top:36px;
-  }
-  .list h3{
-    font-size:0.85rem;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
-    color:var(--muted);
-    margin:0 0 12px;
-    font-weight:700;
-  }
-  .list ul{list-style:none;margin:0;padding:0}
-  .list li{
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-    padding:12px 0;
-    border-top:1px solid var(--border);
-    font-size:0.85rem;
-  }
-  .list li a{color:var(--blue-dark);font-weight:600;text-decoration:none}
-  .list li a:hover{text-decoration:underline}
-  .list li .dest{
-    color:var(--muted);
-    max-width:60%;
-    text-align:right;
-    overflow:hidden;
-    text-overflow:ellipsis;
+.slug-row{display:flex;gap:14px}
+.slug-row .field-group{flex:1;margin-bottom:0}
+
+.btn-shorten{
+    width:100%;margin-top:6px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    color:#fff;border:none;border-radius:12px;
+    padding:15px;font-size:0.95rem;font-weight:600;
+    font-family:'DM Sans',sans-serif;cursor:pointer;
+    transition:transform .15s ease,box-shadow .15s ease;
+}
+.btn-shorten:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(200,16,46,0.25)}
+.btn-shorten:disabled{opacity:0.5;cursor:default;transform:none;box-shadow:none}
+
+.error-msg{
+    color:#f87171;font-size:0.82rem;margin-top:10px;display:none;
+}
+.error-msg.show{display:block}
+
+.result{
+    margin-top:24px;display:none;
+    background:rgba(91,110,248,0.08);
+    border:1px solid rgba(91,110,248,0.25);
+    border-radius:14px;padding:18px 20px;
+}
+.result.show{display:block}
+.result .row{display:flex;align-items:center;gap:10px}
+.result a{
+    flex:1;color:#b8c2ff;font-weight:600;font-size:0.95rem;word-break:break-all;
+}
+.result a:hover{text-decoration:underline}
+.result button{
+    border:1px solid var(--glass-border-bright);background:rgba(255,255,255,0.05);
+    border-radius:8px;padding:9px 16px;font-size:0.8rem;font-weight:600;
+    color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;
     white-space:nowrap;
-  }
-  .list li button{
-    background:none;
-    border:none;
-    color:#c14040;
-    font-size:0.78rem;
-    cursor:pointer;
-    padding:0;
-  }
-  .list .empty{
-    color:var(--muted);
+}
+.result button:hover{background:rgba(255,255,255,0.1)}
+.result .original{margin-top:10px;font-size:0.78rem;color:var(--muted)}
+
+.list{margin-top:38px}
+.list h3{
+    font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;
+    color:var(--muted);margin-bottom:14px;font-weight:700;font-family:'DM Sans',sans-serif;
+}
+.list ul{list-style:none}
+.list li{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:14px 0;border-top:1px solid var(--glass-border);
     font-size:0.85rem;
-    padding:12px 0;
-    border-top:1px solid var(--border);
-  }
+}
+.list li a{color:#b8c2ff;font-weight:600}
+.list li a:hover{text-decoration:underline}
+.list li .dest{
+    color:var(--muted);max-width:44%;text-align:right;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.list li button{
+    background:none;border:none;color:#f87171;font-size:0.78rem;
+    cursor:pointer;font-family:'DM Sans',sans-serif;
+}
+.list .empty{color:var(--muted2);font-size:0.85rem;padding:14px 0;border-top:1px solid var(--glass-border)}
 
-  .footnote{
-    text-align:center;
-    color:var(--muted);
-    font-size:0.8rem;
-    margin-top:28px;
-    line-height:1.6;
-  }
+.footnote{text-align:center;color:var(--muted2);font-size:0.8rem;margin-top:28px;line-height:1.6}
 
-  /* Redirect screen */
-  .redirect-screen{
-    display:none;
-    text-align:center;
-    padding:60px 20px;
-  }
-  .redirect-screen.show{display:block}
-  .spinner{
-    width:34px;height:34px;
-    border:3px solid #dbe4f0;
-    border-top-color:var(--blue);
-    border-radius:50%;
-    margin:0 auto 18px;
-    animation:spin .8s linear infinite;
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .redirect-screen p{color:var(--muted);font-size:0.95rem}
+.redirect-screen{display:none;text-align:center;padding:80px 20px;position:relative;z-index:1}
+.redirect-screen.show{display:block}
+.spinner{
+    width:34px;height:34px;border:3px solid rgba(255,255,255,0.1);
+    border-top-color:var(--blue2);border-radius:50%;
+    margin:0 auto 20px;animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.redirect-screen p{color:var(--muted);font-size:0.95rem}
+
+@media (max-width:520px){
+    .card{padding:28px 22px}
+    .brand h1{font-size:2.1rem}
+    .slug-row{flex-direction:column;gap:18px}
+}
 </style>
 </head>
 <body>
 
+<div class="glow glow-red"></div>
+<div class="glow glow-blue"></div>
+<div class="glow glow-purple"></div>
+
 <div class="wrap" id="generatorView">
-  <div class="brand">
-    <h1><span class="short">Short</span> URL <span class="by">by</span> <span class="studio">Histree Studios</span></h1>
-    <p>Paste a Google Drive or Dropbox link and get a short, shareable link on this domain.</p>
-  </div>
-
-  <div class="card">
-    <h2>Paste the link to be shortened</h2>
-    <div class="field">
-      <input type="text" id="longUrl" placeholder="Paste your Drive or Dropbox link here">
-      <button id="shortenBtn">Shorten URL</button>
-    </div>
-    <p class="hint">Works with any link. Opens instantly for anyone you send it to — no ads, no waiting page, no verification step.</p>
-
-    <div class="result" id="result">
-      <div class="row">
-        <a id="shortLink" href="#" target="_blank" rel="noopener"></a>
-        <button id="copyBtn">Copy</button>
-      </div>
-      <div class="original" id="originalUrl"></div>
+    <div class="brand">
+        <div class="eyebrow"><i class="fa-solid fa-link"></i> Internal tool</div>
+        <h1>Short <span>Links</span></h1>
+        <p>Turn a long Drive, Dropbox, or client link into a clean histreestudios.com link — with your own custom word if you want one.</p>
     </div>
 
-    <div class="list">
-      <h3>Your links</h3>
-      <ul id="linkList"></ul>
-    </div>
-  </div>
+    <div class="card">
+        <div class="field-group">
+            <label for="longUrl">Link to shorten</label>
+            <div class="input-shell">
+                <input type="text" id="longUrl" placeholder="Paste the Drive, Dropbox, or any link here">
+            </div>
+        </div>
 
-  <p class="footnote">Links are saved in this browser. Open this same page on the device you'll manage links from.</p>
+        <div class="field-group">
+            <label for="customSlug">Custom word (optional)</label>
+            <div class="input-shell">
+                <span class="prefix">histreestudios.com/go/</span>
+                <input type="text" id="customSlug" placeholder="e.g. client-brief">
+            </div>
+        </div>
+
+        <button class="btn-shorten" id="shortenBtn">Shorten link</button>
+        <p class="error-msg" id="errorMsg"></p>
+
+        <div class="result" id="result">
+            <div class="row">
+                <a id="shortLink" href="#" target="_blank" rel="noopener"></a>
+                <button id="copyBtn">Copy</button>
+            </div>
+            <div class="original" id="originalUrl"></div>
+        </div>
+
+        <div class="list">
+            <h3>Your links</h3>
+            <ul id="linkList"></ul>
+        </div>
+    </div>
+
+    <p class="footnote">Links are stored in this browser. Open this page from the same device/browser you use to manage them.</p>
 </div>
 
 <div class="wrap redirect-screen" id="redirectView">
-  <div class="spinner"></div>
-  <p id="redirectMsg">Redirecting…</p>
+    <div class="spinner"></div>
+    <p id="redirectMsg">Redirecting…</p>
 </div>
 
 <script>
-  const STORAGE_KEY = "histree_short_links";
+const STORAGE_KEY = "histree_short_links";
 
-  function loadLinks(){
+function loadLinks(){
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
     catch(e){ return {}; }
-  }
-  function saveLinks(links){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
-  }
-  function makeCode(){
-    return Math.random().toString(36).slice(2, 7);
-  }
-  function baseUrl(){
-    return window.location.origin + window.location.pathname;
-  }
+}
+function saveLinks(links){ localStorage.setItem(STORAGE_KEY, JSON.stringify(links)); }
+function randomCode(){ return Math.random().toString(36).slice(2, 7); }
+function slugify(s){ return s.trim().toLowerCase().replace(/[^a-z0-9-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''); }
+function baseUrl(){ return window.location.origin + window.location.pathname; }
 
-  // ---- Redirect mode: if ?to=code is present, redirect immediately ----
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get("to");
+const params = new URLSearchParams(window.location.search);
+const code = params.get("to");
 
-  if (code) {
+if (code) {
     document.getElementById("generatorView").style.display = "none";
-    const view = document.getElementById("redirectView");
-    view.classList.add("show");
+    document.getElementById("redirectView").classList.add("show");
     const links = loadLinks();
     const target = links[code];
     if (target) {
-      window.location.replace(target);
+        window.location.replace(target);
     } else {
-      document.getElementById("redirectMsg").textContent =
-        "This link isn't recognized on this device/browser. Ask the sender to resend it, or open the original.";
+        document.getElementById("redirectMsg").textContent =
+            "This link isn't recognized on this device. Ask for a fresh one, or check the original source.";
     }
-  } else {
-    // ---- Generator mode ----
-    const input = document.getElementById("longUrl");
+} else {
+    const longUrlInput = document.getElementById("longUrl");
+    const slugInput = document.getElementById("customSlug");
     const btn = document.getElementById("shortenBtn");
+    const errorMsg = document.getElementById("errorMsg");
     const result = document.getElementById("result");
     const shortLinkEl = document.getElementById("shortLink");
     const originalUrlEl = document.getElementById("originalUrl");
@@ -297,66 +272,85 @@
     const listEl = document.getElementById("linkList");
 
     function render(){
-      const links = loadLinks();
-      const entries = Object.entries(links);
-      listEl.innerHTML = "";
-      if (entries.length === 0) {
-        listEl.innerHTML = '<li class="empty">No links yet — shorten one above.</li>';
-        return;
-      }
-      entries.reverse().forEach(([c, url]) => {
-        const li = document.createElement("li");
-        const short = baseUrl() + "?to=" + c;
-        li.innerHTML = `
-          <a href="${short}" target="_blank" rel="noopener">${short.replace(/^https?:\/\//,"")}</a>
-          <span class="dest" title="${url}">${url}</span>
-          <button data-code="${c}">Remove</button>
-        `;
-        listEl.appendChild(li);
-      });
-      listEl.querySelectorAll("button[data-code]").forEach(b => {
-        b.addEventListener("click", () => {
-          const links = loadLinks();
-          delete links[b.dataset.code];
-          saveLinks(links);
-          render();
+        const links = loadLinks();
+        const entries = Object.entries(links);
+        listEl.innerHTML = "";
+        if (entries.length === 0) {
+            listEl.innerHTML = '<li class="empty">No links yet — shorten one above.</li>';
+            return;
+        }
+        entries.reverse().forEach(([c, url]) => {
+            const li = document.createElement("li");
+            const short = baseUrl() + "?to=" + c;
+            li.innerHTML = `
+                <a href="${short}" target="_blank" rel="noopener">/go/${c}</a>
+                <span class="dest" title="${url}">${url}</span>
+                <button data-code="${c}">Remove</button>
+            `;
+            listEl.appendChild(li);
         });
-      });
+        listEl.querySelectorAll("button[data-code]").forEach(b => {
+            b.addEventListener("click", () => {
+                const links = loadLinks();
+                delete links[b.dataset.code];
+                saveLinks(links);
+                render();
+            });
+        });
     }
 
     function shorten(){
-      const url = input.value.trim();
-      if (!url) return;
-      let normalized = url;
-      if (!/^https?:\/\//i.test(normalized)) normalized = "https://" + normalized;
+        errorMsg.classList.remove("show");
+        const raw = longUrlInput.value.trim();
+        if (!raw) { errorMsg.textContent = "Paste a link first."; errorMsg.classList.add("show"); return; }
 
-      const links = loadLinks();
-      const newCode = makeCode();
-      links[newCode] = normalized;
-      saveLinks(links);
+        let normalized = raw;
+        if (!/^https?:\/\//i.test(normalized)) normalized = "https://" + normalized;
 
-      const short = baseUrl() + "?to=" + newCode;
-      shortLinkEl.href = short;
-      shortLinkEl.textContent = short;
-      originalUrlEl.textContent = "→ " + normalized;
-      result.classList.add("show");
-      input.value = "";
-      render();
+        const links = loadLinks();
+        let wanted = slugify(slugInput.value);
+
+        let finalCode;
+        if (wanted) {
+            if (links[wanted]) {
+                errorMsg.textContent = "That custom word is already taken — try another.";
+                errorMsg.classList.add("show");
+                return;
+            }
+            finalCode = wanted;
+        } else {
+            finalCode = randomCode();
+            while (links[finalCode]) finalCode = randomCode();
+        }
+
+        links[finalCode] = normalized;
+        saveLinks(links);
+
+        const short = baseUrl() + "?to=" + finalCode;
+        shortLinkEl.href = short;
+        shortLinkEl.textContent = short.replace(/^https?:\/\//, "");
+        originalUrlEl.textContent = "→ " + normalized;
+        result.classList.add("show");
+        longUrlInput.value = "";
+        slugInput.value = "";
+        render();
     }
 
     btn.addEventListener("click", shorten);
-    input.addEventListener("keydown", e => { if (e.key === "Enter") shorten(); });
+    [longUrlInput, slugInput].forEach(el => {
+        el.addEventListener("keydown", e => { if (e.key === "Enter") shorten(); });
+    });
 
     copyBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(shortLinkEl.href).then(() => {
-        const old = copyBtn.textContent;
-        copyBtn.textContent = "Copied";
-        setTimeout(() => copyBtn.textContent = old, 1200);
-      });
+        navigator.clipboard.writeText(shortLinkEl.href).then(() => {
+            const old = copyBtn.textContent;
+            copyBtn.textContent = "Copied";
+            setTimeout(() => copyBtn.textContent = old, 1200);
+        });
     });
 
     render();
-  }
+}
 </script>
 </body>
 </html>
