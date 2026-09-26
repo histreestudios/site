@@ -14,7 +14,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;overflow:hidden}
 ::selection{background:var(--red);color:#fff}
 .deck-header{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:linear-gradient(180deg,rgba(10,10,12,.95),rgba(10,10,12,0));pointer-events:none}
-.brand{font-weight:900;font-size:16px;letter-spacing:.5px}.brand .dot{color:var(--red)}.brand span:last-child{color:var(--yellow)}
+.brand{font-weight:900;font-size:16px;letter-spacing:.5px}.brand .dot{color:var(--red)}.brand .yl{color:var(--yellow)}.brand .rd{color:var(--red)}.brand .wt{color:#fff}
 .deck-tag{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:2px}
 .stage{position:fixed;inset:0}
 .slide{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:70px 5vw 92px;overflow-y:auto}
@@ -84,7 +84,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 <body>
 
 <div class="deck-header">
-  <div class="brand">Histree<span class="dot">.</span><span>Studios</span></div>
+  <div class="brand"><span class="rd">Histree</span><span class="yl">Studios</span><span class="dot">.</span><span class="wt">com</span></div>
   <div class="deck-tag">Marketing & Outreach Intern · Full Workshop</div>
   <div style="width:120px"></div>
 </div>
@@ -112,6 +112,67 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
       <div class="tile hot"><span class="big">11+</span>sales/marketing courses in 1.5 years</div>
     </div>
     <p class="punch">I learned one thing the hard way: <span class="yl">being good at the work is only one part of building the business.</span></p>
+  </div>
+</section>
+
+<section class="slide" data-title="The Numbers">
+  <div class="slide-inner">
+    <div class="secnum"><b>01.5</b> 📊 The numbers behind the lesson</div>
+    <h1 class="mega" style="font-size:clamp(30px,5vw,58px)">Two years, <span class="yl">side by side.</span></h1>
+    <p class="kicker">Before the systems and the pipeline talk - here's what building this alone actually looked like on paper.</p>
+
+    <div style="margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 24px 12px">
+      <svg viewBox="0 0 900 460" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+        <line x1="90" y1="30" x2="90" y2="380" stroke="var(--border)" stroke-width="1.5"/>
+        <line x1="90" y1="380" x2="860" y2="380" stroke="var(--border)" stroke-width="1.5"/>
+        <g stroke="var(--border)" stroke-width="1">
+          <line x1="90" y1="292.5" x2="860" y2="292.5"/>
+          <line x1="90" y1="205" x2="860" y2="205"/>
+          <line x1="90" y1="117.5" x2="860" y2="117.5"/>
+          <line x1="90" y1="30" x2="860" y2="30"/>
+        </g>
+        <g fill="var(--faint)" font-size="12" text-anchor="end">
+          <text x="80" y="384">$0</text>
+          <text x="80" y="296.5">$8k</text>
+          <text x="80" y="209">$16k</text>
+          <text x="80" y="121.5">$24k</text>
+          <text x="80" y="34">$32k</text>
+        </g>
+
+        <line x1="480" y1="20" x2="480" y2="392" stroke="var(--faint)" stroke-width="1" stroke-dasharray="4 5" opacity=".5"/>
+
+        <rect x="180" y="40.4" width="100" height="339.6" rx="6" fill="var(--yellow)"/>
+        <text x="230" y="28" fill="#fff" font-size="17" font-weight="900" text-anchor="middle">$31,050</text>
+        <text x="230" y="399" fill="var(--soft)" font-size="12" text-anchor="middle">Earnings</text>
+
+        <rect x="300" y="249.3" width="100" height="130.7" rx="6" fill="var(--red)"/>
+        <text x="350" y="237" fill="#fff" font-size="17" font-weight="900" text-anchor="middle">$11,945</text>
+        <text x="350" y="399" fill="var(--soft)" font-size="12" text-anchor="middle">Spend</text>
+
+        <text x="290" y="424" fill="#fff" font-size="15" font-weight="900" text-anchor="middle">2025 · FULL YEAR</text>
+
+        <rect x="560" y="268.7" width="100" height="111.3" rx="6" fill="var(--yellow)"/>
+        <text x="610" y="257" fill="#fff" font-size="17" font-weight="900" text-anchor="middle">$10,180</text>
+        <text x="610" y="399" fill="var(--soft)" font-size="12" text-anchor="middle">Earnings</text>
+
+        <rect x="680" y="362" width="100" height="18" rx="4" fill="none" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="730" y="399" fill="var(--faint)" font-size="12" text-anchor="middle">Spend: TBD</text>
+
+        <text x="670" y="424" fill="#fff" font-size="15" font-weight="900" text-anchor="middle">2026 · JAN 1–SEP 20</text>
+      </svg>
+      <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:8px 0 4px;font-size:13px;color:var(--soft)">
+        <span style="display:inline-flex;align-items:center;gap:7px"><i style="width:12px;height:12px;border-radius:3px;background:var(--yellow);display:inline-block"></i>Earnings</span>
+        <span style="display:inline-flex;align-items:center;gap:7px"><i style="width:12px;height:12px;border-radius:3px;background:var(--red);display:inline-block"></i>Subscriptions &amp; ad spend</span>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:20px">
+      <div class="tile"><span class="big">$31,050</span>2025 total earnings</div>
+      <div class="tile"><span class="big">$11,945</span>2025 spend on subscriptions &amp; ads</div>
+      <div class="tile hot"><span class="big">$10,180</span>2026 earnings so far (Jan 1 – Sep 20)</div>
+    </div>
+
+    <p class="punch">Good work still needs a <span class="yl">system</span> behind it - that swing between the two years is exactly why.</p>
   </div>
 </section>
 
