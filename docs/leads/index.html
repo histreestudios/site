@@ -281,8 +281,8 @@ tr:hover td{background:rgba(255,255,255,0.015)}
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-eyebrow">Free tool by Joe · Histree Studios</div>
-  <h1>Find your next<br> <em>10 client (ICP)</em></h1>
+  <div class="hero-eyebrow">Outreach tool by Joe · Histree Studios</div>
+  <h1>Find your next<br> <em>10 ICP</em></h1>
   <p class="hero-sub">Everything you need to find your next clients in one place. Build your ICP, research businesses, save your best leads, write offers, and send outreach without leaving your browser. Free forever.</p>
   <div class="hero-ctas">
     <a class="btn-hero-primary" href="#icpCard">🎯 Build My ICP</a>
@@ -334,9 +334,8 @@ tr:hover td{background:rgba(255,255,255,0.015)}
       <p class="section-label">Step 1</p>
       <h2 class="card-title">Build Your ICP</h2>
       <p class="card-help">Choose a focused service, client type, location, and budget level.</p>
-      <label>Service Type</label>
+      <label>Service I'd Sell</label>
       <select id="serviceType">
-        <option value="Financial Planner">Financial Planner</option>
         <option value="YouTube Long-Form Editing">YouTube Long-Form Editing</option>
         <option value="Short-Form Reels & Shorts">Short-Form Reels &amp; Shorts</option>
         <option value="Podcast Editing & Clipping">Podcast Editing &amp; Clipping</option>
@@ -345,22 +344,25 @@ tr:hover td{background:rgba(255,255,255,0.015)}
         <option value="Content Strategy & Calendar">Content Strategy &amp; Calendar</option>
         <option value="Sponsor & Lead Funnel Build">Sponsor &amp; Lead Funnel Build</option>
       </select>
-      <label>Client Category</label>
+      <label>Prospects Category</label>
       <select id="clientCategory">
-        <option value="Podcasters">Podcasters</option>
+        <option value="Financial Advisor">Financial Advisor</option>
+        <option value="Law firms">Law firms</option>
         <option value="Real estate agents">Real estate agents</option>
+        <option value="Interior designers">Interior designers</option>
+        <option value="Clinics">Clinics</option>
+        <option value="Business coaches">Business coaches</option>
+        <option value="Finance Plan">Finance Plan</option>
+        <option value="Wedding planners">Wedding planners</option>          <option value="Hotels">Hotels</option>
         <option value="Restaurants">Restaurants</option>
         <option value="Cafes">Cafes</option>
-        <option value="Gyms & fitness studios">Gyms &amp; fitness studios</option>
         <option value="Dental clinics">Dental clinics</option>
+        <option value="Gyms & fitness studios">Gyms &amp; fitness studios</option>
         <option value="Skin clinics">Skin clinics</option>
         <option value="Beauty salons">Beauty salons</option>
-        <option value="Wedding planners">Wedding planners</option>
-        <option value="Business coaches">Business coaches</option>
-        <option value="Interior designers">Interior designers</option>
-        <option value="Hotels">Hotels</option>
+        <option value="Spas">Spas</option>
+        <option value="Podcast Studios">Podcast Studios</option>
         <option value="Local ecommerce brands">Local ecommerce brands</option>
-        <option value="Financial Advisor">Financial Advisor</option>
         <option value="Authors & speakers">Authors &amp; speakers</option>
         <option value="Marketing Agency">Marketing Agency</option>
         <option value="Media Agency">Media Agency</option>
@@ -368,7 +370,7 @@ tr:hover td{background:rgba(255,255,255,0.015)}
         <option value="Video Production">Video Production Company</option>
       </select>
       <div class="row-2">
-        <div><label>Target City</label><input id="targetCity" type="text" placeholder="e.g. NY, London, Toronto"></div>
+        <div><label>Target City</label><input id="targetCity" type="text" placeholder="e.g. Manhattan, London, Toronto"></div>
         <div><label>Target Country</label><input id="targetCountry" type="text" placeholder="e.g. USA, UK, Australia"></div>
       </div>
       <label>Budget Level</label>
@@ -633,14 +635,14 @@ tr:hover td{background:rgba(255,255,255,0.015)}
     <span class="sep">·</span>
     <a href="https://instagram.com/joe.sh0w/" target="_blank">Instagram</a>
   </div>
-  <p class="footer-copy">V 1.2</p>
+  <p class="footer-copy">V 1.2.5</p>
   <p class="footer-legal">© 2026 Histree Studios · Joe | All rights reserved.</p>
 </footer>
 
 <script>
     /* ===================== State & constants ===================== */
     const STORAGE_KEYS = { icp: "histreeLeadFinder_icp_v1", leads: "histreeLeadFinder_leads_v1" };
-    const APP_VERSION = "v1.2";
+    const APP_VERSION = "v1.2.5";
     let leads = [];
     let currentView = "table";
     let editingLeadId = null;
